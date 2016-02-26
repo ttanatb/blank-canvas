@@ -14,6 +14,8 @@ namespace blank_canvas
     class GameObject
     {
 
+        //doesn't yet handle multiple textures
+
         #region variables
         Texture2D texture;
         Vector2 position;
