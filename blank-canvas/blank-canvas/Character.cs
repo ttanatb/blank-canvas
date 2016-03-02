@@ -9,28 +9,43 @@ namespace blank_canvas
     {
         //parent to the enemy and the player
 
+        //attributes (more to come)
+        double health;
+
         //constructor
         public Character()
         {
-
+            health = 10;
         }
 
         //moving (takes user input ('A' or 'D') and translates that to movement)
         public void Move(char input)
         {
-            //moving forwards
-
             //moving backwards
+            if(input == 'a' || input == 'A')
+            {
 
+            }
+            //moving forwards
+            else if (input == 'd' || input == 'D')
+            {
 
-
+            }
         }
 
         //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
-        public void Accel()
+        public void Accel(char input)
         {
-            //accelerating forwards and backwards
+            //accelerating backwards
+            if (input == 'a' || input == 'A')
+            {
 
+            }
+            //accelerating forwards
+            else if (input == 'd' || input == 'D')
+            {
+
+            }
         }
 
         //jumping(depending on user input ('W'), player position goes upwards)
@@ -42,7 +57,9 @@ namespace blank_canvas
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
         public void Shoot(char input)
         {
-            //fire right or fire left
+            //fire right
+
+            //fire left
         }
 
         //take damage(when colliding with an enemy/projectile, health gets lowered
@@ -50,6 +67,7 @@ namespace blank_canvas
         {
             //when hit by projectile
 
+            //when hit by an enemy
         }
 
 

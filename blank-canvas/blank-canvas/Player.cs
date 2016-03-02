@@ -7,5 +7,12 @@ namespace blank_canvas
 {
     class Player: Character
     {
+        //a child of the character class
+
+        //constructor
+        public Player()
+        {
+
+        }
     }
 }
