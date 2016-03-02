@@ -17,10 +17,10 @@ namespace blank_canvas
         //doesn't yet handle multiple textures
 
         #region variables
-        Texture2D texture;
-        Vector2 position;
-        Rectangle rectangle;
-        Color color;
+        protected Texture2D texture;
+        protected Vector2 position;
+        protected Rectangle rectangle;
+        protected Color color;
         #endregion
 
         #region constructor
