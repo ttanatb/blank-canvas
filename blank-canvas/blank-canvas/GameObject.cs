@@ -85,6 +85,11 @@ namespace blank_canvas
             this.color = color;
         }
 
+        public GameObject()
+        {
+
+        }
+
         #endregion
 
         #region properties
