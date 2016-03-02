@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+<<<<<<< HEAD
+=======
+/*
+    Class: Enemy
+    Purpose: creates enemy and all movement required for it
+*/
+>>>>>>> 3aa7b7e38116666acb1267e06402e0bc5788878c
 
 namespace blank_canvas
 {

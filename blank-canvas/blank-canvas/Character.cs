@@ -6,6 +6,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+/*
+    Class: Character
+    Purpose: creates character and all movement required for it
+*/
+
 namespace blank_canvas
 {
     class Character : GameObject
