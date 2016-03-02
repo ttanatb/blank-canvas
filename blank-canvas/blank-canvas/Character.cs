@@ -52,6 +52,10 @@ namespace blank_canvas
         public void Jump(char input)
         {
             //jump up
+            if(input == 'w' || input == 'W')
+            {
+
+            }
         }
 
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
