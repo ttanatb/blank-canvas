@@ -43,6 +43,7 @@ namespace blank_canvas
         }
         #endregion
 
+<<<<<<< HEAD
         #region methods
         public virtual void UpdatePos(float deltaTime)
         {
@@ -62,37 +63,73 @@ namespace blank_canvas
 
             Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
             Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
+=======
+        //attributes (more to come)
+        double health;
+
+        //constructor
+        public Character()
+        {
+            health = 10;
+>>>>>>> 70c68aa986222766373c84454f34058bf5914c82
         }
 
 
         //moving (takes user input ('A' or 'D') and translates that to movement)
         protected virtual void Move(char input)
         {
-            //moving forwards
-
             //moving backwards
+            if(input == 'a' || input == 'A')
+            {
 
+            }
+            //moving forwards
+            else if (input == 'd' || input == 'D')
+            {
 
-
+            }
         }
 
         //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
+<<<<<<< HEAD
         protected virtual void Accel()
+=======
+        public void Accel(char input)
+>>>>>>> 70c68aa986222766373c84454f34058bf5914c82
         {
-            //accelerating forwards and backwards
+            //accelerating backwards
+            if (input == 'a' || input == 'A')
+            {
 
+            }
+            //accelerating forwards
+            else if (input == 'd' || input == 'D')
+            {
+
+            }
         }
 
+<<<<<<< HEAD
         //jumping(depending on user input ('W'), player position goes upwards)
         protected virtual void Jump()
+=======
+        //jumping(depending on user input (" "[space bar]), player position goes upwards)
+        public void Jump(string input)
+>>>>>>> 70c68aa986222766373c84454f34058bf5914c82
         {
-            //jump up
+            //jump up(with space bar)
+            if(input == " ")
+            {
+
+            }
         }
 
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
         protected virtual void Shoot()
         {
-            //fire right or fire left
+            //fire right
+
+            //fire left
         }
 
         //take damage(when colliding with an enemy/projectile, health gets lowered
@@ -100,6 +137,7 @@ namespace blank_canvas
         {
             //when hit by projectile
 
+            //when hit by an enemy
         }
         #endregion
 
