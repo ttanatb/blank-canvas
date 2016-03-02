@@ -53,10 +53,14 @@ namespace blank_canvas
             }
         }
 
-        //jumping(depending on user input ('W'), player position goes upwards)
-        public void Jump(char input)
+        //jumping(depending on user input (" "[space bar]), player position goes upwards)
+        public void Jump(string input)
         {
-            //jump up
+            //jump up(with space bar)
+            if(input == " ")
+            {
+
+            }
         }
 
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
