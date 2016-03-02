@@ -17,10 +17,10 @@ namespace blank_canvas
         //doesn't yet handle multiple textures
 
         #region variables
-        Texture2D texture;
-        Vector2 position;
-        Rectangle rectangle;
-        Color color;
+        protected Texture2D texture;
+        protected Vector2 position;
+        protected Rectangle rectangle;
+        protected Color color;
         #endregion
 
         #region constructor
@@ -83,6 +83,11 @@ namespace blank_canvas
             position = new Vector2((float)rectangle.X, (float)rectangle.Y);
             this.rectangle = rectangle;
             this.color = color;
+        }
+
+        public GameObject()
+        {
+
         }
 
         #endregion
