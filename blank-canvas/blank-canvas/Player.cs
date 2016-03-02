@@ -50,5 +50,11 @@ namespace blank_canvas
         }
 
         //methods not from the Parent
+
+        //change colors
+        public void colorChange()
+        {
+            //if player hits enter then 
+        }
     }
 }

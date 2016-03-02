@@ -48,11 +48,11 @@ namespace blank_canvas
             }
         }
 
-        //jumping(depending on user input ('W'), player position goes upwards)
-        public void Jump(char input)
+        //jumping(depending on user input (" "[space bar]), player position goes upwards)
+        public void Jump(string input)
         {
-            //jump up
-            if(input == 'w' || input == 'W')
+            //jump up(with space bar)
+            if(input == " ")
             {
 
             }
