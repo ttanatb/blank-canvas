@@ -5,7 +5,7 @@ using System.Text;
 
 namespace blank_canvas
 {
-    class Player
+    class Player: Character
     {
     }
 }
