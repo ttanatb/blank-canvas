@@ -2,6 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+/*
+    Class: Game1
+    Purpose: creates Monogame
+*/
+
 namespace blank_canvas
 {
     /// <summary>
