@@ -11,6 +11,9 @@ namespace blank_canvas
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        KeyboardState prevKBState;
+
+        Character player;
 
         public Game1()
         {
@@ -27,8 +30,9 @@ namespace blank_canvas
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            player = new Character(new Rectangle(20,20,100,100));
             base.Initialize();
+            prevKBState = Keyboard.GetState();
         }
 
         /// <summary>
@@ -39,7 +43,7 @@ namespace blank_canvas
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            player.Texture = this.Content.Load<Texture2D>("testChar");
             // TODO: use this.Content to load your game content here
         }
 
@@ -59,11 +63,16 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            KeyboardState kbState = Keyboard.GetState();
+            float timer = gameTime.ElapsedGameTime.Milliseconds;
+            if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            if ((kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.D)))
+                player.Force = new Vector2(1, 0);
 
+            player.UpdatePos(timer);
+            prevKBState = kbState;
             base.Update(gameTime);
         }
 
@@ -75,7 +84,9 @@ namespace blank_canvas
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            player.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
