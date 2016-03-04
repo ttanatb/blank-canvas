@@ -150,8 +150,8 @@ namespace blank_canvas
             if (texture != null)
             {
                 if (color != null)
-                    spriteBatch.Draw(texture, rectangle, color);
-                else spriteBatch.Draw(texture, rectangle, Color.White);
+                    spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, rectangle.Width, rectangle.Height), color);
+                else spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, rectangle.Width, rectangle.Height), Color.White);
             }
         }
         #endregion

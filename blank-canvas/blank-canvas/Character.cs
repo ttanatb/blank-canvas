@@ -2,13 +2,73 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+/*
+    Class: Character
+    Purpose: creates character and all movement required for it
+*/
 
 namespace blank_canvas
 {
-    class Character
+    class Character : GameObject
     {
-        //parent to the enemy and the player
+        #region variables
+        Rectangle[] collisionBoxes;
+        Vector2 velocity;
+        Vector2 accleration;
+        Vector2 force;
+        #endregion
 
+        //need more constructors
+        #region constructors 
+        public Character(Rectangle rectangle) : base(rectangle)
+        {
+            collisionBoxes = new Rectangle[1];
+            collisionBoxes[0] = rectangle;
+            velocity = new Vector2(0, 0);
+            accleration = new Vector2(0, 0);
+            force = new Vector2(0, 0);
+        }
+        #endregion
+
+        #region properties
+
+        public Vector2 Force
+        {
+            get { return force; }
+            set { force = value; }
+        }
+
+        public Rectangle[] CollisionBoxes
+        {
+            get { return collisionBoxes; }
+        }
+        #endregion
+
+<<<<<<< HEAD
+        #region methods
+        public virtual void UpdatePos(float deltaTime)
+        {
+            Console.WriteLine("@@@@@Delta time: " + deltaTime);
+            Console.WriteLine("Force: {0}, {1}", force.X, force.Y);
+            Console.WriteLine("Acceleration: {0}, {1}", accleration.X, accleration.Y);
+
+            Vector2 prevAcc = accleration;
+            position.X += velocity.X * deltaTime + (0.5f * prevAcc.X * (float)Math.Pow(deltaTime, 2));
+            position.Y += velocity.Y * deltaTime + (0.5f * prevAcc.Y * (float)Math.Pow(deltaTime, 2));
+
+            accleration += force;
+            force = new Vector2(0, 0);
+
+            Vector2 avgAcc = (prevAcc + accleration) / 2;
+            velocity += avgAcc * deltaTime;
+
+            Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
+            Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
+=======
         //attributes (more to come)
         double health;
 
@@ -16,10 +76,12 @@ namespace blank_canvas
         public Character()
         {
             health = 10;
+>>>>>>> 70c68aa986222766373c84454f34058bf5914c82
         }
 
+
         //moving (takes user input ('A' or 'D') and translates that to movement)
-        public void Move(char input)
+        protected virtual void Move(char input)
         {
             //moving backwards
             if(input == 'a' || input == 'A')
@@ -34,7 +96,11 @@ namespace blank_canvas
         }
 
         //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
+<<<<<<< HEAD
+        protected virtual void Accel()
+=======
         public void Accel(char input)
+>>>>>>> 70c68aa986222766373c84454f34058bf5914c82
         {
             //accelerating backwards
             if (input == 'a' || input == 'A')
@@ -48,8 +114,13 @@ namespace blank_canvas
             }
         }
 
+<<<<<<< HEAD
+        //jumping(depending on user input ('W'), player position goes upwards)
+        protected virtual void Jump()
+=======
         //jumping(depending on user input (" "[space bar]), player position goes upwards)
         public void Jump(string input)
+>>>>>>> 70c68aa986222766373c84454f34058bf5914c82
         {
             //jump up(with space bar)
             if(input == " ")
@@ -59,7 +130,7 @@ namespace blank_canvas
         }
 
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
-        public void Shoot(char input)
+        protected virtual void Shoot()
         {
             //fire right
 
@@ -67,13 +138,13 @@ namespace blank_canvas
         }
 
         //take damage(when colliding with an enemy/projectile, health gets lowered
-        public void takeDamage()
+        protected virtual void takeDamage()
         {
             //when hit by projectile
 
             //when hit by an enemy
         }
-
+        #endregion
 
     }
 }
