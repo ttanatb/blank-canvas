@@ -68,16 +68,40 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //input handling (begin)
             KeyboardState kbState = Keyboard.GetState();
             float timer = gameTime.ElapsedGameTime.Milliseconds;
+
+            //if the user hits the escape button
             if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
 
+            //if the user hits the right arrow key or D
             if ((kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.D)))
+                //goes forward
                 player.Force = new Vector2(1, 0);
+
+            //if the user hits the left arrow key or A
+            if ((kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.A)))
+                //goes backwards
+                player.Force = new Vector2(-1, 0);
+
+            //if the user hits the up arrow key or W
+            if ((kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.W)))
+                //jumps up
+                player.Force = new Vector2(0, 2);
+
+            //if the user hits the space bar
+            if ((kbState.IsKeyDown(Keys.Space)))
+            {
+                //shoots projectile
+                Character(Player).Shoot();
+            }
 
             player.UpdatePos(timer);
             prevKBState = kbState;
+            //input handling(end)
+
             base.Update(gameTime);
         }
 
