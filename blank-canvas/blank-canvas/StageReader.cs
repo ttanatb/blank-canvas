@@ -56,3 +56,4 @@ namespace blank_canvas
             }
         }
     }
+}
