@@ -42,8 +42,17 @@ namespace blank_canvas
             try
             {
                 BinaryReader reader = new BinaryReader(File.OpenRead(filename[0]));
-                Console.WriteLine(reader.ReadString());
-                Console.WriteLine(reader.ReadInt32());
+                reader.ReadString();
+                reader.ReadInt32();
+                char character = reader.ReadChar();
+                while(true)
+                {
+                    char newCharacter = reader.ReadChar();
+                    if (newCharacter != null)
+                    {
+
+                    }
+                }
                 reader.Close();
             }
             catch (FileNotFoundException)
@@ -56,3 +65,4 @@ namespace blank_canvas
             }
         }
     }
+}
