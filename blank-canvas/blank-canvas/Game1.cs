@@ -16,9 +16,11 @@ namespace blank_canvas
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        KeyboardState prevKBState;
 
-        Character player;
+        //initialize classes and variables
+        KeyboardState prevKBState;
+        Character c;
+        Player p;
 
         public Game1()
         {
@@ -35,7 +37,7 @@ namespace blank_canvas
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            player = new Character(new Rectangle(20,20,100,100));
+            p = new Player(new Rectangle(20, 20, 100, 100));
             base.Initialize();
             prevKBState = Keyboard.GetState();
         }
@@ -48,7 +50,7 @@ namespace blank_canvas
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player.Texture = this.Content.Load<Texture2D>("testChar");
+            p.Texture = this.Content.Load<Texture2D>("testChar");
             // TODO: use this.Content to load your game content here
         }
 
@@ -68,39 +70,17 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //input handling (begin)
-            KeyboardState kbState = Keyboard.GetState();
+            //handling input
             float timer = gameTime.ElapsedGameTime.Milliseconds;
 
+            KeyboardState kbState = Keyboard.GetState();
             //if the user hits the escape button
             if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
-
-            //if the user hits the right arrow key or D
-            if ((kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.D)))
-                //goes forward
-                player.Force = new Vector2(1, 0);
-
-            //if the user hits the left arrow key or A
-            if ((kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.A)))
-                //goes backwards
-                player.Force = new Vector2(-1, 0);
-
-            //if the user hits the up arrow key or W
-            if ((kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.W)))
-                //jumps up
-                player.Force = new Vector2(0, 2);
-
-            //if the user hits the space bar
-            if ((kbState.IsKeyDown(Keys.Space)))
-            {
-                //shoots projectile
-                Character(Player).Shoot();
-            }
-
-            player.UpdatePos(timer);
+            c.Move(kbState, p);
             prevKBState = kbState;
-            //input handling(end)
+
+            p.UpdatePos(timer);
 
             base.Update(gameTime);
         }
@@ -114,7 +94,7 @@ namespace blank_canvas
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
+            p.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
