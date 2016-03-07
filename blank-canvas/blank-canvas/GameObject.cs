@@ -11,7 +11,7 @@ namespace blank_canvas
     /// <summary>
     /// <para>The parent class of all objects in the game</para>
     /// </summary>
-    class GameObject
+    public class GameObject
     {
 
         //doesn't yet handle multiple textures
