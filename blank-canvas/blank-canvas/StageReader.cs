@@ -65,8 +65,4 @@ namespace blank_canvas
             }
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 36692fc6a8b9e007711e9c34c8092d18a1feb4cd
