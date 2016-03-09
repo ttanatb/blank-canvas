@@ -44,14 +44,12 @@ namespace blank_canvas
                 BinaryReader reader = new BinaryReader(File.OpenRead(filename[0]));
                 reader.ReadString();
                 reader.ReadInt32();
-                char character = reader.ReadChar();
-                while(true)
-                {
-                    char newCharacter = reader.ReadChar();
-                    if (newCharacter != null)
-                    {
 
-                    }
+                // checks to see if the current position is equal to the length of the text file
+                while (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    char character = reader.ReadChar();
+
                 }
                 reader.Close();
             }
