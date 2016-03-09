@@ -38,7 +38,7 @@
             this.keyLabel = new System.Windows.Forms.Label();
             this.keyBox = new System.Windows.Forms.TextBox();
             this.compilebutton = new System.Windows.Forms.Button();
-            this.FileExistCheckBox = new System.Windows.Forms.CheckBox();
+            this.fileExistsButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // stagenamelabel
@@ -56,16 +56,17 @@
             // 
             this.stagenamebox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.stagenamebox.Location = new System.Drawing.Point(183, 62);
-            this.stagenamebox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.stagenamebox.Margin = new System.Windows.Forms.Padding(4);
             this.stagenamebox.Name = "stagenamebox";
             this.stagenamebox.Size = new System.Drawing.Size(253, 30);
             this.stagenamebox.TabIndex = 1;
+            this.stagenamebox.TextChanged += new System.EventHandler(this.stagenamebox_TextChanged);
             // 
             // levelnumberbox
             // 
             this.levelnumberbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.levelnumberbox.Location = new System.Drawing.Point(183, 102);
-            this.levelnumberbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.levelnumberbox.Margin = new System.Windows.Forms.Padding(4);
             this.levelnumberbox.Name = "levelnumberbox";
             this.levelnumberbox.Size = new System.Drawing.Size(32, 30);
             this.levelnumberbox.TabIndex = 2;
@@ -95,11 +96,11 @@
             // stagebuildertextbox
             // 
             this.stagebuildertextbox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stagebuildertextbox.Location = new System.Drawing.Point(236, 188);
-            this.stagebuildertextbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.stagebuildertextbox.Location = new System.Drawing.Point(237, 186);
+            this.stagebuildertextbox.Margin = new System.Windows.Forms.Padding(4);
             this.stagebuildertextbox.Multiline = true;
             this.stagebuildertextbox.Name = "stagebuildertextbox";
-            this.stagebuildertextbox.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.stagebuildertextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.stagebuildertextbox.Size = new System.Drawing.Size(544, 328);
             this.stagebuildertextbox.TabIndex = 5;
             this.stagebuildertextbox.WordWrap = false;
@@ -130,14 +131,14 @@
             // 
             this.keyBox.Font = new System.Drawing.Font("Courier New", 10F);
             this.keyBox.Location = new System.Drawing.Point(17, 188);
-            this.keyBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.keyBox.Margin = new System.Windows.Forms.Padding(4);
             this.keyBox.Multiline = true;
             this.keyBox.Name = "keyBox";
             this.keyBox.ReadOnly = true;
             this.keyBox.Size = new System.Drawing.Size(209, 328);
             this.keyBox.TabIndex = 8;
-            this.keyBox.Text = "Tiles:\r\n\r\n     Blank Tile\r\n_    Platform Tile\r\nx    Enemy\r\no    Puzzle Orb\r\n0    " +
-    "End Orb\r\n|    Door";
+            this.keyBox.Text = "Tiles:\r\n     Blank Tile\r\n_    Platform Tile\r\nx    Enemy\r\no    Puzzle Orb\r\n0    En" +
+    "d Orb\r\n|    Door";
             // 
             // compilebutton
             // 
@@ -150,24 +151,22 @@
             this.compilebutton.UseVisualStyleBackColor = true;
             this.compilebutton.Click += new System.EventHandler(this.compilebutton_Click);
             // 
-            // FileExistCheckBox
+            // fileExistsButton
             // 
-            this.FileExistCheckBox.AutoSize = true;
-            this.FileExistCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.FileExistCheckBox.Location = new System.Drawing.Point(415, 524);
-            this.FileExistCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.FileExistCheckBox.Name = "FileExistCheckBox";
-            this.FileExistCheckBox.Size = new System.Drawing.Size(196, 21);
-            this.FileExistCheckBox.TabIndex = 10;
-            this.FileExistCheckBox.Text = "File for level already exists";
-            this.FileExistCheckBox.UseVisualStyleBackColor = true;
+            this.fileExistsButton.Location = new System.Drawing.Point(237, 523);
+            this.fileExistsButton.Name = "fileExistsButton";
+            this.fileExistsButton.Size = new System.Drawing.Size(166, 47);
+            this.fileExistsButton.TabIndex = 13;
+            this.fileExistsButton.Text = "Load in File (if it exists)";
+            this.fileExistsButton.UseVisualStyleBackColor = true;
+            this.fileExistsButton.Click += new System.EventHandler(this.fileExistsButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(804, 580);
-            this.Controls.Add(this.FileExistCheckBox);
+            this.Controls.Add(this.fileExistsButton);
             this.Controls.Add(this.compilebutton);
             this.Controls.Add(this.keyBox);
             this.Controls.Add(this.keyLabel);
@@ -178,7 +177,7 @@
             this.Controls.Add(this.levelnumberbox);
             this.Controls.Add(this.stagenamebox);
             this.Controls.Add(this.stagenamelabel);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Stage Builder - Blank ";
             this.ResumeLayout(false);
@@ -198,7 +197,7 @@
         private System.Windows.Forms.Label keyLabel;
         private System.Windows.Forms.TextBox keyBox;
         private System.Windows.Forms.Button compilebutton;
-        private System.Windows.Forms.CheckBox FileExistCheckBox;
+        private System.Windows.Forms.Button fileExistsButton;
     }
 }
 
