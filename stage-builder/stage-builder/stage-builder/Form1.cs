@@ -19,16 +19,43 @@ namespace stage_builder
         string lvlStr; // Used for level string - Before Parsing
         double level; // Used for level number
         string stageTxt; // Used for stage text
-        int timesRun = 0; // number of times the file has been run
+        int timesRun = 0; // number of times the file has been runbool
 
 
 
         public Form1()
         {
             InitializeComponent();
+            fileExistsButton.Enabled = false;
+            compilebutton.Enabled = false;
+        }
+
+        private void stagenamebox_TextChanged(object sender, EventArgs e)
+        {
+            fileExistsButton.Enabled = true;
         }
 
 
+        private void fileExistsButton_Click(object sender, EventArgs e) //Loads in stage text file if it already exists
+        {
+            stageName = (stagenamebox.Text); // assign the stage name variable
+            fileName = (stageName + ".txt"); // assign a text file name variable
+
+            try
+            {
+                StreamReader input = new StreamReader(fileName);
+
+                stagebuildertextbox.Text = System.IO.File.ReadAllText(fileName);
+                input.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
+            compilebutton.Enabled = true;
+        }
+        
 
 
         private void compilebutton_Click(object sender, EventArgs e)
@@ -43,29 +70,21 @@ namespace stage_builder
             // File Writer
             try
             {
-                StreamWriter output = new StreamWriter(fileName,true); // creates file and appends to an existing file (if done more than once)
+                StreamWriter output = new StreamWriter(fileName); // creates file and overrides existing file (if done more than once)
 
-                if((timesRun==0) && (FileExistCheckBox.Checked == false)) // Checks if the program has been run before
-                { 
-                    output.WriteLine(stageName); // Puts stage name at top of text file
-                    output.WriteLine(level); // Puts level number at top of text file
-                }
-
+                output.WriteLine(stageName); // Puts stage name at top of text file
+                output.WriteLine(level); // Puts level number at top of text file
                 output.WriteLine(stageTxt); // Writes in the text of the stage
-
                 output.Close();
             }
-            catch(Exception ex)
+
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
             }
 
-            // Resets the stage text box
-            stagebuildertextbox.Text = "";
-
             timesRun++;
         }
-
     }
 }

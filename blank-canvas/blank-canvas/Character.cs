@@ -21,6 +21,7 @@ namespace blank_canvas
         Vector2 accleration;
         Vector2 force;
         int health;
+        int paint;
         #endregion
 
         //need more constructors
@@ -33,6 +34,7 @@ namespace blank_canvas
             accleration = new Vector2(0, 0);
             force = new Vector2(0, 0);
             health = 10;
+            paint = 0;
         }
         #endregion
 
@@ -47,6 +49,17 @@ namespace blank_canvas
         public Rectangle[] CollisionBoxes
         {
             get { return collisionBoxes; }
+        }
+
+        public int Heath
+        {
+            get { return health; }
+            set { health = value; }
+        }
+
+        public int Paint
+        {
+            set { paint = value; }
         }
         #endregion
 

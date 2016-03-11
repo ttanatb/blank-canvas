@@ -25,6 +25,22 @@ namespace blank_canvas
         {
             enemyRec = eRec;
         }
+
+        //methods
+
+        //collision method for an enemy (can't bump into it)
+        public bool CheckCollision(Character character)
+        {
+            foreach (Rectangle r in character.CollisionBoxes)
+            {
+                if (r.Intersects(this.Rectangle))
+
+                    // Damage player here?
+                    character.Heath = character.Heath - 2; //I have this as 2 as a default (can be changed later)
+                    return true;
+            }
+            return false;
+        }
     }
 }
 

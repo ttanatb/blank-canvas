@@ -42,8 +42,15 @@ namespace blank_canvas
             try
             {
                 BinaryReader reader = new BinaryReader(File.OpenRead(filename[0]));
-                Console.WriteLine(reader.ReadString());
-                Console.WriteLine(reader.ReadInt32());
+                reader.ReadString();
+                reader.ReadInt32();
+
+                // checks to see if the current position is equal to the length of the text file
+                while (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    char character = reader.ReadChar();
+
+                }
                 reader.Close();
             }
             catch (FileNotFoundException)
