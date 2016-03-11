@@ -67,9 +67,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\enemyNoColor.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\playerStandingStill.png" />
     <Content Include="Content\testChar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\tileGround5.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

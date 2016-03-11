@@ -22,6 +22,12 @@ namespace blank_canvas
         Character c;
         Player p;
 
+        //Textures
+        Texture2D pTextureSS; // Player Standing Still
+        Texture2D eTextureSS; // Enemy Standing Still
+
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -52,6 +58,9 @@ namespace blank_canvas
             spriteBatch = new SpriteBatch(GraphicsDevice);
             p.Texture = this.Content.Load<Texture2D>("testChar");
             // TODO: use this.Content to load your game content here
+            pTextureSS = Content.Load<Texture2D>("playerStandingStill");
+            eTextureSS = Content.Load<Texture2D>("enemyNoColor");
+            
         }
 
         /// <summary>
