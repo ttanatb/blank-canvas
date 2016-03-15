@@ -84,10 +84,6 @@ namespace blank_canvas
 
             KeyboardState kbState = Keyboard.GetState();
             //if the user hits the escape button
-            if (kbState.IsKeyDown(Keys.Escape))
-                Exit();
-            c.Move(kbState, p);
-            prevKBState = kbState;
 
             p.UpdatePos(timer);
 
