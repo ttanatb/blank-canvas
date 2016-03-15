@@ -38,10 +38,10 @@ namespace blank_canvas
         // moves and reads in file
         public void ReadFile()
         {
-
+            BinaryReader reader = null;
             try
             {
-                BinaryReader reader = new BinaryReader(File.OpenRead(filename[0]));
+                reader = new BinaryReader(File.OpenRead(filename[0]));
                 reader.ReadString();
                 reader.ReadInt32();
 
@@ -50,8 +50,10 @@ namespace blank_canvas
                 {
                     char character = reader.ReadChar();
 
+                    //this should be where the world is generated?
+                    //make sure the whole thing doesn't like exist in one line
+
                 }
-                reader.Close();
             }
             catch (FileNotFoundException)
             {
@@ -61,6 +63,7 @@ namespace blank_canvas
             {
                 Console.WriteLine("Error. Null Reference. Press any key.");
             }
+            finally { reader.Close(); }
         }
     }
 }
