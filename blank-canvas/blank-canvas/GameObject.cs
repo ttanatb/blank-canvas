@@ -21,6 +21,7 @@ namespace blank_canvas
         protected Vector2 position;
         protected Rectangle rectangle;
         protected Color color;
+
         #endregion
 
         #region constructor
@@ -136,6 +137,26 @@ namespace blank_canvas
         {
             get { return color; }
             set { color = value; }
+        }
+
+        public Point Min
+        {
+            get { return position.ToPoint(); }
+        }
+
+        public Point Max
+        {
+            get { return new Point((int)position.X + rectangle.Width, (int)position.Y + rectangle.Height); }
+        }
+
+        public int Width
+        {
+            get { return rectangle.Width; }
+        }
+
+        public int Height
+        {
+            get { return rectangle.Height; }
         }
         #endregion
 

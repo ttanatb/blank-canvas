@@ -9,11 +9,16 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
+<<<<<<< HEAD
     public class Player: Character
+=======
+    public class Player : Character
+>>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
     {
         //a child of the character class
 
         //attributes
+<<<<<<< HEAD
         Rectangle playerRec;
 
         //constructor
@@ -26,11 +31,20 @@ namespace blank_canvas
 
         //take damage(when colliding with an enemy/projectile, health gets lowered
         public void takeDamage()
+=======
+        bool canJump;
+
+        public bool CanJump
         {
-            //only real change is how much damage the player takes depending on each enemy
+            get { return canJump; }
+            set { canJump = value; }
         }
 
-        //methods not from the Parent
+        //constructor
+        public Player(Rectangle pRec):base(pRec)
+>>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
+        {
+        }
 
         //change colors
         public void colorChange()
@@ -39,4 +53,3 @@ namespace blank_canvas
         }
     }
 }
-
