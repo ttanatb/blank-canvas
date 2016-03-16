@@ -47,13 +47,14 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Gates.cs" />
+    <Compile Include="InputManager.cs" />
     <Compile Include="PaletteTable.cs" />
+    <Compile Include="StageManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StageReader.cs" />
-    <Compile Include="test.cs" />
     <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>

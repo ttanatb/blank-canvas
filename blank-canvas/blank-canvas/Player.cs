@@ -14,12 +14,17 @@ namespace blank_canvas
         //a child of the character class
 
         //attributes
-        Rectangle playerRec;
+        bool canJump;
+
+        public bool CanJump
+        {
+            get { return canJump; }
+            set { canJump = value; }
+        }
 
         //constructor
         public Player(Rectangle pRec):base(pRec)
         {
-            playerRec = new Rectangle(pRec.X, pRec.Y, pRec.Width, pRec.Height);
         }
 
         //change colors

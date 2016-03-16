@@ -79,20 +79,7 @@ namespace blank_canvas
 
         #region methods
 
-        /// <summary>
-        /// Checks collision with each of the character's collision boxes
-        /// </summary>
-        /// <param name="character">Character to check collision with</param>
-        /// <returns>Returns true if there is collision</returns>
-        public bool CheckCollision(Character character)
-        {
-            foreach(Rectangle r in character.CollisionBoxes)
-            {
-                if (r.Intersects(this.Rectangle))
-                    return true;
-            }
-            return false;
-        }
+
 
         #endregion
     }
