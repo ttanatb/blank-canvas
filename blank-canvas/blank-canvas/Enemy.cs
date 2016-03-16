@@ -13,11 +13,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
-<<<<<<< HEAD
-    public class Enemy: Character
-=======
     public class Enemy : Character
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
     {
         //a child of the character class
 
@@ -40,7 +36,7 @@ namespace blank_canvas
                 if (r.Intersects(this.Rectangle))
 
                     // Damage player here?
-                    character.Heath = character.Heath - 2; //I have this as 2 as a default (can be changed later)
+                    character.Health = character.Health - 2; //I have this as 2 as a default (can be changed later)
                     return true;
             }
             return false;
