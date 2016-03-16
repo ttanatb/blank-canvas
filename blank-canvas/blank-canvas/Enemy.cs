@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
-<<<<<<< HEAD
-=======
 /*
     Class: Enemy
     Purpose: creates enemy and all movement required for it
 */
->>>>>>> 3aa7b7e38116666acb1267e06402e0bc5788878c
 
 namespace blank_canvas
 {
-    class Enemy: Character
+    public class Enemy: Character
     {
         //a child of the character class
 

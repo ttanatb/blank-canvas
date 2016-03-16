@@ -13,13 +13,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
-    class Character : GameObject
+    public class Character : GameObject
     {
         #region variables
         Rectangle[] collisionBoxes;
         Vector2 velocity;
         Vector2 accleration;
         Vector2 force;
+        int health;
         #endregion
 
         //need more constructors
@@ -31,6 +32,7 @@ namespace blank_canvas
             velocity = new Vector2(0, 0);
             accleration = new Vector2(0, 0);
             force = new Vector2(0, 0);
+            health = 10;
         }
         #endregion
 
@@ -48,7 +50,6 @@ namespace blank_canvas
         }
         #endregion
 
-<<<<<<< HEAD
         #region methods
         public virtual void UpdatePos(float deltaTime)
         {
@@ -68,39 +69,37 @@ namespace blank_canvas
 
             Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
             Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
-=======
-        //attributes (more to come)
-        double health;
-
-        //constructor
-        public Character()
-        {
-            health = 10;
->>>>>>> 70c68aa986222766373c84454f34058bf5914c82
         }
-
+    
 
         //moving (takes user input ('A' or 'D') and translates that to movement)
-        protected virtual void Move(char input)
+        public void Move(KeyboardState kbState, Player p)
         {
-            //moving backwards
-            if(input == 'a' || input == 'A')
-            {
+            //if the user hits the right arrow key or D
+            if ((kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.D)))
+                //goes forward
+                p.Force = new Vector2(1, 0);
 
-            }
-            //moving forwards
-            else if (input == 'd' || input == 'D')
-            {
+            //if the user hits the left arrow key or A
+            if ((kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.A)))
+                //goes backwards
+                p.Force = new Vector2(-1, 0);
 
+            //if the user hits the up arrow key or W
+            if ((kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.W)))
+                //jumps up
+                p.Force = new Vector2(0, 2);
+
+            //if the user hits the space bar
+            if ((kbState.IsKeyDown(Keys.Space)))
+            {
+                //shoots projectile
+                p.Shoot();
             }
         }
 
         //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
-<<<<<<< HEAD
-        protected virtual void Accel()
-=======
-        public void Accel(char input)
->>>>>>> 70c68aa986222766373c84454f34058bf5914c82
+        protected virtual void Accel(char input)
         {
             //accelerating backwards
             if (input == 'a' || input == 'A')
@@ -114,13 +113,8 @@ namespace blank_canvas
             }
         }
 
-<<<<<<< HEAD
-        //jumping(depending on user input ('W'), player position goes upwards)
-        protected virtual void Jump()
-=======
         //jumping(depending on user input (" "[space bar]), player position goes upwards)
-        public void Jump(string input)
->>>>>>> 70c68aa986222766373c84454f34058bf5914c82
+        protected virtual void Jump(string input)
         {
             //jump up(with space bar)
             if(input == " ")
