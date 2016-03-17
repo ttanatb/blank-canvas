@@ -92,7 +92,7 @@ namespace blank_canvas
             //if the user hits the escape button
             if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
-            c.Move(kbState, p);
+            c.Move();
             prevKBState = kbState;
 
             p.UpdatePos(timer);

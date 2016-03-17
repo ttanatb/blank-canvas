@@ -31,7 +31,7 @@ namespace blank_canvas
             input = new InputManager();
             stageReader = new StageReader();
             level = 0;
-            //
+            
             //do stage reader things
 
             //calls construct stage method(?)
@@ -46,6 +46,11 @@ namespace blank_canvas
             //updates enemy movement
 
             //search for nearest tile of each character (left,right,top,bottom)
+            foreach (Tile t in SearchClosestTiles(player))
+            {
+                CheckCollision(player, t);
+            }
+                
             //checks if they are colliding with it
 
             //updates velocity if collision didn't occur
@@ -73,7 +78,7 @@ namespace blank_canvas
             return false;
         }
 
-        private Tile[] SearchClosestTiles(Character character, Tile tile)
+        private Tile[] SearchClosestTiles(Character character)
         {
             Tile[] tiles = new Tile[4];
 

@@ -25,15 +25,14 @@ namespace blank_canvas
         protected int health;
         private int paint;
 
-
+        //what are these things for
         Vector2 spritePosition;
         Vector2 spriteOrigin;
         Vector2 spriteVelocity;
         float tangentialVelocity;
         #endregion
 
-        //need more constructors
-        #region constructors 
+        #region constructors
         public Character(Rectangle rectangle) : base(rectangle)
         {
             collisionBoxes = new Rectangle[1];
@@ -45,6 +44,7 @@ namespace blank_canvas
             paint = 0;
         }
 
+        //what is this for
         public Character(Vector2 sPos, Vector2 sOrig, Vector2 sVelo, float tVelo)
         {
             spritePosition = sPos;
@@ -55,7 +55,6 @@ namespace blank_canvas
         #endregion
 
         #region properties
-
         public Vector2 PrevPos
         {
             get { return prevPos; }
@@ -66,8 +65,6 @@ namespace blank_canvas
             get { return velocity; }
             set { velocity = value; }
         }
-
-        #region methods
 
         public Vector2 Acceleration
         {
@@ -80,37 +77,6 @@ namespace blank_canvas
             get { return collisionBoxes; }
         }
 
-            Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
-            Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
-
-                   //moving (takes user input ('A' or 'D') and translates that to movement)
-        public void Move(KeyboardState kbState, Player p)
-        {
-            //if the user hits the right arrow key or D
-            if ((kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.D)))
-                //goes forward
-                p.Force = new Vector2(1, 0);
-
-            //if the user hits the left arrow key or A
-            if ((kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.A)))
-                //goes backwards
-                p.Force = new Vector2(-1, 0);
-
-            //if the user hits the up arrow key or W
-            if ((kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.W)))
-                //jumps up
-                p.Force = new Vector2(0, 2);
-
-            //if the user hits the space bar
-            if ((kbState.IsKeyDown(Keys.Space)))
-            {
-                //shoots projectile
-                p.Shoot();
-            }
-        }
-
-        //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
-        protected virtual void Accel(char input)
         public int Health
         {
             get { return health; }
@@ -124,7 +90,6 @@ namespace blank_canvas
         #endregion
 
         #region methods
-
         public void UpdatePos(double deltaTime)
         {
             prevPos = new Vector2(position.X, position.Y);
@@ -160,15 +125,13 @@ namespace blank_canvas
 
         }
 
-        //jumping(depending on user input (" "[space bar]), player position goes upwards)
-        protected virtual void Jump(string input)
         public void UpdateVx(double deltaTime)
         {
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
         }
 
-        //moving (takes user input ('A' or 'D') and translates that to movement)
+        //what is this for? I kinda have methods for these right up on top
         public void Move()
         {
             rectangle = new Rectangle((int)spritePosition.X, (int)spritePosition.Y, texture.Width, texture.Height);
@@ -226,11 +189,10 @@ namespace blank_canvas
 
         }
         #endregion
-
     }
 }
 
-        }
+        
     
 
  
