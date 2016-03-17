@@ -16,13 +16,6 @@ namespace blank_canvas
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-<<<<<<< HEAD
-
-        //initialize classes and variables
-        KeyboardState prevKBState;
-        Character c;
-        Player p;
-=======
 
         //initialize classes and variables
         KeyboardState prevKBState;
@@ -33,8 +26,6 @@ namespace blank_canvas
         Texture2D pTextureSS; // Player Standing Still
         Texture2D eTextureSS; // Enemy Standing Still
 
-
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
 
         public Game1()
         {
@@ -51,11 +42,7 @@ namespace blank_canvas
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-<<<<<<< HEAD
-            p = new Player(new Rectangle(20,20,100,100));
-=======
             p = new Player(new Rectangle(20, 20, 100, 100));
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
             base.Initialize();
             prevKBState = Keyboard.GetState();
         }
@@ -96,13 +83,10 @@ namespace blank_canvas
 
             KeyboardState kbState = Keyboard.GetState();
             //if the user hits the escape button
-<<<<<<< HEAD
             if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
             c.Move();
             prevKBState = kbState;
-=======
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
 
             p.UpdatePos(timer);
 

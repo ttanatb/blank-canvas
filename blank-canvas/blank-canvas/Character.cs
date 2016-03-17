@@ -16,13 +16,8 @@ namespace blank_canvas
     public class Character : GameObject
     {
         #region variables
-<<<<<<< HEAD
-        Rectangle[] collisionBoxes;
-        Vector2 velocity;
-        Vector2 accleration;
         Vector2 force;
-        int health;
-=======
+
         protected Rectangle[] collisionBoxes;
         protected Vector2 velocity;
         protected Vector2 acceleration;
@@ -30,16 +25,14 @@ namespace blank_canvas
         protected Vector2 prevAcc;
         protected int health;
         private int paint;
-<<<<<<< HEAD
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
-=======
+
 
         //what are these things for
         Vector2 spritePosition;
         Vector2 spriteOrigin;
         Vector2 spriteVelocity;
         float tangentialVelocity;
->>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
+
         #endregion
 
         #region constructors
@@ -48,17 +41,15 @@ namespace blank_canvas
             collisionBoxes = new Rectangle[1];
             collisionBoxes[0] = rectangle;
             velocity = new Vector2(0, 0);
-<<<<<<< HEAD
-            accleration = new Vector2(0, 0);
+
+            acceleration = new Vector2(0, 0);
             force = new Vector2(0, 0);
             health = 10;
-=======
+
             acceleration = new Vector2(0, 0);
             health = 10;
             paint = 0;
-<<<<<<< HEAD
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
-=======
+
         }
 
         //what is this for
@@ -68,7 +59,7 @@ namespace blank_canvas
             spriteOrigin = sOrig;
             spriteVelocity = sVelo;
             tangentialVelocity = tVelo;
->>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
+
         }
         #endregion
 
@@ -84,15 +75,7 @@ namespace blank_canvas
             set { velocity = value; }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        #region methods
-        public virtual void UpdatePos(float deltaTime)
-=======
-=======
->>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         public Vector2 Acceleration
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
         {
             get { return acceleration;}
             set { acceleration = value; }
@@ -102,31 +85,33 @@ namespace blank_canvas
         {
             get { return collisionBoxes; }
         }
+        #endregion
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+        #region methods
+        public virtual void UpdatePos(float deltaTime)
+        {
             Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
             Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
         }
     
-
+        /*
         //moving (takes user input ('A' or 'D') and translates that to movement)
         public void Move(KeyboardState kbState, Player p)
         {
             //if the user hits the right arrow key or D
             if ((kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.D)))
                 //goes forward
-                p.Force = new Vector2(1, 0);
+                p.force = new Vector2(1, 0);
 
             //if the user hits the left arrow key or A
             if ((kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.A)))
                 //goes backwards
-                p.Force = new Vector2(-1, 0);
+                p.force = new Vector2(-1, 0);
 
             //if the user hits the up arrow key or W
             if ((kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.W)))
                 //jumps up
-                p.Force = new Vector2(0, 2);
+                p.force = new Vector2(0, 2);
 
             //if the user hits the space bar
             if ((kbState.IsKeyDown(Keys.Space)))
@@ -135,14 +120,13 @@ namespace blank_canvas
                 p.Shoot();
             }
         }
+        */
 
         //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
-        protected virtual void Accel(char input)
-=======
-        public int Heath
-=======
+        //protected virtual void Accel(char input)
+
         public int Health
->>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
+
         {
             get { return health; }
             set { health = value; }
@@ -152,9 +136,7 @@ namespace blank_canvas
         {
             set { paint = value; }
         }
-        #endregion
 
-        #region methods
         public void UpdatePos(double deltaTime)
         {
             prevPos = new Vector2(position.X, position.Y);
@@ -178,7 +160,6 @@ namespace blank_canvas
         }
 
         public void Halt()
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
         {
             if (velocity.X > 0)
                 velocity.X = (float)Math.Floor((velocity.X / 1.2));
@@ -191,22 +172,15 @@ namespace blank_canvas
 
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         //jumping(depending on user input (" "[space bar]), player position goes upwards)
-        protected virtual void Jump(string input)
-=======
-=======
->>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
+        //protected virtual void Jump(string input)
+
         public void UpdateVx(double deltaTime)
->>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
         {
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
         }
 
-<<<<<<< HEAD
-=======
         //what is this for? I kinda have methods for these right up on top
         public void Move()
         {
@@ -242,7 +216,6 @@ namespace blank_canvas
             }
         }
 
->>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
         protected virtual void Shoot()
         {
@@ -268,11 +241,3 @@ namespace blank_canvas
         #endregion
     }
 }
-<<<<<<< HEAD
-=======
-
-        
-    
-
- 
->>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
