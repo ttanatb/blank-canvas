@@ -30,11 +30,19 @@ namespace blank_canvas
         protected Vector2 prevAcc;
         protected int health;
         private int paint;
+<<<<<<< HEAD
 >>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
+=======
+
+        //what are these things for
+        Vector2 spritePosition;
+        Vector2 spriteOrigin;
+        Vector2 spriteVelocity;
+        float tangentialVelocity;
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         #endregion
 
-        //need more constructors
-        #region constructors 
+        #region constructors
         public Character(Rectangle rectangle) : base(rectangle)
         {
             collisionBoxes = new Rectangle[1];
@@ -48,12 +56,23 @@ namespace blank_canvas
             acceleration = new Vector2(0, 0);
             health = 10;
             paint = 0;
+<<<<<<< HEAD
 >>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
+=======
+        }
+
+        //what is this for
+        public Character(Vector2 sPos, Vector2 sOrig, Vector2 sVelo, float tVelo)
+        {
+            spritePosition = sPos;
+            spriteOrigin = sOrig;
+            spriteVelocity = sVelo;
+            tangentialVelocity = tVelo;
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         }
         #endregion
 
         #region properties
-
         public Vector2 PrevPos
         {
             get { return prevPos; }
@@ -66,9 +85,12 @@ namespace blank_canvas
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         #region methods
         public virtual void UpdatePos(float deltaTime)
 =======
+=======
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         public Vector2 Acceleration
 >>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
         {
@@ -81,6 +103,7 @@ namespace blank_canvas
             get { return collisionBoxes; }
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
             Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
@@ -117,6 +140,9 @@ namespace blank_canvas
         protected virtual void Accel(char input)
 =======
         public int Heath
+=======
+        public int Health
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         {
             get { return health; }
             set { health = value; }
@@ -129,7 +155,6 @@ namespace blank_canvas
         #endregion
 
         #region methods
-
         public void UpdatePos(double deltaTime)
         {
             prevPos = new Vector2(position.X, position.Y);
@@ -167,9 +192,12 @@ namespace blank_canvas
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         //jumping(depending on user input (" "[space bar]), player position goes upwards)
         protected virtual void Jump(string input)
 =======
+=======
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         public void UpdateVx(double deltaTime)
 >>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
         {
@@ -177,6 +205,44 @@ namespace blank_canvas
 
         }
 
+<<<<<<< HEAD
+=======
+        //what is this for? I kinda have methods for these right up on top
+        public void Move()
+        {
+            rectangle = new Rectangle((int)spritePosition.X, (int)spritePosition.Y, texture.Width, texture.Height);
+            spritePosition = spriteVelocity + spritePosition;
+            spriteOrigin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                spriteVelocity.X = tangentialVelocity;
+                spriteVelocity.Y = tangentialVelocity;
+            }
+            else if (spriteVelocity != Vector2.Zero)
+            {
+                float i = spriteVelocity.X;
+                float j = spriteVelocity.Y;
+
+                spriteVelocity.X = i -= 0.1f * i;
+                spriteVelocity.Y = j -= 0.1f * j;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                spriteVelocity.X = -tangentialVelocity;
+                spriteVelocity.Y = -tangentialVelocity;
+            }
+            else if (spriteVelocity != Vector2.Zero)
+            {
+                float i = spriteVelocity.X;
+                float j = spriteVelocity.Y;
+
+                spriteVelocity.X = i -= 0.1f * i;
+                spriteVelocity.Y = j -= 0.1f * j;
+            }
+        }
+
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
         protected virtual void Shoot()
         {
@@ -200,6 +266,13 @@ namespace blank_canvas
 
         }
         #endregion
-
     }
 }
+<<<<<<< HEAD
+=======
+
+        
+    
+
+ 
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302

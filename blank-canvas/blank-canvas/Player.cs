@@ -29,10 +29,17 @@ namespace blank_canvas
 
         //methods from the Parent
 
+            /*
         //take damage(when colliding with an enemy/projectile, health gets lowered
         public void takeDamage()
+<<<<<<< HEAD
 =======
         bool canJump;
+=======
+        {
+
+        }*/
+>>>>>>> f81c99f4a40d1b267a24e7a95de91ca4496a7302
 
         public bool CanJump
         {

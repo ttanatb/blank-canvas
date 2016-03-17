@@ -99,7 +99,7 @@ namespace blank_canvas
 <<<<<<< HEAD
             if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
-            c.Move(kbState, p);
+            c.Move();
             prevKBState = kbState;
 =======
 >>>>>>> d909b04d77a90b37b7dc3a4f2fa66a63c36a65e9
