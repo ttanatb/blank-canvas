@@ -18,8 +18,6 @@ namespace blank_canvas
         SpriteBatch spriteBatch;
 
         //initialize classes and variables
-        KeyboardState prevKBState;
-        Character c;
         Player p;
 
         //Textures
@@ -44,7 +42,6 @@ namespace blank_canvas
             // TODO: Add your initialization logic here
             p = new Player(new Rectangle(20, 20, 100, 100));
             base.Initialize();
-            prevKBState = Keyboard.GetState();
         }
 
         /// <summary>
@@ -85,8 +82,36 @@ namespace blank_canvas
             //if the user hits the escape button
             if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
-            c.Move();
-            prevKBState = kbState;
+
+            //movement
+            if(kbState.IsKeyDown(Keys.A))
+            {
+                //move left
+                p.MoveLeft();
+            }
+            if (kbState.IsKeyDown(Keys.D))
+            {
+                //move right
+                p.MoveRight();
+            }
+            if (kbState.IsKeyDown(Keys.W))
+            {
+                //jump
+                if (p.CanJump == true)
+                {
+
+                }
+            }
+            if(kbState.IsKeyDown(Keys.Space))
+            {
+                //shooting
+                p.Shoot();
+            }
+
+            //tracking the player
+            p.Halt();
+            p.UpdateVx(timer);
+            p.UpdateVy(timer);
 
             p.UpdatePos(timer);
 

@@ -14,7 +14,6 @@ namespace blank_canvas
         //a child of the character class
 
         //attributes
-        Rectangle playerRec;
         bool canJump;
 
 
@@ -27,7 +26,6 @@ namespace blank_canvas
         //constructor
         public Player(Rectangle pRec):base(pRec)
         {
-
         }
 
         //change colors

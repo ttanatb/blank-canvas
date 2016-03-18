@@ -53,6 +53,7 @@ namespace blank_canvas
         }
 
         //what is this for
+        /*
         public Character(Vector2 sPos, Vector2 sOrig, Vector2 sVelo, float tVelo)
         {
             spritePosition = sPos;
@@ -61,6 +62,7 @@ namespace blank_canvas
             tangentialVelocity = tVelo;
 
         }
+        */
         #endregion
 
         #region properties
@@ -182,6 +184,7 @@ namespace blank_canvas
         }
 
         //what is this for? I kinda have methods for these right up on top
+        /*
         public void Move()
         {
             rectangle = new Rectangle((int)spritePosition.X, (int)spritePosition.Y, texture.Width, texture.Height);
@@ -215,9 +218,10 @@ namespace blank_canvas
                 spriteVelocity.Y = j -= 0.1f * j;
             }
         }
+        */
 
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
-        protected virtual void Shoot()
+        public void Shoot()
         {
             //fire right
 
