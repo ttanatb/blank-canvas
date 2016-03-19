@@ -51,18 +51,6 @@ namespace blank_canvas
             paint = 0;
 
         }
-
-        //what is this for
-        /*
-        public Character(Vector2 sPos, Vector2 sOrig, Vector2 sVelo, float tVelo)
-        {
-            spritePosition = sPos;
-            spriteOrigin = sOrig;
-            spriteVelocity = sVelo;
-            tangentialVelocity = tVelo;
-
-        }
-        */
         #endregion
 
         #region properties
@@ -95,34 +83,6 @@ namespace blank_canvas
             Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
             Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
         }
-    
-        /*
-        //moving (takes user input ('A' or 'D') and translates that to movement)
-        public void Move(KeyboardState kbState, Player p)
-        {
-            //if the user hits the right arrow key or D
-            if ((kbState.IsKeyDown(Keys.Right)) || (kbState.IsKeyDown(Keys.D)))
-                //goes forward
-                p.force = new Vector2(1, 0);
-
-            //if the user hits the left arrow key or A
-            if ((kbState.IsKeyDown(Keys.Left)) || (kbState.IsKeyDown(Keys.A)))
-                //goes backwards
-                p.force = new Vector2(-1, 0);
-
-            //if the user hits the up arrow key or W
-            if ((kbState.IsKeyDown(Keys.Up)) || (kbState.IsKeyDown(Keys.W)))
-                //jumps up
-                p.force = new Vector2(0, 2);
-
-            //if the user hits the space bar
-            if ((kbState.IsKeyDown(Keys.Space)))
-            {
-                //shoots projectile
-                p.Shoot();
-            }
-        }
-        */
 
         //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
         //protected virtual void Accel(char input)
@@ -182,43 +142,6 @@ namespace blank_canvas
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
         }
-
-        //what is this for? I kinda have methods for these right up on top
-        /*
-        public void Move()
-        {
-            rectangle = new Rectangle((int)spritePosition.X, (int)spritePosition.Y, texture.Width, texture.Height);
-            spritePosition = spriteVelocity + spritePosition;
-            spriteOrigin = new Vector2(rectangle.Width / 2, rectangle.Height / 2);
-
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
-            {
-                spriteVelocity.X = tangentialVelocity;
-                spriteVelocity.Y = tangentialVelocity;
-            }
-            else if (spriteVelocity != Vector2.Zero)
-            {
-                float i = spriteVelocity.X;
-                float j = spriteVelocity.Y;
-
-                spriteVelocity.X = i -= 0.1f * i;
-                spriteVelocity.Y = j -= 0.1f * j;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
-            {
-                spriteVelocity.X = -tangentialVelocity;
-                spriteVelocity.Y = -tangentialVelocity;
-            }
-            else if (spriteVelocity != Vector2.Zero)
-            {
-                float i = spriteVelocity.X;
-                float j = spriteVelocity.Y;
-
-                spriteVelocity.X = i -= 0.1f * i;
-                spriteVelocity.Y = j -= 0.1f * j;
-            }
-        }
-        */
 
         //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
         public void Shoot()

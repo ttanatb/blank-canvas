@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 /*
     Class: Game1
@@ -19,11 +20,21 @@ namespace blank_canvas
 
         //initialize classes and variables
         Player p;
+        Camera camera;
 
         //Textures
         Texture2D pTextureSS; // Player Standing Still
         Texture2D eTextureSS; // Enemy Standing Still
 
+        //for camera
+        //center of player
+        Vector2 spriteOrigin;
+        //starting location for player
+        public Vector2 spritePosition;
+        //background position
+        Vector2 backgroundPosition;
+        Texture2D backgroundTexture;
+        public Rectangle playerRec;
 
         public Game1()
         {
@@ -41,6 +52,7 @@ namespace blank_canvas
         {
             // TODO: Add your initialization logic here
             p = new Player(new Rectangle(20, 20, 100, 100));
+            camera = new Camera(GraphicsDevice.Viewport);
             base.Initialize();
         }
 
@@ -56,7 +68,12 @@ namespace blank_canvas
             // TODO: use this.Content to load your game content here
             pTextureSS = Content.Load<Texture2D>("playerStandingStill");
             eTextureSS = Content.Load<Texture2D>("enemyNoColor");
-            
+            //for camera
+            //values can be changed
+            backgroundPosition = new Vector2(-500, 0);
+            spritePosition = new Vector2(300, 250);
+            backgroundTexture = Content.Load<Texture2D>("testBackground");
+
         }
 
         /// <summary>
@@ -79,6 +96,11 @@ namespace blank_canvas
             float timer = gameTime.ElapsedGameTime.Milliseconds;
 
             KeyboardState kbState = Keyboard.GetState();
+
+            //for camera
+            playerRec = new Rectangle((int)spritePosition.X, (int)spritePosition.Y, pTextureSS.Width, pTextureSS.Height);
+            spriteOrigin = new Vector2(playerRec.Width / 2, playerRec.Height / 2);
+
             //if the user hits the escape button
             if (kbState.IsKeyDown(Keys.Escape))
                 Exit();
@@ -108,6 +130,9 @@ namespace blank_canvas
                 p.Shoot();
             }
 
+            //for camera
+            camera.Update(gameTime, this);
+
             //tracking the player
             p.Halt();
             p.UpdateVx(timer);
@@ -126,8 +151,10 @@ namespace blank_canvas
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            p.Draw(spriteBatch);
+            //for camera
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
+            spriteBatch.Draw(backgroundTexture, backgroundPosition, Color.White);
+            spriteBatch.Draw(pTextureSS, spritePosition, null, Color.White, 0, spriteOrigin, 1f, SpriteEffects.None, 0);
             spriteBatch.End();
 
             base.Draw(gameTime);
