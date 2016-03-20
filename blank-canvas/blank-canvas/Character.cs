@@ -16,40 +16,28 @@ namespace blank_canvas
     public class Character : GameObject
     {
         #region variables
-        Vector2 force;
-
         protected Rectangle[] collisionBoxes;
         protected Vector2 velocity;
         protected Vector2 acceleration;
         protected Vector2 prevPos;
         protected Vector2 prevAcc;
         protected int health;
-        private int paint;
-
-
-        //what are these things for
-        Vector2 spritePosition;
-        Vector2 spriteOrigin;
-        Vector2 spriteVelocity;
-        float tangentialVelocity;
 
         #endregion
 
         #region constructors
         public Character(Rectangle rectangle) : base(rectangle)
         {
+            //NEEDS WORK
             collisionBoxes = new Rectangle[1];
             collisionBoxes[0] = rectangle;
+
             velocity = new Vector2(0, 0);
-
             acceleration = new Vector2(0, 0);
-            force = new Vector2(0, 0);
             health = 10;
 
             acceleration = new Vector2(0, 0);
             health = 10;
-            paint = 0;
-
         }
         #endregion
 
@@ -75,17 +63,6 @@ namespace blank_canvas
         {
             get { return collisionBoxes; }
         }
-        #endregion
-
-        #region methods
-        public virtual void UpdatePos(float deltaTime)
-        {
-            Console.WriteLine("Position: {0}, {1}", position.X, position.Y);
-            Console.WriteLine("Velocity: {0}, {1}", velocity.X, velocity.Y);
-        }
-
-        //accelerating(depending on how long a key ('A' or 'D') is pressed will increase your speed)
-        //protected virtual void Accel(char input)
 
         public int Health
 
@@ -93,13 +70,11 @@ namespace blank_canvas
             get { return health; }
             set { health = value; }
         }
+        #endregion
 
-        public int Paint
-        {
-            set { paint = value; }
-        }
+        #region Methods
 
-        public void UpdatePos(double deltaTime)
+        public virtual void UpdatePos(double deltaTime)
         {
             prevPos = new Vector2(position.X, position.Y);
             position.X += (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
@@ -134,16 +109,13 @@ namespace blank_canvas
 
         }
 
-        //jumping(depending on user input (" "[space bar]), player position goes upwards)
-        //protected virtual void Jump(string input)
-
         public void UpdateVx(double deltaTime)
         {
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
         }
 
-        //shooting(depending on user input ('Space Bar'?), a single projectile is fired from the player)
+        //NEEDS WORK
         public void Shoot()
         {
             //fire right
@@ -151,7 +123,7 @@ namespace blank_canvas
             //fire left
         }
 
-        //take damage(when colliding with an enemy/projectile, health gets lowered
+        //NEEDS WORK
         protected virtual void takeDamage()
         {
             //when hit by projectile

@@ -110,18 +110,54 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// Checks to see if only one key 
+        /// Checks to see if a key is not being held or pressed
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public bool OnlyKeyDown(Keys key)
+        /// <param name="key">The key to test with</param>
+        public bool KeyUp(Keys key)
         {
-            Keys[] keys = kb.GetPressedKeys();
-            if (keys.Length == 1 && keys[0] == key)
+            if (kb.IsKeyUp(key))
                 return true;
             else return false;
         }
 
+        /// <summary>
+        /// Checks to see if a set of keys are not being held or pressed
+        /// </summary>
+        /// <param name="key">The key to test with</param>
+        public bool KeysUp(params Keys[] keys)
+        {
+            foreach(Keys k in keys)
+            {
+                if (!kb.IsKeyUp(k))
+                    return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Checks to see if a key was released
+        /// </summary>
+        /// <param name="key">The key to test with</param>
+        public bool KeyRelease(Keys key)
+        {
+            if (prevKb.IsKeyDown(key) && kb.IsKeyUp(key))
+                return true;
+            else return false;
+        }
+
+        /// <summary>
+        /// Checks to see if a set of keys was released
+        /// </summary>
+        /// <param name="key">The key to test with</param>
+        public bool KeysRelease(params Keys[] keys)
+        {
+            foreach(Keys k in keys)
+            {
+                if (!(prevKb.IsKeyDown(k) && kb.IsKeyUp(k)))
+                    return false;
+            }
+            return true;
+        }
         /// <summary>
         /// Checks to see if the left click is pressed (not held)
         /// </summary>

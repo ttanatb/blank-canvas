@@ -11,7 +11,7 @@ namespace blank_canvas
     class Camera
     {
         //draws camera
-        public Matrix transform;
+        Matrix transform;
         //where we are looking
         Viewport view;
         //center of camera
@@ -20,11 +20,18 @@ namespace blank_canvas
         public Camera(Viewport newView)
         {
             view = newView;
+            transform = new Matrix();
+            centre = Vector2.Zero;
         }
 
-        public void Update(GameTime gameTime, Game1 player)
+        public Matrix Transform
         {
-            centre = new Vector2(player.spritePosition.X + (player.playerRec.Width / 2) - 400, player.spritePosition.Y + (player.playerRec.Height / 2) - 400);
+            get { return transform; }
+        }
+
+        public void Update(Player player)
+        {
+            centre = new Vector2(player.X + (player.Width / 2) - 400, player.Y + (player.Height / 2) - 400);
             transform = Matrix.CreateScale(new Vector3(1, 1, 0)) * Matrix.CreateTranslation(new Vector3(-centre.X, -centre.Y, 0));
 
         }

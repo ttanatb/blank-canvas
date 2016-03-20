@@ -15,6 +15,10 @@ namespace blank_canvas
 
         //attributes
         bool canJump;
+        bool collisionX;
+        bool collisionY;
+        Vector2 spriteOrigin;
+        //NEEDS WORK: paint attribute
 
 
         public bool CanJump
@@ -23,15 +27,61 @@ namespace blank_canvas
             set { canJump = value; }
         }
 
+        public bool CollisionX
+        {
+            get { return collisionX; }
+            set { collisionX = value; }
+        }
+
+        public bool CollisionY
+        {
+            get { return collisionY; }
+            set { collisionY = value; }
+        }
+
+        //NEEDS WORK: Paint properties
+
         //constructor
-        public Player(Rectangle pRec):base(pRec)
+        public Player(Rectangle pRec) : base(pRec)
+        {
+            canJump = false;
+            collisionX = false;
+            collisionY = false;
+            spriteOrigin = new Vector2(pRec.X, prevAcc.Y);
+        }
+
+        //NEEDS WORK:
+        public void colorChange()
         {
         }
 
-        //change colors
-        public void colorChange()
+
+        public override void UpdatePos(double deltaTime)
         {
-            //if player hits enter then 
+            spriteOrigin = new Vector2(Width / 2, Height / 2);
+            collisionX = false;
+            collisionY = false;
+            base.UpdatePos(deltaTime);
+        }
+
+        /// <summary>
+        /// Jump
+        /// </summary>
+        public void Jump()
+        {
+            velocity.Y = -500f;
+            canJump = false;
+        }
+
+        public void ReleaseJump()
+        {
+            if (velocity.Y < -250f)
+                velocity.Y = -250f; 
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, position, null, Color.White, 0, spriteOrigin, 1f, SpriteEffects.None, 0);
         }
     }
 }

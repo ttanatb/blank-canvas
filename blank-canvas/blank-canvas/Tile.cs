@@ -22,57 +22,9 @@ namespace blank_canvas
 
         #region constructors
         /// <param name="position">X and Y coordinates of top-left corner</param>
-        public Tile(Vector2 position)
-        {
-            rectangle = new Rectangle((int)position.X,(int)position.Y, WIDTH, HEIGHT);
-            this.position = position;
-            color = Color.White;
-        }
-
-        /// <param name="position">X and Y coordinates of top-left corner</param>
-        /// <param name="color">Color of the object</param>
-        public Tile(Vector2 position, Color color)
-        {
-            rectangle = new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT);
-            this.position = position;
-            this.color = color;
-        }
-
-        /// <param name="position">X and Y coordinates of top-left corner</param>
-        /// <param name="texture">Texture of the object</param>
-        public Tile(Vector2 position, Texture2D texture)
-        {
-            rectangle = new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT);
-            this.position = position;
-            this.texture = texture;
-            color = Color.White;
-        }
-
-        /// <param name="position">X and Y coordinates of top-left corner</param>
-        /// <param name="texture">Texture of the object</param>
-        /// <param name="color">Color of the object</param>
-        public Tile(Vector2 position, Texture2D texture, Color color)
-        {
-            rectangle = new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT);
-            this.position = position;
-            this.texture = texture;
-            this.color = color;
-        }
-
-        // do we need all of these 
-        public Tile(Rectangle rectangle, Color color) : base (rectangle, color)
+        public Tile(Vector2 position) : base(new Rectangle((int)position.X, (int)position.Y,WIDTH, HEIGHT))
         {
             
-        }
-
-        public Tile(Texture2D texture, Rectangle rectangle) : base (texture, rectangle)
-        {
-
-        }
-
-        public Tile(Texture2D texture, Rectangle rectangle, Color color) : base (texture, rectangle, color)
-        {
-
         }
 
         #endregion
