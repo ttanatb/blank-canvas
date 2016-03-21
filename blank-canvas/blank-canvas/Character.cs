@@ -19,6 +19,7 @@ namespace blank_canvas
         protected Rectangle[] collisionBoxes;
         protected Vector2 velocity;
         protected Vector2 acceleration;
+        protected Vector2 projectedPos;
         protected Vector2 prevPos;
         protected Vector2 prevAcc;
         protected int health;
@@ -32,6 +33,7 @@ namespace blank_canvas
             collisionBoxes = new Rectangle[1];
             collisionBoxes[0] = rectangle;
 
+            projectedPos = new Vector2((float)rectangle.X, (float)rectangle.Y);
             velocity = new Vector2(0, 0);
             acceleration = new Vector2(0, 0);
             health = 10;
@@ -45,6 +47,11 @@ namespace blank_canvas
         public Vector2 PrevPos
         {
             get { return prevPos; }
+        }
+
+        public Vector2 ProjectedPos
+        {
+            get { return projectedPos; }
         }
 
         public Vector2 Velocity
@@ -74,12 +81,24 @@ namespace blank_canvas
 
         #region Methods
 
-        public virtual void UpdatePos(double deltaTime)
+
+        public virtual void ProjectPos(double deltaTime)
         {
-            prevPos = new Vector2(position.X, position.Y);
-            position.X += (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
-            position.Y += (float)(velocity.Y * deltaTime + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
+            projectedPos.X = position.X + (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
+            projectedPos.Y = position.Y + (float)(velocity.Y * deltaTime + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
             prevAcc = acceleration;
+        }
+
+        public void UpdatePosX(double deltaTime)
+        {
+            prevPos.X = position.X;
+            position.X = projectedPos.X;
+        }
+
+        public void UpdatePosY(double deltaTime)
+        {
+            prevPos.Y = position.Y;
+            position.Y = projectedPos.Y;
         }
     
         public void MoveRight()

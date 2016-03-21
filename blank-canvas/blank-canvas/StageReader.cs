@@ -31,14 +31,18 @@ namespace blank_canvas
         // constructor that gets string
         public StageReader()
         {
+            e = new List<Enemy>();
+            t = new List<Tile>();
+
             try
             {
-                sourcePath = Path.GetFullPath(@"stage-builder\bin\Debug");
+                sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug");
                 filename = Directory.GetFiles(sourcePath, "*.txt");
                 //Console.WriteLine(sourcePath + "\n" + filename[0]);
             }
             catch (DirectoryNotFoundException)
             {
+                Console.WriteLine(sourcePath);
                 Console.WriteLine("Error. Press any key.");
             }
 
@@ -51,8 +55,8 @@ namespace blank_canvas
             try
             {
                 reader = new BinaryReader(File.OpenRead(filename[0]));
-                reader.ReadString();
-                reader.ReadInt32();
+                //reader.ReadString();
+                //reader.ReadInt32();
 
                 // counts the position in the binary reader
                 pos = 0;
@@ -64,22 +68,20 @@ namespace blank_canvas
 
                     if (character.Equals('_'))
                     {
-                        int x = 0;
-                        int y = 1;
+                        int y = 8;
                         int prevX = 0;
-                        if (prevX == x)
+                        if (prevX == pos)
                         {
-                            x++;
+
                         }
                         // initializes new ground tile
-                        t[pos] = new Tile(new Vector2(x * 64, y * 64));
-                        prevX = x;
+                        t.Add(new Tile(new Vector2(pos * 64, y * 64)));
                     }
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
                         // this is just a test rectangle
-                        p = new Player(new Rectangle(20, 20, 100, 100));
+                        p = new Player(new Rectangle(20, -200, 100, 100));
                     }
                     else if (character.Equals('E'))
                     {
@@ -110,6 +112,10 @@ namespace blank_canvas
                     //make sure the whole thing doesn't like exist in one line
                     pos++;
                 }
+
+                t.Add(new Tile(new Vector2((pos-3) * 64, 7 * 64)));
+                t.Add(new Tile(new Vector2((pos-7) * 64, 5 *64)));
+
                 reader.Close();
             }
             catch (FileNotFoundException)
@@ -131,8 +137,8 @@ namespace blank_canvas
         {
             get
             {
-                Enemy[] enemy = new Enemy[pos];
-                for (int i = 0; i < pos; i++)
+                Enemy[] enemy = new Enemy[e.Count];
+                for (int i = 0; i < e.Count; i++)
                     enemy[i] = e[i];
                 return enemy;
             }
@@ -142,8 +148,8 @@ namespace blank_canvas
         {
             get
             {
-                Tile[] tile = new Tile[pos];
-                for (int i = 0; i < pos; i++)
+                Tile[] tile = new Tile[t.Count];
+                for (int i = 0; i < t.Count; i++)
                     tile[i] = t[i];
                 return tile;
             }

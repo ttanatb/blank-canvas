@@ -24,7 +24,6 @@ namespace blank_canvas
         /// <param name="position">X and Y coordinates of top-left corner</param>
         public Tile(Vector2 position) : base(new Rectangle((int)position.X, (int)position.Y,WIDTH, HEIGHT))
         {
-            
         }
         
         #endregion
@@ -33,7 +32,7 @@ namespace blank_canvas
         public bool CheckCollision(Player player)
         {
 
-            if ((Max.Y >= player.Min.Y) && (Min.Y <= player.Max.Y) && (Max.X >= player.Min.X) && (Min.X <= player.Max.X))
+            if ((Max.Y >= player.Min.Y) && (Min.Y < player.Max.Y) && (Max.X > player.Min.X) && (Min.X < player.Max.X))
                 return true;
             
             else return false;

@@ -36,21 +36,10 @@ namespace blank_canvas
             this.camera = camera;
             level = 0;
 
-            //SHECKLE
-            //NEEDS WORK: calls construct stage method(?)
-            //NEEDS WORK: instantiate the player based on starting position
-            //NEEDS WORK: instantiate all teh enemies needed   
             stageReader.ReadFile();
             player = stageReader.Player;
             enemies = stageReader.Enemy;
             tiles = stageReader.Tile;
-
-            //this code below is purely for testing
-            //player = new Player(new Rectangle(20, 20, 100, 100));
-            //enemies = new Enemy[0];
-            //tiles = new Tile[1,2];
-            //tiles[0, 0] = new Tile(new Vector2(20, 1000));
-            //tiles[0, 1] = new Tile(new Vector2(84, 1000 - 64));
         }
 
         public Camera Camera
@@ -68,6 +57,7 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load<Texture2D>(tileTexture);
 
+            //for printing out test information
             testFont = content.Load<SpriteFont>("Arial_14");
         }
 
@@ -77,15 +67,13 @@ namespace blank_canvas
         /// </summary>
         /// <param name="deltaTime">The amount of miliseconds passed since previous update</param>
         public void Update(double deltaTime)
-        {            //converts from time to miliseconds
+        {           
+            //converts from time to miliseconds
             deltaTime = deltaTime / 1000.0;
 
-            //updates the position based on velocity on acceleration
-            player.UpdatePos(deltaTime);
-            camera.Update(player);
+            player.ProjectPos(deltaTime);
 
-            foreach (Enemy enemy in enemies)
-                enemy.UpdatePos(deltaTime);
+            //updates the position based on velocity on acceleration
 
             foreach (Tile t in tiles)
             {
@@ -99,12 +87,14 @@ namespace blank_canvas
 
             if (!player.CollisionY)
             {
+                player.UpdatePosY(deltaTime);
                 player.Acceleration += new Vector2(0, GRAVITY);
                 player.UpdateVy(deltaTime);
             }
 
             if (!player.CollisionX)
             {
+                player.UpdatePosX(deltaTime);
                 //checks input to change acceleration/velocity
                 //checks for input towards the left
                 if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
@@ -119,30 +109,19 @@ namespace blank_canvas
                     player.Halt();
 
                 player.UpdateVx(deltaTime);
-
             }
+
+            camera.Update(player);
+
 
 
             //checks for input for jump
-            if (player.CanJump && input.KeyPressed(Keys.Space) && (player.Velocity.Y <= 0))
+            if (player.CanJump && input.KeyPressed(Keys.Space) && (player.Velocity.Y <= 40))
                 player.Jump();
 
             //checks if jump was released early
             if (input.KeyRelease(Keys.Space))
                 player.ReleaseJump();
-            
-            //NEEDS WORK: updates enemy movement
-
-
-            
-
-            
-            //updates velocity for enemies
-            foreach (Enemy enemy in enemies)
-            {
-                enemy.UpdateVx(deltaTime);
-                enemy.UpdateVy(deltaTime);
-            }
             
         }
 
@@ -179,7 +158,7 @@ namespace blank_canvas
                 player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
-            else if (player.PrevPos.Y + player.Height - 1<= tile.Y) //intersects from top
+            else if (player.PrevPos.Y + player.Height - 1 <= tile.Y) //intersects from top
             {
                 player.CollisionY = true;
                 player.Y = tile.Min.Y - player.Height;
@@ -190,7 +169,6 @@ namespace blank_canvas
             }
             else if (player.PrevPos.Y + player.Height + 1 >= tile.Max.Y)
             {
-                player.CollisionY = true;
                 player.Y = tile.Max.Y;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
                 player.Acceleration = new Vector2(player.Velocity.X, 0);

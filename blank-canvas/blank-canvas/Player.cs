@@ -17,7 +17,6 @@ namespace blank_canvas
         bool canJump;
         bool collisionX;
         bool collisionY;
-        Vector2 projectedPos;
         //NEEDS WORK: paint attribute
 
 
@@ -56,12 +55,12 @@ namespace blank_canvas
         }
 
 
-        public override void UpdatePos(double deltaTime)
+        public override void ProjectPos(double deltaTime)
         {
             //spriteOrigin = new Vector2(width / 2, height / 2);
             collisionX = false;
             collisionY = false;
-            base.UpdatePos(deltaTime);
+            base.ProjectPos(deltaTime);
         }
 
         /// <summary>
