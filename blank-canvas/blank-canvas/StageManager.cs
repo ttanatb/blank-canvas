@@ -18,6 +18,7 @@ namespace blank_canvas
         StageReader stageReader;
         InputManager input;
         Camera camera;
+        SpriteFont testFont;
 
         Player player;
         Enemy[] enemies;
@@ -35,15 +36,17 @@ namespace blank_canvas
             this.camera = camera;
             level = 0;
 
+            //SHECKLE
             //NEEDS WORK: calls construct stage method(?)
             //NEEDS WORK: instantiate the player based on starting position
             //NEEDS WORK: instantiate all teh enemies needed    
 
-            player = new Player(new Rectangle(20, 20, 113, 160));
+            //this code below is purely for testing
+            player = new Player(new Rectangle(20, 20, 100, 100));
             enemies = new Enemy[0];
-            tiles = new Tile[0,0];
-
-
+            tiles = new Tile[1,2];
+            tiles[0, 0] = new Tile(new Vector2(20, 1000));
+            tiles[0, 1] = new Tile(new Vector2(84, 1000 - 64));
         }
 
         public Camera Camera
@@ -60,6 +63,8 @@ namespace blank_canvas
 
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load<Texture2D>(tileTexture);
+
+            testFont = content.Load<SpriteFont>("Arial_14");
         }
 
         /// <summary>
@@ -78,22 +83,41 @@ namespace blank_canvas
             foreach (Enemy enemy in enemies)
                 enemy.UpdatePos(deltaTime);
 
+            foreach (Tile t in tiles)
+            {
+                if (t.CheckCollision(player))
+                    FixPos(player, t);
+            }
+
             //updates acceleartion for players
             player.Acceleration = Vector2.Zero;
-            player.Acceleration += new Vector2(0, GRAVITY);
+            input.Update();
 
-            //checks input to change acceleration/velocity
-            //checks for input towards the left
-            if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
-                player.MoveLeft();
+            if (!player.CollisionY)
+            {
+                player.Acceleration += new Vector2(0, GRAVITY);
+                player.UpdateVy(deltaTime);
+            }
 
-            //checks for input towards the right
-            else if (input.KeyDown(Keys.Right) && input.KeyUp(Keys.Left))
-                player.MoveRight();
+            if (!player.CollisionX)
+            {
+                //checks input to change acceleration/velocity
+                //checks for input towards the left
+                if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
+                    player.MoveLeft();
 
-            //checks for no input
-            else if (input.KeysUp(Keys.Left, Keys.Right))
-                player.Halt();
+                //checks for input towards the right
+                else if (input.KeyDown(Keys.Right) && input.KeyUp(Keys.Left))
+                    player.MoveRight();
+
+                //checks for no input
+                else if (input.KeysUp(Keys.Left, Keys.Right))
+                    player.Halt();
+
+                player.UpdateVx(deltaTime);
+
+            }
+
 
             //checks for input for jump
             if (player.CanJump && input.KeyPressed(Keys.Space) && (player.Velocity.Y <= 0))
@@ -105,21 +129,9 @@ namespace blank_canvas
             
             //NEEDS WORK: updates enemy movement
 
-            //search for nearest tile of each character (left,right,top,bottom)
-            /*
-            foreach (Tile t in SearchClosestTiles(player))
-            {
-                if (CheckCollision(player, t))
-                    FixPos(player, t);
-            }
-            */
 
-            //updates velocity if collision didn't occur
-            if (!player.CollisionX)
-                player.UpdateVx(deltaTime);
+            
 
-            if (!player.CollisionY)
-                player.UpdateVy(deltaTime);
             
             //updates velocity for enemies
             foreach (Enemy enemy in enemies)
@@ -137,21 +149,7 @@ namespace blank_canvas
             //NEEDS WORK: load the new variables
         }
 
-        /// <summary>
-        /// Checks collision with each of the character's collision boxes
-        /// </summary>
-        /// <param name="character">Character to check collision with</param>
-        /// <returns>Returns true if there is collision</returns>
-        public bool CheckCollision(Character character, Tile tile)
-        {
-            foreach (Rectangle r in character.CollisionBoxes)
-            {
-                if (r.Intersects(tile.Rectangle))
-                    return true;
-            }
-            return false;
-        }
-
+        //NEEDS WORK
         private Tile[] SearchClosestTiles(Character character)
         {
             Tile[] tiles = new Tile[4];
@@ -177,7 +175,7 @@ namespace blank_canvas
                 player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
-            else if (player.PrevPos.Y + player.Height - 1 <= tile.Y) //intersects from top
+            else if (player.PrevPos.Y + player.Height - 1<= tile.Y) //intersects from top
             {
                 player.CollisionY = true;
                 player.Y = tile.Min.Y - player.Height;
@@ -202,6 +200,7 @@ namespace blank_canvas
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y ), Color.Black);
         }
     }
 }

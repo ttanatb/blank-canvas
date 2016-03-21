@@ -17,7 +17,7 @@ namespace blank_canvas
         bool canJump;
         bool collisionX;
         bool collisionY;
-        Vector2 spriteOrigin;
+        Vector2 projectedPos;
         //NEEDS WORK: paint attribute
 
 
@@ -47,7 +47,7 @@ namespace blank_canvas
             canJump = false;
             collisionX = false;
             collisionY = false;
-            spriteOrigin = new Vector2(pRec.X, prevAcc.Y);
+            //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
 
         //NEEDS WORK:
@@ -58,7 +58,7 @@ namespace blank_canvas
 
         public override void UpdatePos(double deltaTime)
         {
-            spriteOrigin = new Vector2(Width / 2, Height / 2);
+            //spriteOrigin = new Vector2(width / 2, height / 2);
             collisionX = false;
             collisionY = false;
             base.UpdatePos(deltaTime);
@@ -81,7 +81,12 @@ namespace blank_canvas
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, null, Color.White, 0, spriteOrigin, 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(texture, position, Color.White);
+        }
+
+        public override string ToString()
+        {
+            return collisionY +  base.ToString();
         }
     }
 }

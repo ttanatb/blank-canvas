@@ -26,11 +26,18 @@ namespace blank_canvas
         {
             
         }
-
+        
         #endregion
 
         #region methods
+        public bool CheckCollision(Player player)
+        {
 
+            if ((Max.Y >= player.Min.Y) && (Min.Y <= player.Max.Y) && (Max.X >= player.Min.X) && (Min.X <= player.Max.X))
+                return true;
+            
+            else return false;
+        }
 
 
         #endregion

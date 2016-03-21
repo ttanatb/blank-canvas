@@ -34,28 +34,6 @@ namespace blank_canvas
             color = Color.White;
         }
 
-        /// <param name="texture">Texture of the object</param>
-        /// <param name="position">Position of the object</param>
-        public GameObject(Texture2D texture, Vector2 position)
-        {
-            this.texture = texture;
-            this.position = position;
-            width = texture.Width;
-            height = texture.Height;
-            color = Color.White;
-        }
-
-        /// <param name="texture">Texture of the object</param>
-        /// <param name="rectangle">Target rectangle</param>
-        public GameObject(Texture2D texture, Rectangle rectangle)
-        {
-            this.texture = texture;
-            width = rectangle.Width;
-            height = rectangle.Height;
-            position = new Vector2(rectangle.X, rectangle.Y);
-            color = Color.White;
-        }
-
         public GameObject()
         {
 
