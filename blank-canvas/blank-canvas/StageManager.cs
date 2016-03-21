@@ -22,7 +22,7 @@ namespace blank_canvas
 
         Player player;
         Enemy[] enemies;
-        Tile[,] tiles;
+        Tile[] tiles;
 
         int level;
 
@@ -39,14 +39,18 @@ namespace blank_canvas
             //SHECKLE
             //NEEDS WORK: calls construct stage method(?)
             //NEEDS WORK: instantiate the player based on starting position
-            //NEEDS WORK: instantiate all teh enemies needed    
+            //NEEDS WORK: instantiate all teh enemies needed   
+            stageReader.ReadFile();
+            player = stageReader.Player;
+            enemies = stageReader.Enemy;
+            tiles = stageReader.Tile;
 
             //this code below is purely for testing
-            player = new Player(new Rectangle(20, 20, 100, 100));
-            enemies = new Enemy[0];
-            tiles = new Tile[1,2];
-            tiles[0, 0] = new Tile(new Vector2(20, 1000));
-            tiles[0, 1] = new Tile(new Vector2(84, 1000 - 64));
+            //player = new Player(new Rectangle(20, 20, 100, 100));
+            //enemies = new Enemy[0];
+            //tiles = new Tile[1,2];
+            //tiles[0, 0] = new Tile(new Vector2(20, 1000));
+            //tiles[0, 1] = new Tile(new Vector2(84, 1000 - 64));
         }
 
         public Camera Camera
