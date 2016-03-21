@@ -13,23 +13,29 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
+    /// <summary>
+    /// A child of the gameObject class that can move around 
+    /// </summary>
     public class Character : GameObject
     {
         #region variables
+        //variables
         protected Rectangle[] collisionBoxes;
+
         protected Vector2 velocity;
         protected Vector2 acceleration;
         protected Vector2 projectedPos;
         protected Vector2 prevPos;
         protected Vector2 prevAcc;
-        protected int health;
 
+        protected int health;
         #endregion
 
         #region constructors
+        //constructor
         public Character(Rectangle rectangle) : base(rectangle)
         {
-            //NEEDS WORK
+            //NEEDS WORK (Collision box still only has one box)
             collisionBoxes = new Rectangle[1];
             collisionBoxes[0] = rectangle;
 
@@ -44,6 +50,7 @@ namespace blank_canvas
         #endregion
 
         #region properties
+        //properties
         public Vector2 PrevPos
         {
             get { return prevPos; }
@@ -81,7 +88,10 @@ namespace blank_canvas
 
         #region Methods
 
-
+        /// <summary>
+        /// Projects out the position of the character based on the previous position, velocity, time step, and acceleration
+        /// </summary>
+        /// <param name="deltaTime">The time step from the previous update call</param>
         public virtual void ProjectPos(double deltaTime)
         {
             projectedPos.X = position.X + (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
@@ -89,18 +99,27 @@ namespace blank_canvas
             prevAcc = acceleration;
         }
 
-        public void UpdatePosX(double deltaTime)
+        /// <summary>
+        /// Updates the actual position of the character
+        /// </summary>
+        public void UpdatePosX()
         {
             prevPos.X = position.X;
             position.X = projectedPos.X;
         }
 
-        public void UpdatePosY(double deltaTime)
+        /// <summary>
+        /// Updates the actual position of the character
+        /// </summary>
+        public void UpdatePosY()
         {
             prevPos.Y = position.Y;
             position.Y = projectedPos.Y;
         }
     
+        /// <summary>
+        /// Accelerates the character to the right, then caps it
+        /// </summary>
         public void MoveRight()
         {
             if (velocity.X < 200)
@@ -108,6 +127,9 @@ namespace blank_canvas
             else velocity.X = 200;
         }
 
+        /// <summary>
+        /// Accelerates the character to the left, then caps it
+        /// </summary>
         public void MoveLeft()
         {
             if (velocity.X > -200)
@@ -115,6 +137,9 @@ namespace blank_canvas
             else velocity.X = -200;
         }
 
+        /// <summary>
+        /// Halts the character to a stop
+        /// </summary>
         public void Halt()
         {
             if (velocity.X > 0)
@@ -122,12 +147,19 @@ namespace blank_canvas
             else velocity.X = (float)Math.Ceiling((velocity.X / 1.2));
         }
 
+        /// <summary>
+        /// Updates the y factor of the velocity of a character based on the average acceleration and time step
+        /// </summary>
+        /// <param name="deltaTime">Time step in miliseconds</param>
         public void UpdateVy(double deltaTime)
         {
             velocity.Y += (float)(((prevAcc.Y + acceleration.Y) * deltaTime) / 2);
-
         }
 
+        /// <summary>
+        /// Updates the x factor of the velocity of a character based on the average accelearation and time step
+        /// </summary>
+        /// <param name="deltaTime">Time step in miliseconds</param>
         public void UpdateVx(double deltaTime)
         {
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
@@ -150,6 +182,7 @@ namespace blank_canvas
             //when hit by an enemy
         }
 
+        //used for testing
         public override string ToString()
         {
             string msg = "Position: " + position.X + ", " + position.Y + "\nVelocity: " + velocity.X + ", " + velocity.Y + "\nAcceleration: " + acceleration.X + ", " + acceleration.Y;

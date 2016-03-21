@@ -28,6 +28,7 @@ namespace blank_canvas
 
         // position counter
         int pos;
+
         // constructor that gets string
         public StageReader()
         {
@@ -48,7 +49,7 @@ namespace blank_canvas
 
         }
 
-        // moves and reads in file
+        // reads in file
         public void ReadFile()
         {
             BinaryReader reader = null;
@@ -80,8 +81,7 @@ namespace blank_canvas
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
-                        // this is just a test rectangle
-                        p = new Player(new Rectangle(20, -200, 100, 100));
+                        p = new Player(new Rectangle(20, -200, 100, 100)); //
                     }
                     else if (character.Equals('E'))
                     {

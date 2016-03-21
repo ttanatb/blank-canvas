@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
+    /// <summary>
+    /// The projectile that is used by the player (yet to be utilized)
+    /// </summary>
     class Projectile
     {
     }

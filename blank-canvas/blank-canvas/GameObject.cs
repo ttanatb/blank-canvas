@@ -13,11 +13,8 @@ namespace blank_canvas
     /// </summary>
     public class GameObject
     {
-
-        //doesn't yet handle multiple textures
-
         #region variables
-        protected Texture2D texture;
+        protected Texture2D texture; //may need an array instead (doesn't handle sprite sheets either)
         protected Vector2 position;
         protected Color color;
         protected int width;
@@ -32,11 +29,6 @@ namespace blank_canvas
             height = rectangle.Height;
             position = new Vector2(rectangle.X, rectangle.Y);
             color = Color.White;
-        }
-
-        public GameObject()
-        {
-
         }
 
         #endregion
@@ -77,21 +69,33 @@ namespace blank_canvas
             set { texture = value; }
         }
 
+        /// <summary>
+        /// The point that represents the top-left corner of the object's AABB
+        /// </summary>
         public Point Min
         {
             get { return position.ToPoint(); }
         }
 
+        /// <summary>
+        /// The point that represents the bottom-right corner of the object's AABB
+        /// </summary>
         public Point Max
         {
             get { return new Point((int)position.X + width, (int)position.Y + height); }
         }
 
+        /// <summary>
+        /// The width of the object
+        /// </summary>
         public int Width
         {
             get { return width; }
         }
 
+        /// <summary>
+        /// The height of the object
+        /// </summary>
         public int Height
         {
             get { return height; }

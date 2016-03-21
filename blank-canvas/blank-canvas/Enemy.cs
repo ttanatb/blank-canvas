@@ -13,17 +13,16 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
+
     public class Enemy : Character
     {
         //a child of the character class
 
-        //attributes
-        Rectangle enemyRec;
 
         //constructor
         public Enemy(Rectangle eRec):base(eRec)
         {
-            enemyRec = eRec;
+
         }
 
         //methods

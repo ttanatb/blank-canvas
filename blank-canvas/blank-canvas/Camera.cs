@@ -6,8 +6,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+/*
+    Class: Camera  
+    Purpose: controls the viewport of the game
+*/
+
+
 namespace blank_canvas
 {
+    /// <summary>
+    /// The class that controls the camera movement based on the position of the player
+    /// </summary>
     class Camera
     {
         //draws camera
@@ -17,6 +26,7 @@ namespace blank_canvas
         //center of camera
         Vector2 centre;
 
+        //constructor
         public Camera(Viewport newView)
         {
             view = newView;
@@ -24,11 +34,16 @@ namespace blank_canvas
             centre = Vector2.Zero;
         }
 
+        //properties
         public Matrix Transform
         {
             get { return transform; }
         }
 
+        /// <summary>
+        /// Updates the view of the camera
+        /// </summary>
+        /// <param name="player">The player to center the camera at</param>
         public void Update(Player player)
         {
             centre = new Vector2(player.X + (player.Width / 2) - 400, player.Y + (player.Height / 2) - 400);

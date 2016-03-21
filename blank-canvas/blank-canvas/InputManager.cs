@@ -7,6 +7,7 @@ namespace blank_canvas
     /// </summary>
     class InputManager
     {
+        //variables
         KeyboardState kb;
         KeyboardState prevKb;
         MouseState prevMouse;

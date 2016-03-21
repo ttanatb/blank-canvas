@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 /*
     Class: Buttons
-    Purpose: Creates Buttons for the game
+    Purpose: Creates Buttons for the game to be used in the GUI
 */
 
 namespace blank_canvas

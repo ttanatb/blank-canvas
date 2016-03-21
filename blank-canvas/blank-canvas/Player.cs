@@ -9,16 +9,19 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
+    /// <summary>
+    /// The child of the character class that the player controls
+    /// </summary>
     public class Player : Character
     {
-        //a child of the character class
 
         //attributes
         bool canJump;
-        bool collisionX;
-        bool collisionY;
+        bool collisionX;    //checks if there was collision in the X-coordinate
+        bool collisionY;    //checks if there was collision in the y-coordinate
         //NEEDS WORK: paint attribute
 
+        //properties
 
         public bool CanJump
         {
@@ -55,16 +58,19 @@ namespace blank_canvas
         }
 
 
+        /// <summary>
+        /// Sets up the collision variables in addition to projecting the position
+        /// </summary>
+        /// <param name="deltaTime">The timestep in miliseconds</param>
         public override void ProjectPos(double deltaTime)
         {
-            //spriteOrigin = new Vector2(width / 2, height / 2);
             collisionX = false;
             collisionY = false;
             base.ProjectPos(deltaTime);
         }
 
         /// <summary>
-        /// Jump
+        /// Jumps
         /// </summary>
         public void Jump()
         {
@@ -72,17 +78,16 @@ namespace blank_canvas
             canJump = false;
         }
 
+        /// <summary>
+        /// Cuts vertical velocity during jump
+        /// </summary>
         public void ReleaseJump()
         {
             if (velocity.Y < -250f)
                 velocity.Y = -250f; 
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, position, Color.White);
-        }
-
+        //used for testing
         public override string ToString()
         {
             return collisionY +  base.ToString();

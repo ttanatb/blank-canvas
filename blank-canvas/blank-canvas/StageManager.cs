@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 namespace blank_canvas
 {
     /// <summary>
-    /// The StageManager starts with the stageReader. The stageReader will determine the tiles needed and the enemies to instantiate
+    /// The StageManager manages the gameplay loop
     /// </summary>
     class StageManager
     {
@@ -29,6 +29,7 @@ namespace blank_canvas
         const float GRAVITY = 1200f;
         #endregion
 
+        //constructor
         public StageManager(Camera camera, InputManager inputManager)
         {
             input = new InputManager();
@@ -42,11 +43,19 @@ namespace blank_canvas
             tiles = stageReader.Tile;
         }
 
+        //property
         public Camera Camera
         {
             get { return camera;  }
         }
 
+        /// <summary>
+        /// Loads in the textures
+        /// </summary>
+        /// <param name="content">The ContentManager</param>
+        /// <param name="playerTexture">The texture for the player</param>
+        /// <param name="enemyTexture">The texture for the enemy</param>
+        /// <param name="tileTexture">The texture for the tiles</param>
         public void LoadContent(ContentManager content, string playerTexture,
             string enemyTexture, string tileTexture)
         {
@@ -87,14 +96,14 @@ namespace blank_canvas
 
             if (!player.CollisionY)
             {
-                player.UpdatePosY(deltaTime);
+                player.UpdatePosY();
                 player.Acceleration += new Vector2(0, GRAVITY);
                 player.UpdateVy(deltaTime);
             }
 
             if (!player.CollisionX)
             {
-                player.UpdatePosX(deltaTime);
+                player.UpdatePosX();
                 //checks input to change acceleration/velocity
                 //checks for input towards the left
                 if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
