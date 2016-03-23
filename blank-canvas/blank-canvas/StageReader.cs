@@ -27,7 +27,8 @@ namespace blank_canvas
         List<Enemy> e;
 
         // position counter
-        int pos;
+        int xpos;
+        int ypos;
 
         // constructor that gets string
         public StageReader()
@@ -60,7 +61,9 @@ namespace blank_canvas
                 //reader.ReadInt32();
 
                 // counts the position in the binary reader
-                pos = 0;
+                xpos = 0;
+                ypos = 0;
+
 
                 // checks to see if the current position is equal to the length of the text file
                 while (reader.BaseStream.Position != reader.BaseStream.Length)
@@ -69,24 +72,29 @@ namespace blank_canvas
 
                     if (character.Equals('_'))
                     {
-                        int y = 8;
+                        /*
+                        int y = 0;
                         int prevX = 0;
-                        if (prevX == pos)
+                        if (prevX == xpos)
                         {
 
                         }
+                        */
+
                         // initializes new ground tile
-                        t.Add(new Tile(new Vector2(pos * 64, y * 64)));
+                        t.Add(new Tile(new Vector2(xpos, ypos)));
+                        Console.WriteLine("Tile created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
-                        p = new Player(new Rectangle(20, -200, 100, 100)); //
+                        p = new Player(new Rectangle(xpos, ypos, 64, 128)); //
+                        Console.WriteLine("Player created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('E'))
                     {
                         // initializes enemy
-                        // e[pos] = new Enemy(new Rectangle(20, 40, 100, 100));
+                        // e[xpos] = new Enemy(new Rectangle(20, 40, 100, 100));
 
                     }
                     else if (character.Equals('o'))
@@ -104,19 +112,26 @@ namespace blank_canvas
                         // initializes door
                         // class not created yet
                     }
-                    else
+                    else if (character.Equals(' '))
                     {
                         // do nothing
+                        Console.WriteLine("Nothing Created: " + xpos + ", " + ypos);
                     }
+
+                    xpos = xpos+64;
+
+                    if (character.Equals('/'))
+                    {
+                        ypos=ypos+64;
+                        xpos = 0;
+                    }
+                    
                     //this should be where the world is generated?
                     //make sure the whole thing doesn't like exist in one line
-                    pos++;
                 }
 
-                t.Add(new Tile(new Vector2((pos-3) * 64, 7 * 64)));
-                t.Add(new Tile(new Vector2((pos-7) * 64, 5 *64)));
-
-                reader.Close();
+                //t.Add(new Tile(new Vector2((xpos-3) * 64, 7 * 64)));
+                //t.Add(new Tile(new Vector2((xpos-7) * 64, 5 *64)));
             }
             catch (FileNotFoundException)
             {
@@ -125,6 +140,10 @@ namespace blank_canvas
             catch (NullReferenceException)
             {
                 Console.WriteLine("Error. Null Reference. Press any key.");
+            }
+            finally
+            {
+                reader.Close();
             }
         }
 

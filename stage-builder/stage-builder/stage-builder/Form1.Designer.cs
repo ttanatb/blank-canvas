@@ -138,7 +138,7 @@
             this.keyBox.Size = new System.Drawing.Size(209, 328);
             this.keyBox.TabIndex = 8;
             this.keyBox.Text = "Tiles:\r\n     Blank Tile\r\n_    Ground Tile\r\nP    Player\r\nE    Enemy\r\no    Puzzle O" +
-    "rb\r\n0    End Orb\r\n|    Door";
+    "rb\r\n0    End Orb\r\n|    Door\r\n\r\nFormat:\r\n/    Y-axis advance\r\n\r\n";
             // 
             // compilebutton
             // 
