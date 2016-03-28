@@ -115,7 +115,7 @@ namespace blank_canvas
                     else if (character.Equals(' '))
                     {
                         // do nothing
-                        Console.WriteLine("Nothing Created: " + xpos + ", " + ypos);
+                        //Console.WriteLine("Nothing Created: " + xpos + ", " + ypos);
                     }
 
                     xpos = xpos+64;
