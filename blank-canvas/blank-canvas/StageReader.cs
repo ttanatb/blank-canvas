@@ -30,6 +30,9 @@ namespace blank_canvas
         int xpos;
         int ypos;
 
+        string title;
+        int level;
+
         // constructor that gets string
         public StageReader()
         {
@@ -38,9 +41,9 @@ namespace blank_canvas
 
             try
             {
-                sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug");
+                sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug"); //doesn't handle multiple text files
                 filename = Directory.GetFiles(sourcePath, "*.txt");
-                //Console.WriteLine(sourcePath + "\n" + filename[0]);
+                Console.WriteLine(sourcePath + "\n" + filename[0]);
             }
             catch (DirectoryNotFoundException)
             {
@@ -50,102 +53,7 @@ namespace blank_canvas
 
         }
 
-        // reads in file
-        public void ReadFile()
-        {
-            BinaryReader reader = null;
-            try
-            {
-                reader = new BinaryReader(File.OpenRead(filename[0]));
-                //reader.ReadString();
-                //reader.ReadInt32();
-
-                // counts the position in the binary reader
-                xpos = 0;
-                ypos = 0;
-
-
-                // checks to see if the current position is equal to the length of the text file
-                while (reader.BaseStream.Position != reader.BaseStream.Length)
-                {
-                    char character = reader.ReadChar();
-
-                    if (character.Equals('_'))
-                    {
-                        /*
-                        int y = 0;
-                        int prevX = 0;
-                        if (prevX == xpos)
-                        {
-
-                        }
-                        */
-
-                        // initializes new ground tile
-                        t.Add(new Tile(new Vector2(xpos, ypos)));
-                        Console.WriteLine("Tile created: " + xpos + ", " + ypos);
-                    }
-                    else if (character.Equals('P'))
-                    {
-                        // initializes player in the world
-                        p = new Player(new Rectangle(xpos, ypos, 64, 128)); //
-                        Console.WriteLine("Player created: " + xpos + ", " + ypos);
-                    }
-                    else if (character.Equals('E'))
-                    {
-                        // initializes enemy
-                        // e[xpos] = new Enemy(new Rectangle(20, 40, 100, 100));
-
-                    }
-                    else if (character.Equals('o'))
-                    {
-                        // initializes puzzle orb
-                        // class not created yet
-                    }
-                    else if (character.Equals('0'))
-                    {
-                        // initializes end orb
-                        // class not created yet
-                    }
-                    else if (character.Equals('|'))
-                    {
-                        // initializes door
-                        // class not created yet
-                    }
-                    else if (character.Equals(' '))
-                    {
-                        // do nothing
-                        //Console.WriteLine("Nothing Created: " + xpos + ", " + ypos);
-                    }
-
-                    xpos = xpos+64;
-
-                    if (character.Equals('/'))
-                    {
-                        ypos=ypos+64;
-                        xpos = 0;
-                    }
-                    
-                    //this should be where the world is generated?
-                    //make sure the whole thing doesn't like exist in one line
-                }
-
-                //t.Add(new Tile(new Vector2((xpos-3) * 64, 7 * 64)));
-                //t.Add(new Tile(new Vector2((xpos-7) * 64, 5 *64)));
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("Error. Press any key.");
-            }
-            catch (NullReferenceException)
-            {
-                Console.WriteLine("Error. Null Reference. Press any key.");
-            }
-            finally
-            {
-                reader.Close();
-            }
-        }
+        #region Properties
 
         public Player Player
         {
@@ -171,6 +79,127 @@ namespace blank_canvas
                 for (int i = 0; i < t.Count; i++)
                     tile[i] = t[i];
                 return tile;
+            }
+        }
+
+        public int Level
+        {
+            get { return level; }
+        }
+
+        public string Title
+        {
+            get { return title; }
+        }
+
+        #endregion
+
+        // reads in file
+        public void ReadFile()
+        {
+            BinaryReader reader = null;
+
+            try
+            {
+                //does reader thing
+                reader = new BinaryReader(File.OpenRead(filename[0]));
+                char character;
+
+                //a bit of info: every line ends with a '\r\n'
+
+
+                //reads the title
+                title = "";
+
+                while ((character = reader.ReadChar()) != '\r') //reads until line break
+                {
+                    title += character;
+                }
+                Console.WriteLine(title);
+
+                reader.ReadChar(); //reads away the '\n'
+
+
+                string lvlString = ""; //string to Parse
+                while ((character = reader.ReadChar()) != '\r') //reads until line break
+                {
+                    lvlString += character; //concatnates an int of level
+                }
+
+                int.TryParse(lvlString, out level); //parses it back to int
+                Console.WriteLine(level);
+
+                reader.ReadChar(); //reads away the '\n'
+
+                // counts the position in the binary reader
+                xpos = 0;
+                ypos = 0;
+
+                // checks to see if the current position is equal to the length of the text file
+                while (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    character = reader.ReadChar();
+
+                    if (character.Equals('_'))
+                    {
+                        // initializes new ground tile
+                        Tile tile = new Tile(new Vector2(xpos , ypos));
+                        t.Add(tile);
+                        Console.WriteLine("Tile created: " + xpos + ", " + ypos + " (Grid Positions: {0}, {1})", tile.GridPosition.X, tile.GridPosition.Y);
+                    }
+
+                    else if (character.Equals('P'))
+                    {
+                        // initializes player in the world
+                        p = new Player(new Rectangle(xpos, ypos, 64, 128)); //
+                        Console.WriteLine("Player created: " + xpos + ", " + ypos);
+                    }
+
+                    else if (character.Equals('E'))
+                    {
+                        // initializes enemy
+                        // e[xpos] = new Enemy(new Rectangle(20, 40, 100, 100));
+                    }
+
+                    else if (character.Equals('o'))
+                    {
+                        // initializes puzzle orb
+                        // class not created yet
+                    }
+
+                    else if (character.Equals('0'))
+                    {
+                        // initializes end orb
+                        // class not created yet
+                    }
+
+                    else if (character.Equals('|'))
+                    {
+                        // initializes door
+                        // class not created yet
+                    }
+
+                    xpos += 64;
+
+                    if (character.Equals('\r'))
+                    {
+                        reader.ReadChar(); //reads away the '\n'
+                        ypos += 64;
+                        xpos = 0;
+                    }
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("Error. File not found.");
+            }
+            catch (NullReferenceException)
+            {
+                Console.WriteLine("Error. Null Reference. Press any key.");
+            }
+            finally
+            {
+                reader.Close();
             }
         }
     }

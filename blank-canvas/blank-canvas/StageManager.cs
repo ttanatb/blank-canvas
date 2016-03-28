@@ -122,8 +122,6 @@ namespace blank_canvas
 
             camera.Update(player);
 
-
-
             //checks for input for jump
             if (player.CanJump && input.KeyPressed(Keys.Space) && (player.Velocity.Y <= 40))
                 player.Jump();
