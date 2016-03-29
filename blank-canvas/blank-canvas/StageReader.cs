@@ -20,7 +20,7 @@ namespace blank_canvas
         // the path for the original file
         private string sourcePath;
         // creates tile
-        List<Tile> t;
+        Grid grid;
         // creates player
         Player p;
         // creates enemy
@@ -37,7 +37,7 @@ namespace blank_canvas
         public StageReader()
         {
             e = new List<Enemy>();
-            t = new List<Tile>();
+            grid = new Grid();
 
             try
             {
@@ -71,15 +71,9 @@ namespace blank_canvas
             }
         }
 
-        public Tile[] Tile
+        public Grid Grid
         {
-            get
-            {
-                Tile[] tile = new Tile[t.Count];
-                for (int i = 0; i < t.Count; i++)
-                    tile[i] = t[i];
-                return tile;
-            }
+            get { return grid; }
         }
 
         public int Level
@@ -143,9 +137,8 @@ namespace blank_canvas
                     if (character.Equals('_'))
                     {
                         // initializes new ground tile
-                        Tile tile = new Tile(new Vector2(xpos , ypos));
-                        t.Add(tile);
-                        Console.WriteLine("Tile created: " + xpos + ", " + ypos + " (Grid Positions: {0}, {1})", tile.GridPosition.X, tile.GridPosition.Y);
+                        grid.AddTile(xpos / 64, ypos / 64);
+                        Console.WriteLine("Tile created: " + xpos + ", " + ypos);
                     }
 
                     else if (character.Equals('P'))

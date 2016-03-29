@@ -48,6 +48,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Gates.cs" />
+    <Compile Include="Grid.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="PaletteTable.cs" />
     <Compile Include="StageManager.cs" />

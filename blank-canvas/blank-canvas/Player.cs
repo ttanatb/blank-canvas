@@ -17,8 +17,7 @@ namespace blank_canvas
 
         //attributes
         bool canJump;
-        bool collisionX;    //checks if there was collision in the X-coordinate
-        bool collisionY;    //checks if there was collision in the y-coordinate
+        const float JUMP_VELOCITY = -600f;
         //NEEDS WORK: paint attribute
 
         //properties
@@ -29,27 +28,12 @@ namespace blank_canvas
             set { canJump = value; }
         }
 
-        public bool CollisionX
-        {
-            get { return collisionX; }
-            set { collisionX = value; }
-        }
-
-        public bool CollisionY
-        {
-            get { return collisionY; }
-            set { collisionY = value; }
-        }
-
         //NEEDS WORK: Paint properties
 
         //constructor
         public Player(Rectangle pRec) : base(pRec)
         {
             canJump = false;
-            collisionX = false;
-            collisionY = false;
-            //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
 
         //NEEDS WORK:
@@ -64,8 +48,6 @@ namespace blank_canvas
         /// <param name="deltaTime">The timestep in miliseconds</param>
         public override void ProjectPos(double deltaTime)
         {
-            collisionX = false;
-            collisionY = false;
             base.ProjectPos(deltaTime);
         }
 
@@ -74,7 +56,7 @@ namespace blank_canvas
         /// </summary>
         public void Jump()
         {
-            velocity.Y = -500f;
+            velocity.Y = JUMP_VELOCITY;
             canJump = false;
         }
 
@@ -83,14 +65,14 @@ namespace blank_canvas
         /// </summary>
         public void ReleaseJump()
         {
-            if (velocity.Y < -250f)
-                velocity.Y = -250f; 
+            if (velocity.Y < JUMP_VELOCITY/2)
+                velocity.Y = JUMP_VELOCITY/2; 
         }
 
         //used for testing
         public override string ToString()
         {
-            return collisionY +  base.ToString();
+            return base.ToString();
         }
     }
 }

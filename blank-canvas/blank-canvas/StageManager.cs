@@ -22,7 +22,7 @@ namespace blank_canvas
 
         Player player;
         Enemy[] enemies;
-        Tile[] tiles;
+        Grid grid;
 
         int level;
 
@@ -40,7 +40,7 @@ namespace blank_canvas
             stageReader.ReadFile();
             player = stageReader.Player;
             enemies = stageReader.Enemy;
-            tiles = stageReader.Tile;
+            grid = stageReader.Grid;
         }
 
         //property
@@ -63,8 +63,7 @@ namespace blank_canvas
             foreach (Enemy enemy in enemies)
                 enemy.Texture = content.Load<Texture2D>(enemyTexture);
 
-            foreach (Tile tile in tiles)
-                tile.Texture = content.Load<Texture2D>(tileTexture);
+            grid.LoadContent(content, tileTexture);
 
             //for printing out test information
             testFont = content.Load<SpriteFont>("Arial_14");
@@ -83,17 +82,28 @@ namespace blank_canvas
             player.ProjectPos(deltaTime);
 
             //updates the position based on velocity on acceleration
+            int xDistanceToTile = Math.Abs(SearchLowestDistanceToTilesX(player));
+            Console.WriteLine("Distance to travel: " + player.DistanceToTravel.X + " Distance to tile: " + xDistanceToTile);
 
-            foreach (Tile t in tiles)
-            {
-                if (t.CheckCollision(player))
-                    FixPos(player, t);
-            }
+            bool canMove = CheckIfCanMoveX(player, xDistanceToTile);
 
-            //updates acceleartion for players
-            player.Acceleration = Vector2.Zero;
+            //player.Acceleration = Vector2.Zero;
             input.Update();
+            player.UpdatePosX();
 
+            if (!(player.FacingDirection == Direction.Left && !canMove) && input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
+                player.MoveLeft();
+
+            else if (!(player.FacingDirection == Direction.Right && !canMove) && input.KeyDown(Keys.Right) && input.KeyUp(Keys.Left))
+                player.MoveRight();
+
+            if (input.KeysUp(Keys.Left, Keys.Right))
+                player.Halt();
+
+            //player.UpdateVx(deltaTime);
+            
+
+            /*
             if (!player.CollisionY)
             {
                 player.UpdatePosY();
@@ -119,6 +129,7 @@ namespace blank_canvas
 
                 player.UpdateVx(deltaTime);
             }
+            */
 
             camera.Update(player);
 
@@ -140,37 +151,68 @@ namespace blank_canvas
         }
 
         //NEEDS WORK
-        private Tile[] SearchClosestTiles(Character character)
+        private int SearchLowestDistanceToTilesX(Character character)
         {
-            Tile[] tiles = new Tile[4];
-            //NEEDS WORK: search the tiles in the 4 directions
+            int lowestDistance = 99999999;
+            Tile[] tiles = new Tile[character.IntersectingRows.Length];
+
+            for (int i = 0; i < character.IntersectingRows.Length; i++)
+            {
+                if (character.IntersectingRows[i] == -1)
+                    continue;
+
+                tiles[i] = grid.SearchNearestTileInRow(character.IntersectingRows[i], (int)character.X/64,character.FacingDirection);
+
+                int xDistanceToChar = (int)tiles[i].DistanceToChar(character).X;
+                if (xDistanceToChar < lowestDistance)
+                    lowestDistance = xDistanceToChar;
+            }
+
+            
+            return lowestDistance;
+        }
+
+        private bool CheckIfCanMoveX(Player player, int xDistanceToTile)
+        {
+            if (xDistanceToTile < (int)player.DistanceToTravel.X)
+                return true;
+            else return false;
+        }
+
+        /*
+        private Tile[] SearchClosestTilesY(Character character)
+        {
+            Tile[] tiles = new Tile[character.IntersectingColumns.Length];
+            
+            for(int i = 0;)
             return tiles;
         }
+        */
 
         private void FixPos(Player player, Tile tile)
         {
             if (player.PrevPos.X + 4 >= tile.Max.X) //prioritizes intersection from the sides
             {
-                player.CollisionX = true;
+                //player.CollisionX = true;
                 player.X = tile.Max.X;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
-                player.Acceleration = new Vector2(0, player.Acceleration.Y);
+               // player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
             else if (player.PrevPos.X + player.Width - 4 <= tile.X)
             {
-                player.CollisionX = true;
+                //player.CollisionX = true;
                 player.X = tile.X - player.Width;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
-                player.Acceleration = new Vector2(0, player.Acceleration.Y);
+                //player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
             else if (player.PrevPos.Y + player.Height - 1 <= tile.Y) //intersects from top
             {
-                player.CollisionY = true;
+                //player.CollisionY = true;
                 player.Y = tile.Min.Y - player.Height;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
-                player.Acceleration = new Vector2(player.Velocity.X, 0);
+                //player.Acceleration = new Vector2(player.Velocity.X, 0);
                 if (player is Player)
                     player.CanJump = true;
             }
@@ -178,14 +220,13 @@ namespace blank_canvas
             {
                 player.Y = tile.Max.Y;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
-                player.Acceleration = new Vector2(player.Velocity.X, 0);
+                //player.Acceleration = new Vector2(player.Velocity.X, 0);
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Tile tile in tiles)
-                tile.Draw(spriteBatch);
+            grid.Draw(spriteBatch);
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);

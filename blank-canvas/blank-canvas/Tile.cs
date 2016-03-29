@@ -47,6 +47,19 @@ namespace blank_canvas
             else return false;
         }
 
+        //used for testing
+        public void Draw(SpriteBatch spriteBatch, SpriteFont font)
+        {
+            Draw(spriteBatch);
+            spriteBatch.DrawString(font, "(" + gridPos.X + ", " + gridPos.Y + ")", position, Color.White);
+
+        }
+
+        public Vector2 DistanceToChar(Character character)
+        {
+            return new Vector2(character.X - X, character.Y - Y);
+        }
+
 
         #endregion
     }
