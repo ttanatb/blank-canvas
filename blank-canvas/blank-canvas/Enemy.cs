@@ -20,9 +20,10 @@ namespace blank_canvas
 
 
         //constructor
-        public Enemy(Rectangle eRec):base(eRec)
+        public Enemy(Rectangle eRec, int hlth):base(eRec)
         {
-
+            health = hlth; //Will be set for all enemies as 1 hit (could be set as more in the future)
+            paint = 100000; //practically unlimited paint projectiles for enemy
         }
 
         //methods
@@ -33,9 +34,6 @@ namespace blank_canvas
             foreach (Rectangle r in character.CollisionBoxes)
             {
                 if (r.Intersects(this.Rectangle))
-
-                    // Damage player here?
-                    character.Health = character.Health - 2; //I have this as 2 as a default (can be changed later)
                     return true;
             }
             return false;

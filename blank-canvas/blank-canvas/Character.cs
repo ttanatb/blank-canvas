@@ -28,7 +28,9 @@ namespace blank_canvas
         protected Vector2 prevPos;
         protected Vector2 prevAcc;
 
+        // Character specific attributes
         protected int health;
+        protected int paint;
         #endregion
 
         #region constructors
@@ -42,10 +44,6 @@ namespace blank_canvas
             projectedPos = new Vector2((float)rectangle.X, (float)rectangle.Y);
             velocity = new Vector2(0, 0);
             acceleration = new Vector2(0, 0);
-            health = 10;
-
-            acceleration = new Vector2(0, 0);
-            health = 10;
         }
         #endregion
 
@@ -79,10 +77,14 @@ namespace blank_canvas
         }
 
         public int Health
-
         {
             get { return health; }
             set { health = value; }
+        }
+        public int Paint
+        {
+            get { return health; }
+            set { paint = value; }
         }
         #endregion
 
@@ -169,9 +171,7 @@ namespace blank_canvas
         //NEEDS WORK
         public void Shoot()
         {
-            //fire right
-
-            //fire left
+            // Shoot
         }
 
         //NEEDS WORK
