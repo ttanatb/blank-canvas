@@ -28,9 +28,14 @@ namespace blank_canvas
         protected Vector2 prevPos;
         protected Vector2 prevAcc;
 
-        // Character specific attributes
+        // character specific attributes
         protected int health;
         protected int paint;
+
+        //states to help govern animation states and which way projectile should fire
+        enum Direction { Up, Down, Left, Right };
+        Direction facing;
+
         #endregion
 
         #region constructors
@@ -44,6 +49,12 @@ namespace blank_canvas
             projectedPos = new Vector2((float)rectangle.X, (float)rectangle.Y);
             velocity = new Vector2(0, 0);
             acceleration = new Vector2(0, 0);
+            health = 10;
+
+            acceleration = new Vector2(0, 0);
+            health = 10;
+
+            facing = Direction.Right;
         }
         #endregion
 
@@ -67,7 +78,7 @@ namespace blank_canvas
 
         public Vector2 Acceleration
         {
-            get { return acceleration;}
+            get { return acceleration; }
             set { acceleration = value; }
         }
 
@@ -82,50 +93,38 @@ namespace blank_canvas
             set { health = value; }
         }
         public int Paint
+
         {
             get { return health; }
-            set { paint = value; }
+            set { health = value; }
         }
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Projects out the position of the character based on the previous position, velocity, time step, and acceleration
+        /// Moves the character based on the previous position, velocity, time step, and acceleration
         /// </summary>
         /// <param name="deltaTime">The time step from the previous update call</param>
-        public virtual void ProjectPos(double deltaTime)
+        public virtual void UpdatePos(double deltaTime)
         {
-            projectedPos.X = position.X + (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
-            projectedPos.Y = position.Y + (float)(velocity.Y * deltaTime + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
+            prevPos.X = position.X;
+            prevPos.Y = position.Y;
+            position.X += (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
+            position.Y += (float)(velocity.Y * deltaTime + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
             prevAcc = acceleration;
         }
 
-        /// <summary>
-        /// Updates the actual position of the character
-        /// </summary>
-        public void UpdatePosX()
-        {
-            prevPos.X = position.X;
-            position.X = projectedPos.X;
-        }
-
-        /// <summary>
-        /// Updates the actual position of the character
-        /// </summary>
-        public void UpdatePosY()
-        {
-            prevPos.Y = position.Y;
-            position.Y = projectedPos.Y;
-        }
-    
         /// <summary>
         /// Accelerates the character to the right, then caps it
         /// </summary>
         public void MoveRight()
         {
             if (velocity.X < 200)
+            {
                 acceleration += new Vector2(10000, 0);
+                facing = Direction.Right;
+            }
             else velocity.X = 200;
         }
 
@@ -135,7 +134,10 @@ namespace blank_canvas
         public void MoveLeft()
         {
             if (velocity.X > -200)
+            {
                 acceleration += new Vector2(-10000, 0);
+                facing = Direction.Left;
+            }
             else velocity.X = -200;
         }
 
@@ -150,20 +152,12 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// Updates the y factor of the velocity of a character based on the average acceleration and time step
+        /// Updates the velocity of a character based on the average acceleration and time step
         /// </summary>
         /// <param name="deltaTime">Time step in miliseconds</param>
-        public void UpdateVy(double deltaTime)
+        public void UpdateVelocity(double deltaTime)
         {
             velocity.Y += (float)(((prevAcc.Y + acceleration.Y) * deltaTime) / 2);
-        }
-
-        /// <summary>
-        /// Updates the x factor of the velocity of a character based on the average accelearation and time step
-        /// </summary>
-        /// <param name="deltaTime">Time step in miliseconds</param>
-        public void UpdateVx(double deltaTime)
-        {
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
         }
@@ -171,7 +165,16 @@ namespace blank_canvas
         //NEEDS WORK
         public void Shoot()
         {
-            // Shoot
+            //fire right
+            if (facing == Direction.Right)
+            {
+
+            }
+            //fire left
+            if (facing == Direction.Left)
+            {
+
+            }
         }
 
         //NEEDS WORK
@@ -180,6 +183,27 @@ namespace blank_canvas
             //when hit by projectile
 
             //when hit by an enemy
+        }
+
+        //used to identify what frame to use
+        public void FrameChange()
+        {
+            if (facing == Direction.Up)
+            {
+                //change to jumping frame
+            }
+            if (facing == Direction.Down)
+            {
+                //change to falling frame
+            }
+            if (facing == Direction.Left)
+            {
+                //change to facing left frame
+            }
+            if (facing == Direction.Right)
+            {
+                //change to facing right frame
+            }
         }
 
         //used for testing
@@ -192,3 +216,4 @@ namespace blank_canvas
         #endregion
     }
 }
+
