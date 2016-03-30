@@ -62,11 +62,11 @@ namespace blank_canvas
         /// Sets up the collision variables in addition to projecting the position
         /// </summary>
         /// <param name="deltaTime">The timestep in miliseconds</param>
-        public override void ProjectPos(double deltaTime)
+        public override void UpdatePos(double deltaTime)
         {
             collisionX = false;
             collisionY = false;
-            base.ProjectPos(deltaTime);
+            base.UpdatePos(deltaTime);
         }
 
         /// <summary>

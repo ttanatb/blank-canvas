@@ -96,32 +96,16 @@ namespace blank_canvas
         #region Methods
 
         /// <summary>
-        /// Projects out the position of the character based on the previous position, velocity, time step, and acceleration
+        /// Moves the character based on the previous position, velocity, time step, and acceleration
         /// </summary>
         /// <param name="deltaTime">The time step from the previous update call</param>
-        public virtual void ProjectPos(double deltaTime)
-        {
-            projectedPos.X = position.X + (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
-            projectedPos.Y = position.Y + (float)(velocity.Y * deltaTime + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
-            prevAcc = acceleration;
-        }
-
-        /// <summary>
-        /// Updates the actual position of the character
-        /// </summary>
-        public void UpdatePosX()
+        public virtual void UpdatePos(double deltaTime)
         {
             prevPos.X = position.X;
-            position.X = projectedPos.X;
-        }
-
-        /// <summary>
-        /// Updates the actual position of the character
-        /// </summary>
-        public void UpdatePosY()
-        {
             prevPos.Y = position.Y;
-            position.Y = projectedPos.Y;
+            position.X += (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
+            position.Y += (float)(velocity.Y * deltaTime + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
+            prevAcc = acceleration;
         }
     
         /// <summary>
@@ -161,20 +145,12 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// Updates the y factor of the velocity of a character based on the average acceleration and time step
+        /// Updates the velocity of a character based on the average acceleration and time step
         /// </summary>
         /// <param name="deltaTime">Time step in miliseconds</param>
-        public void UpdateVy(double deltaTime)
+        public void UpdateVelocity(double deltaTime)
         {
             velocity.Y += (float)(((prevAcc.Y + acceleration.Y) * deltaTime) / 2);
-        }
-
-        /// <summary>
-        /// Updates the x factor of the velocity of a character based on the average accelearation and time step
-        /// </summary>
-        /// <param name="deltaTime">Time step in miliseconds</param>
-        public void UpdateVx(double deltaTime)
-        {
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
         }

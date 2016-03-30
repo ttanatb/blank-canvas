@@ -84,40 +84,23 @@ namespace blank_canvas
             //converts from time to miliseconds
             deltaTime = deltaTime / 1000.0;
 
-            player.ProjectPos(deltaTime);
-
-            //updates the position based on velocity on acceleration
-
+            player.UpdatePos(deltaTime);
+            camera.Update(player);
 
             //updates acceleartion for players
             player.Acceleration = Vector2.Zero;
             input.Update();
 
-            //if (!player.CollisionY)
-            {
-                player.UpdatePosY();
-                player.Acceleration += new Vector2(0, GRAVITY);
-                player.UpdateVy(deltaTime);
-            }
 
-            //if (!player.CollisionX)
-            {
-                player.UpdatePosX();
-                //checks input to change acceleration/velocity
-                //checks for input towards the left
-
-
-                player.UpdateVx(deltaTime);
-            }
-
+            player.Acceleration += new Vector2(0, GRAVITY);
+            player.UpdateVelocity(deltaTime);
 
             foreach (Rectangle r in tileCollision)
             {
                 if (r.Intersects(player.Rectangle))
                     FixPos(player, r);
             }
-
-            camera.Update(player);
+            
 
             //checks for input for jump
             if (player.CanJump && input.KeyPressed(Keys.Space))
