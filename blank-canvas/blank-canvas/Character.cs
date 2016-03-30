@@ -185,7 +185,7 @@ namespace blank_canvas
             //fire right
             if(facing == Direction.Right)
             {
-
+                
             }
             //fire left
             if (facing == Direction.Left)
@@ -200,6 +200,27 @@ namespace blank_canvas
             //when hit by projectile
 
             //when hit by an enemy
+        }
+        
+        //used to identify what frame to use
+        public void FrameChange()
+        {
+            if(facing == Direction.Up)
+            {
+                //change to jumping frame
+            }
+            if (facing == Direction.Down)
+            {
+                //change to falling frame
+            }
+            if (facing == Direction.Left)
+            {
+                //change to facing left frame
+            }
+            if (facing == Direction.Right)
+            {
+                //change to facing right frame
+            }
         }
 
         //used for testing
