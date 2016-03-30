@@ -29,6 +29,11 @@ namespace blank_canvas
         protected Vector2 prevAcc;
 
         protected int health;
+
+        //states to help govern animation states and which way projectile should fire
+        enum Direction { Up, Down, Left, Right };
+        Direction facing;
+
         #endregion
 
         #region constructors
@@ -46,6 +51,8 @@ namespace blank_canvas
 
             acceleration = new Vector2(0, 0);
             health = 10;
+
+            facing = Direction.Right;
         }
         #endregion
 
@@ -123,7 +130,10 @@ namespace blank_canvas
         public void MoveRight()
         {
             if (velocity.X < 200)
+            {
                 acceleration += new Vector2(10000, 0);
+                facing = Direction.Right;
+            }
             else velocity.X = 200;
         }
 
@@ -133,7 +143,10 @@ namespace blank_canvas
         public void MoveLeft()
         {
             if (velocity.X > -200)
+            {
                 acceleration += new Vector2(-10000, 0);
+                facing = Direction.Left;
+            }
             else velocity.X = -200;
         }
 
@@ -170,8 +183,15 @@ namespace blank_canvas
         public void Shoot()
         {
             //fire right
-
+            if(facing == Direction.Right)
+            {
+                
+            }
             //fire left
+            if (facing == Direction.Left)
+            {
+
+            }
         }
 
         //NEEDS WORK
@@ -180,6 +200,27 @@ namespace blank_canvas
             //when hit by projectile
 
             //when hit by an enemy
+        }
+        
+        //used to identify what frame to use
+        public void FrameChange()
+        {
+            if(facing == Direction.Up)
+            {
+                //change to jumping frame
+            }
+            if (facing == Direction.Down)
+            {
+                //change to falling frame
+            }
+            if (facing == Direction.Left)
+            {
+                //change to facing left frame
+            }
+            if (facing == Direction.Right)
+            {
+                //change to facing right frame
+            }
         }
 
         //used for testing
