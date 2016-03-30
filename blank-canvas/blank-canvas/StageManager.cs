@@ -23,10 +23,12 @@ namespace blank_canvas
         Player player;
         Enemy[] enemies;
         Tile[] tiles;
+        Rectangle[] tileCollision;
 
         int level;
 
         const float GRAVITY = 1200f;
+        Texture2D testTexture;
         #endregion
 
         //constructor
@@ -39,8 +41,9 @@ namespace blank_canvas
 
             stageReader.ReadFile();
             player = stageReader.Player;
-            enemies = stageReader.Enemy;
+            enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
+            tileCollision = stageReader.CollisionBoxes;
         }
 
         //property
@@ -68,6 +71,7 @@ namespace blank_canvas
 
             //for printing out test information
             testFont = content.Load<SpriteFont>("Arial_14");
+            testTexture = content.Load<Texture2D>("testChar");
         }
 
         /// <summary>
@@ -84,52 +88,56 @@ namespace blank_canvas
 
             //updates the position based on velocity on acceleration
 
-            foreach (Tile t in tiles)
-            {
-                if (t.CheckCollision(player))
-                    FixPos(player, t);
-            }
 
             //updates acceleartion for players
             player.Acceleration = Vector2.Zero;
             input.Update();
 
-            if (!player.CollisionY)
+            //if (!player.CollisionY)
             {
                 player.UpdatePosY();
                 player.Acceleration += new Vector2(0, GRAVITY);
                 player.UpdateVy(deltaTime);
             }
 
-            if (!player.CollisionX)
+            //if (!player.CollisionX)
             {
                 player.UpdatePosX();
                 //checks input to change acceleration/velocity
                 //checks for input towards the left
-                if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
-                    player.MoveLeft();
 
-                //checks for input towards the right
-                else if (input.KeyDown(Keys.Right) && input.KeyUp(Keys.Left))
-                    player.MoveRight();
-
-                //checks for no input
-                else if (input.KeysUp(Keys.Left, Keys.Right))
-                    player.Halt();
 
                 player.UpdateVx(deltaTime);
+            }
+
+
+            foreach (Rectangle r in tileCollision)
+            {
+                if (r.Intersects(player.Rectangle))
+                    FixPos(player, r);
             }
 
             camera.Update(player);
 
             //checks for input for jump
-            if (player.CanJump && input.KeyPressed(Keys.Space) && (player.Velocity.Y <= 40))
+            if (player.CanJump && input.KeyPressed(Keys.Space))
                 player.Jump();
 
             //checks if jump was released early
             if (input.KeyRelease(Keys.Space))
                 player.ReleaseJump();
-            
+
+            if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
+                player.MoveLeft();
+
+            //checks for input towards the right
+            else if (input.KeyDown(Keys.Right) && input.KeyUp(Keys.Left))
+                player.MoveRight();
+
+            //checks for no input
+            else if (input.KeysUp(Keys.Left, Keys.Right))
+                player.Halt();
+
         }
 
         private void NextLevel()
@@ -147,36 +155,35 @@ namespace blank_canvas
             return tiles;
         }
 
-        private void FixPos(Player player, Tile tile)
+        private void FixPos(Player player, Rectangle rect)
         {
-            if (player.PrevPos.X + 4 >= tile.Max.X) //prioritizes intersection from the sides
+            if (player.PrevPos.X + 4 >= rect.X + rect.Width) //prioritizes intersection from the sides
             {
                 player.CollisionX = true;
-                player.X = tile.Max.X;
+                player.X = rect.X + rect.Width;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
                 player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
-            else if (player.PrevPos.X + player.Width - 4 <= tile.X)
+            else if (player.PrevPos.X + player.Width - 4 <= rect.X)
             {
                 player.CollisionX = true;
-                player.X = tile.X - player.Width;
+                player.X = rect.X - player.Width;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
                 player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
-            else if (player.PrevPos.Y + player.Height - 1 <= tile.Y) //intersects from top
+            else if (player.PrevPos.Y + player.Height - 1 <= rect.Y) //intersects from top
             {
                 player.CollisionY = true;
-                player.Y = tile.Min.Y - player.Height;
+                player.Y = rect.Y - player.Height + 1;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
                 player.Acceleration = new Vector2(player.Velocity.X, 0);
-                if (player is Player)
-                    player.CanJump = true;
+                player.CanJump = true;
             }
-            else if (player.PrevPos.Y + player.Height + 1 >= tile.Max.Y)
+            else if (player.PrevPos.Y + player.Height + 1 >= rect.Y + rect.Height)
             {
-                player.Y = tile.Max.Y;
+                player.Y = rect.Y + rect.Height ;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
                 player.Acceleration = new Vector2(player.Velocity.X, 0);
             }
@@ -189,6 +196,9 @@ namespace blank_canvas
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);
+            foreach (Rectangle rect in tileCollision)
+                spriteBatch.Draw(testTexture, rect, Color.Red);
+            
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y ), Color.Black);
         }
     }
