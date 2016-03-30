@@ -15,16 +15,13 @@ namespace blank_canvas
 {
     class StageReader
     {
-        // sets filename
-        private string[] filename;
-        // the path for the original file
-        private string sourcePath;
-        // creates tile
-        List<Tile> t;
-        // creates player
-        Player p;
-        // creates enemy
-        List<Enemy> e;
+        private string[] fileNames; // sets filename
+        private string sourcePath; // the path for the original file
+
+        Player player;
+        List<Tile> tiles;
+        List<Enemy> enemies;
+        List<Rectangle> collisionBoxes;
 
         // position counter
         int xpos;
@@ -36,14 +33,15 @@ namespace blank_canvas
         // constructor that gets string
         public StageReader()
         {
-            e = new List<Enemy>();
-            t = new List<Tile>();
+            enemies = new List<Enemy>();
+            tiles = new List<Tile>();
+            collisionBoxes = new List<Rectangle>();
 
             try
             {
                 sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug"); //doesn't handle multiple text files
-                filename = Directory.GetFiles(sourcePath, "*.txt");
-                Console.WriteLine(sourcePath + "\n" + filename[0]);
+                fileNames = Directory.GetFiles(sourcePath, "*.txt");
+                Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
             catch (DirectoryNotFoundException)
             {
@@ -57,17 +55,17 @@ namespace blank_canvas
 
         public Player Player
         {
-            get { return p; }
+            get { return player; }
         }
 
-        public Enemy[] Enemy
+        public Enemy[] Enemies
         {
             get
             {
-                Enemy[] enemy = new Enemy[e.Count];
-                for (int i = 0; i < e.Count; i++)
-                    enemy[i] = e[i];
-                return enemy;
+                Enemy[] e = new Enemy[enemies.Count];
+                for (int i = 0; i < enemies.Count; i++)
+                    e[i] = enemies[i];
+                return e;
             }
         }
 
@@ -75,12 +73,25 @@ namespace blank_canvas
         {
             get
             {
-                Tile[] tile = new Tile[t.Count];
-                for (int i = 0; i < t.Count; i++)
-                    tile[i] = t[i];
-                return tile;
+                Tile[] t = new Tile[tiles.Count];
+                for (int i = 0; i < tiles.Count; i++)
+                    t[i] = tiles[i];
+                return t;
             }
         }
+
+        public Rectangle[] CollisionBoxes
+        {
+            get
+            {
+                Rectangle[] boxes = new Rectangle[collisionBoxes.Count];
+                for (int i = 0; i < collisionBoxes.Count; i++)
+                    boxes[i] = collisionBoxes[i];
+                return boxes;
+            }
+        }
+
+
 
         public int Level
         {
@@ -100,9 +111,9 @@ namespace blank_canvas
             BinaryReader reader = null;
 
             try
-            {
+            {  
                 //does reader thing
-                reader = new BinaryReader(File.OpenRead(filename[0]));
+                reader = new BinaryReader(File.OpenRead(fileNames[0]));
                 char character;
 
                 //a bit of info: every line ends with a '\r\n'
@@ -123,7 +134,7 @@ namespace blank_canvas
                 string lvlString = ""; //string to Parse
                 while ((character = reader.ReadChar()) != '\r') //reads until line break
                 {
-                    lvlString += character; //concatnates an int of level
+                    lvlString += character; //concatnates the string of numbers
                 }
 
                 int.TryParse(lvlString, out level); //parses it back to int
@@ -134,6 +145,8 @@ namespace blank_canvas
                 // counts the position in the binary reader
                 xpos = 0;
                 ypos = 0;
+                int i = 0;
+                int startingPos = 0;
 
                 // checks to see if the current position is equal to the length of the text file
                 while (reader.BaseStream.Position != reader.BaseStream.Length)
@@ -143,15 +156,20 @@ namespace blank_canvas
                     if (character.Equals('_'))
                     {
                         // initializes new ground tile
-                        Tile tile = new Tile(new Vector2(xpos , ypos));
-                        t.Add(tile);
-                        Console.WriteLine("Tile created: " + xpos + ", " + ypos + " (Grid Positions: {0}, {1})", tile.GridPosition.X, tile.GridPosition.Y);
+                        Tile tile = new Tile(new Vector2(xpos, ypos));
+                        tiles.Add(tile);
+                        Console.WriteLine("Tile created: " + xpos + ", " + ypos);
+
+                        if (i == 0)
+                            startingPos = xpos;
+
+                        i++;
                     }
 
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
-                        p = new Player(new Rectangle(xpos, ypos, 64, 128)); //
+                        player = new Player(new Rectangle(xpos, ypos, 64, 128)); //
                         Console.WriteLine("Player created: " + xpos + ", " + ypos);
                     }
 
@@ -179,14 +197,26 @@ namespace blank_canvas
                         // class not created yet
                     }
 
+                    else if ((character.Equals(' ')) || (reader.BaseStream.Position == reader.BaseStream.Length) || character.Equals('\r'))
+                    {
+                        if (i != 0)
+                        {
+                            collisionBoxes.Add(new Rectangle(startingPos, ypos, 64 * i, 64));
+                            Console.WriteLine("CollisionBox added at: " + startingPos + " to " + 64*i + startingPos);
+                            i = 0;
+                        }
+
+                        if (character.Equals('\r'))
+                        {
+                            reader.ReadChar(); //reads away the '\n'
+                            ypos += 64;
+                            xpos = -64;
+                        }
+                    }
+
                     xpos += 64;
 
-                    if (character.Equals('\r'))
-                    {
-                        reader.ReadChar(); //reads away the '\n'
-                        ypos += 64;
-                        xpos = 0;
-                    }
+
                 }
             }
             catch (FileNotFoundException)

@@ -18,21 +18,17 @@ namespace blank_canvas
         #region constants
         const int WIDTH = 64;   
         const int HEIGHT = 64;
-        Point gridPos;
         #endregion
 
         #region Properties
-        public Point GridPosition
-        {
-            get { return gridPos; }
-        }
+
         #endregion
 
         #region constructors
         /// <param name="position">X and Y coordinates of top-left corner</param>
         public Tile(Vector2 position) : base(new Rectangle((int)position.X, (int)position.Y,WIDTH, HEIGHT))
         {
-            gridPos = new Point((int)position.X / 64, (int)position.Y / 64);
+
         }
         
         #endregion
