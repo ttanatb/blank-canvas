@@ -168,12 +168,14 @@ namespace blank_canvas
             //fire right
             if (facing == Direction.Right)
             {
-
+                //for character sprite
+                //texture = Content.Load<Texture2D>("File_name");
             }
             //fire left
             if (facing == Direction.Left)
             {
-
+                //for character sprite
+                //texture = Content.Load<Texture2D>("File_name");
             }
         }
 

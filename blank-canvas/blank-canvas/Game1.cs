@@ -23,12 +23,18 @@ namespace blank_canvas
         Vector2 backgroundPosition;
         Texture2D backgroundTexture;
 
+<<<<<<< HEAD
         // game state
         enum GameState { MainMenu, Gameplay, Pause, EndOfGame};
         GameState state;
 
         // creates button
         Buttons butt;
+=======
+        //states to help govern game states
+        enum GameState { startMenu, helpMenu, inGame, pauseMenu};
+        GameState gState;
+>>>>>>> 29d2134d7db5019b411bfe275b26a79d74e5cbb2
 
         public Game1()
         {
