@@ -23,6 +23,10 @@ namespace blank_canvas
         Vector2 backgroundPosition;
         Texture2D backgroundTexture;
 
+        //states to help govern game states
+        enum GameState { startMenu, helpMenu, inGame, pauseMenu};
+        GameState gState;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
