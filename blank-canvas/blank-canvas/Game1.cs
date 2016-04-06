@@ -23,12 +23,20 @@ namespace blank_canvas
         Vector2 backgroundPosition;
         Texture2D backgroundTexture;
 
+        // game state
+        enum GameState { MainMenu, Gameplay, Pause, EndOfGame};
+        GameState state;
+
+        // creates button
+        Buttons butt;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
+            
 
             Content.RootDirectory = "Content";
         }
@@ -42,7 +50,7 @@ namespace blank_canvas
         protected override void Initialize()
         {
             stageManager = new StageManager(new Camera(GraphicsDevice.Viewport), new InputManager());
-
+            butt = new Buttons();
 
             base.Initialize();
         }
@@ -61,6 +69,8 @@ namespace blank_canvas
             backgroundPosition = new Vector2(-500, 0);
             backgroundTexture = Content.Load<Texture2D>("testBackground");
 
+            
+            
         }
 
         /// <summary>
@@ -85,6 +95,29 @@ namespace blank_canvas
             stageManager.Update(deltaTime);
 
             base.Update(gameTime);
+            // initializes game state
+            switch (state)
+            {
+                case GameState.MainMenu:
+                    UpdateMainMenu(deltaTime);
+                    break;
+                case GameState.Gameplay:
+                    UpdateGameplay(deltaTime);
+                    break;
+                case GameState.Pause:
+                    UpdatePause(deltaTime);
+                    break;
+                case GameState.EndOfGame:
+                    UpdateEndOfGame(deltaTime);
+                    break;
+            }
+        }
+
+        // changes from main menu to gameplay
+        private void UpdateMainMenu(float deltaTime)
+        {
+            if (butt.isPressed())
+                state = GameState.Gameplay;
         }
 
         /// <summary>

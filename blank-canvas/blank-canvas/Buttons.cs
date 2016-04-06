@@ -15,5 +15,10 @@ namespace blank_canvas
 {
     class Buttons
     {
+        
+        internal bool isPressed()
+        {
+            
+        }
     }
 }
