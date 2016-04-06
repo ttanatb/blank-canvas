@@ -180,7 +180,7 @@ namespace blank_canvas
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);
             foreach (Rectangle rect in tileCollision)
-                spriteBatch.Draw(testTexture, rect, Color.Red);
+                //spriteBatch.Draw(testTexture, rect, Color.Red);
             
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y ), Color.Black);
         }
