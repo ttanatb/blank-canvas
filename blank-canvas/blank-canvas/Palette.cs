@@ -52,9 +52,39 @@ namespace blank_canvas
 
         public PaletteColor GetColor()
         {
-            if (colors[0] && colors[1] && colors[2])
-                return PaletteColor.Black;
-
+            // Check's all colors that contain red first, then checks all colors with blue in it, then finally checks if it has yellow, if no color than it displays white as the color
+            if(colors[0])
+            {
+                if(colors[1])
+                {
+                    if(colors[2]) 
+                    {
+                        return PaletteColor.Black;
+                    }
+                    return PaletteColor.Purple;
+                }
+                if(colors[2])
+                {
+                    return PaletteColor.Orange;
+                }
+                return PaletteColor.Red;
+            }
+            if(colors[1])
+            {
+              if(colors[2])
+                {
+                    return PaletteColor.Green;
+                }
+                return PaletteColor.Blue;
+            }
+            if(colors[2])
+            {
+                return PaletteColor.Yellow;
+            } 
+            else
+            {
+                return PaletteColor.White;
+            }
         }
     }
 }
