@@ -5,17 +5,6 @@ using System.Text;
 
 namespace blank_canvas
 {
-    enum PaletteColor
-    {
-        Red,
-        Blue,
-        Yellow,
-        Orange,
-        Green,
-        Purple,
-        Black,
-        White,
-    }
 
     /// <summary>
     /// The data structure that holds the color of a gameobject
@@ -84,6 +73,14 @@ namespace blank_canvas
             else
             {
                 return PaletteColor.White;
+            }
+        }
+
+        public void ResetColor()
+        {
+            for (int i = 0; i < colors.Length; i++)
+            {
+                colors[i] = false;
             }
         }
     }

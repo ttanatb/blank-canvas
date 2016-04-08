@@ -18,6 +18,23 @@ namespace blank_canvas
     /// </summary>
     public class Character : GameObject
     {
+        //states to help govern animation states and which way projectile should fire
+        enum Direction
+        {
+            Left,
+            Right,
+        }
+
+        enum AnimState
+        {
+            Idle,
+            Walk,
+            Jump,
+            Hurt,
+            Shoot,
+            Draw,
+        }
+
         #region variables
         //variables
         protected Rectangle[] collisionBoxes;
@@ -32,9 +49,9 @@ namespace blank_canvas
         protected int health;
         protected int paint;
 
-        //states to help govern animation states and which way projectile should fire
-        enum Direction { Up, Down, Left, Right };
-        Direction facing;
+
+        Direction direction;
+        AnimState animState;
 
         #endregion
 
@@ -54,7 +71,8 @@ namespace blank_canvas
             acceleration = new Vector2(0, 0);
             health = 10;
 
-            facing = Direction.Right;
+            direction = Direction.Right;
+            animState = AnimState.Idle;
         }
         #endregion
 
@@ -123,7 +141,7 @@ namespace blank_canvas
             if (velocity.X < 200)
             {
                 acceleration += new Vector2(10000, 0);
-                facing = Direction.Right;
+                direction = Direction.Right;
             }
             else velocity.X = 200;
         }
@@ -136,7 +154,7 @@ namespace blank_canvas
             if (velocity.X > -200)
             {
                 acceleration += new Vector2(-10000, 0);
-                facing = Direction.Left;
+                direction = Direction.Left;
             }
             else velocity.X = -200;
         }
@@ -166,13 +184,13 @@ namespace blank_canvas
         public void Shoot()
         {
             //fire right
-            if (facing == Direction.Right)
+            if (direction == Direction.Right)
             {
                 //for character sprite
                 //texture = Content.Load<Texture2D>("File_name");
             }
             //fire left
-            if (facing == Direction.Left)
+            if (direction == Direction.Left)
             {
                 //for character sprite
                 //texture = Content.Load<Texture2D>("File_name");
@@ -187,22 +205,14 @@ namespace blank_canvas
             //when hit by an enemy
         }
 
-        //used to identify what frame to use
-        public void FrameChange()
+        //used to identify what frame to use 
+        private void FrameChange()
         {
-            if (facing == Direction.Up)
-            {
-                //change to jumping frame
-            }
-            if (facing == Direction.Down)
-            {
-                //change to falling frame
-            }
-            if (facing == Direction.Left)
+            if (direction == Direction.Left)
             {
                 //change to facing left frame
             }
-            if (facing == Direction.Right)
+            if (direction == Direction.Right)
             {
                 //change to facing right frame
             }

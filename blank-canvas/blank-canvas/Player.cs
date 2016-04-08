@@ -19,6 +19,7 @@ namespace blank_canvas
         bool canJump;
         bool collisionX;    //checks if there was collision in the X-coordinate
         bool collisionY;    //checks if there was collision in the y-coordinate
+        Bucket bucket;
         //NEEDS WORK: paint attribute
 
         //properties
@@ -49,6 +50,8 @@ namespace blank_canvas
             canJump = false;
             collisionX = false;
             collisionY = false;
+
+            bucket = new Bucket();
             //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
 

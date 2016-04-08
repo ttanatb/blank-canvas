@@ -11,36 +11,48 @@ namespace blank_canvas
     /// <summary>
     /// The projectile that is used by the player (yet to be utilized)
     /// </summary>
-    class Projectile:GameObject
+    class Projectile : GameObject
     {
         #region Variables
-        const int WIDTH = 64; // Need to be changed/balanced correctly
-        const int HEIGHT = 64;
-        Point gridPos;
-        protected Rectangle[] collisionBoxes;
+        const int WIDTH = 32; // Need to be changed/balanced correctly
+        const int HEIGHT = 32;
+        protected Rectangle collisionBox;
 
         // unique variables
-        public string projectileColor;
+        PaletteColor projectileColor;
         #endregion
 
         #region Properties
-        public Rectangle[] CollisionBoxes
+        public Rectangle CollisionBox
         {
-            get { return collisionBoxes; }
+            get { return collisionBox; }
         }
 
-        public string ProjectileColor
+        public PaletteColor ProjectileColor
         {
             get { return projectileColor; }
         }
         #endregion
 
         #region Constructors
-        public Projectile(Vector2 position, string clr):base(new Rectangle((int)position.X, (int)position.Y,WIDTH, HEIGHT))
+        public Projectile(Character character, PaletteColor color) : base(new Rectangle((int)character.X, (int)character.Y,WIDTH, HEIGHT))
         {
-            gridPos = new Point((int)position.X / 64, (int)position.Y / 64); //This statement needs to be double checked with logic in stageReader
-            projectileColor = clr;
+            projectileColor = color;
         }
+
+        private bool CheckValidTarget(GameObject gameObject)
+        {
+            if (gameObject is PuzzleOrb)
+                return true;
+            else return false;
+        }
+
+        public bool CheckCollision(GameObject gameObject)
+        {
+
+        }
+
+        //methods to check intersection
 
         #endregion
 

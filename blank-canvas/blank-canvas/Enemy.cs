@@ -13,27 +13,35 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
-
+    /// <summary>
+    /// The basic enemy class
+    /// </summary>
     public class Enemy : Character
     {
         //a child of the character class
+        PaletteColor paletteColor;
 
+        public PaletteColor PaletteColor
+        {
+            get { return paletteColor; }
+        }
 
         //constructor
-        public Enemy(Rectangle eRec, int hlth):base(eRec)
+        public Enemy(Rectangle eRec, int health):base(eRec)
         {
-            health = hlth; //Will be set for all enemies as 1 hit (could be set as more in the future)
+            this.health = health; //Will be set for all enemies as 1 hit (could be set as more in the future)
             paint = 100000; //practically unlimited paint projectiles for enemy
         }
 
         //methods
 
+            //lol this isn't used
         //collision method for an enemy (can't bump into it)
         public bool CheckCollision(Character character)
         {
             foreach (Rectangle r in character.CollisionBoxes)
             {
-                if (r.Intersects(this.Rectangle))
+                if (r.Intersects(Rectangle))
                     return true;
             }
             return false;

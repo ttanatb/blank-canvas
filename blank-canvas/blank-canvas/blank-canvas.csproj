@@ -41,10 +41,12 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Bucket.cs" />
     <Compile Include="Buttons.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Character.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="Enum.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Gates.cs" />

@@ -103,7 +103,7 @@ namespace blank_canvas
             
 
             //checks for input for jump
-            if (player.CanJump && input.KeyPressed(Keys.Space))
+            if (player.CanJump && input.KeyPressed(Keys.Space) && player.Velocity.Y <= 10)
                 player.Jump();
 
             //checks if jump was released early
