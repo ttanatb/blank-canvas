@@ -28,7 +28,6 @@ namespace blank_canvas
         /// <param name="position">X and Y coordinates of top-left corner</param>
         public Tile(Vector2 position) : base(new Rectangle((int)position.X, (int)position.Y,WIDTH, HEIGHT))
         {
-
         }
         
         #endregion

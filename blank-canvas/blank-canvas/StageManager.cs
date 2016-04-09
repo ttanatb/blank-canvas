@@ -24,6 +24,10 @@ namespace blank_canvas
         Enemy[] enemies;
         Tile[] tiles;
         Rectangle[] tileCollision;
+        Projectile projectile;
+        Texture2D projectileTexture;
+
+        Random rndm;
 
         int level;
 
@@ -60,7 +64,7 @@ namespace blank_canvas
         /// <param name="enemyTexture">The texture for the enemy</param>
         /// <param name="tileTexture">The texture for the tiles</param>
         public void LoadContent(ContentManager content, string playerTexture,
-            string enemyTexture, string tileTexture)
+            string enemyTexture, string tileTexture, string projectileTexture)
         {
             player.Texture = content.Load<Texture2D>(playerTexture);
             foreach (Enemy enemy in enemies)
@@ -69,7 +73,9 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load<Texture2D>(tileTexture);
 
-            //for printing out test information
+            projectile = new Projectile();
+            this.projectileTexture = content.Load<Texture2D>(projectileTexture);
+
             testFont = content.Load<SpriteFont>("Arial_14");
             testTexture = content.Load<Texture2D>("testChar");
         }
@@ -79,13 +85,14 @@ namespace blank_canvas
         /// and then updates velocity of characters
         /// </summary>
         /// <param name="deltaTime">The amount of miliseconds passed since previous update</param>
-        public void Update(double deltaTime)
+        public void Update(float deltaTime)
         {           
             //converts from time to miliseconds
-            deltaTime = deltaTime / 1000.0;
+            deltaTime = deltaTime / 1000.0f;
 
             player.UpdatePos(deltaTime);
             camera.Update(player);
+
 
             //updates acceleartion for players
             player.Acceleration = Vector2.Zero;
@@ -95,8 +102,17 @@ namespace blank_canvas
             player.Acceleration += new Vector2(0, GRAVITY);
             player.UpdateVelocity(deltaTime);
 
+            if (projectile.Active)
+            {
+                projectile.Update(deltaTime);
+            }
+
+
             foreach (Rectangle r in tileCollision)
             {
+                if (projectile.Active)
+                    if (projectile.CheckCollision(r))
+                        projectile.Active = false;
                 if (r.Intersects(player.Rectangle))
                     FixPos(player, r);
             }
@@ -121,6 +137,13 @@ namespace blank_canvas
             else if (input.KeysUp(Keys.Left, Keys.Right))
                 player.Halt();
 
+            if (input.KeyPressed(Keys.C) && !projectile.Active)
+            {
+                player.Shoot();
+                projectile = new Projectile(player, player.Direction, PaletteColor.Yellow);
+                projectile.Texture = projectileTexture;
+            }
+
         }
 
         private void NextLevel()
@@ -142,7 +165,6 @@ namespace blank_canvas
         {
             if (player.PrevPos.X + 4 >= rect.X + rect.Width) //prioritizes intersection from the sides
             {
-                player.CollisionX = true;
                 player.X = rect.X + rect.Width;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
                 player.Acceleration = new Vector2(0, player.Acceleration.Y);
@@ -150,7 +172,6 @@ namespace blank_canvas
             }
             else if (player.PrevPos.X + player.Width - 4 <= rect.X)
             {
-                player.CollisionX = true;
                 player.X = rect.X - player.Width;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
                 player.Acceleration = new Vector2(0, player.Acceleration.Y);
@@ -158,7 +179,6 @@ namespace blank_canvas
             }
             else if (player.PrevPos.Y + player.Height - 1 <= rect.Y) //intersects from top
             {
-                player.CollisionY = true;
                 player.Y = rect.Y - player.Height + 1;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
                 player.Acceleration = new Vector2(player.Velocity.X, 0);
@@ -179,9 +199,10 @@ namespace blank_canvas
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            foreach (Rectangle rect in tileCollision)
-                //spriteBatch.Draw(testTexture, rect, Color.Red);
-            
+            // foreach (Rectangle rect in tileCollision)
+            //spriteBatch.Draw(testTexture, rect, Color.Red);
+            if (projectile.Active)
+                projectile.Draw(spriteBatch);
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y ), Color.Black);
         }
     }

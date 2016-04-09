@@ -19,22 +19,22 @@ namespace blank_canvas
         SpriteBatch spriteBatch;
         StageManager stageManager;
 
+        //this shouldn't be here
         //background position
         Vector2 backgroundPosition;
         Texture2D backgroundTexture;
 
-<<<<<<< HEAD
         // game state
-        enum GameState { MainMenu, Gameplay, Pause, EndOfGame};
         GameState state;
 
         // creates button
-        Buttons butt;
-=======
-        //states to help govern game states
-        enum GameState { startMenu, helpMenu, inGame, pauseMenu};
-        GameState gState;
->>>>>>> 29d2134d7db5019b411bfe275b26a79d74e5cbb2
+        Button butt;
+
+        public GameState gameState
+        {
+            get { return state; }
+            set { state = value; }
+        }
 
         public Game1()
         {
@@ -43,7 +43,6 @@ namespace blank_canvas
             graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
             
-
             Content.RootDirectory = "Content";
         }
 
@@ -56,7 +55,7 @@ namespace blank_canvas
         protected override void Initialize()
         {
             stageManager = new StageManager(new Camera(GraphicsDevice.Viewport), new InputManager());
-            butt = new Buttons();
+            butt = new Button();
 
             base.Initialize();
         }
@@ -70,7 +69,7 @@ namespace blank_canvas
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            stageManager.LoadContent(Content, "playerStandingStill", "enemyNoColor", "tileGround5");
+            stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "tileGround5", "projectile");
 
             backgroundPosition = new Vector2(-500, 0);
             backgroundTexture = Content.Load<Texture2D>("testBackground");
@@ -95,35 +94,37 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //handling input
-            float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
-
-            stageManager.Update(deltaTime);
-
-            base.Update(gameTime);
             // initializes game state
             switch (state)
             {
                 case GameState.MainMenu:
-                    UpdateMainMenu(deltaTime);
+                    UpdateMainMenu();
                     break;
                 case GameState.Gameplay:
-                    UpdateGameplay(deltaTime);
+                    UpdateGameplay(gameTime);
                     break;
                 case GameState.Pause:
-                    UpdatePause(deltaTime);
+                    //UpdatePause();
                     break;
                 case GameState.EndOfGame:
-                    UpdateEndOfGame(deltaTime);
+                    //UpdateEndOfGame();
                     break;
             }
+
+            base.Update(gameTime);
         }
 
         // changes from main menu to gameplay
-        private void UpdateMainMenu(float deltaTime)
+        private void UpdateMainMenu()
         {
             if (butt.isPressed())
                 state = GameState.Gameplay;
+        }
+
+        private void UpdateGameplay(GameTime gameTime)
+        {
+            float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
+            stageManager.Update(deltaTime);
         }
 
         /// <summary>

@@ -11,7 +11,11 @@ namespace blank_canvas
     /// <summary>
     /// The puzzle element of the game that is yet to be implemented
     /// </summary>
-    class Gates
+    class Gates : GameObject
     {
+        public Gates(Rectangle rect) : base(rect)
+        {
+
+        }
     }
 }

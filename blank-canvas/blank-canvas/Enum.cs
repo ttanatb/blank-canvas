@@ -33,4 +33,18 @@ namespace blank_canvas
         if so add to its respective int
         */
     }
+
+    public enum GameState
+    {
+        MainMenu,
+        Gameplay,
+        Pause,
+        EndOfGame
+    }
+
+    public enum Direction
+    {
+        Left,
+        Right,
+    }
 }

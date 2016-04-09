@@ -19,11 +19,8 @@ namespace blank_canvas
     public class Character : GameObject
     {
         //states to help govern animation states and which way projectile should fire
-        enum Direction
-        {
-            Left,
-            Right,
-        }
+
+
 
         enum AnimState
         {
@@ -37,6 +34,8 @@ namespace blank_canvas
 
         #region variables
         //variables
+        protected const float MOVESPEED = 300f;
+
         protected Rectangle[] collisionBoxes;
 
         protected Vector2 velocity;
@@ -116,6 +115,11 @@ namespace blank_canvas
             get { return health; }
             set { health = value; }
         }
+
+        public Direction Direction
+        {
+            get { return direction; }
+        }
         #endregion
 
         #region Methods
@@ -138,12 +142,13 @@ namespace blank_canvas
         /// </summary>
         public void MoveRight()
         {
-            if (velocity.X < 200)
+            direction = Direction.Right;
+            if (velocity.X < MOVESPEED)
             {
                 acceleration += new Vector2(10000, 0);
                 direction = Direction.Right;
             }
-            else velocity.X = 200;
+            else velocity.X = MOVESPEED;
         }
 
         /// <summary>
@@ -151,12 +156,13 @@ namespace blank_canvas
         /// </summary>
         public void MoveLeft()
         {
-            if (velocity.X > -200)
+            direction = Direction.Left;
+            if (velocity.X > -MOVESPEED)
             {
                 acceleration += new Vector2(-10000, 0);
                 direction = Direction.Left;
             }
-            else velocity.X = -200;
+            else velocity.X = -MOVESPEED;
         }
 
         /// <summary>
@@ -178,23 +184,6 @@ namespace blank_canvas
             velocity.Y += (float)(((prevAcc.Y + acceleration.Y) * deltaTime) / 2);
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
-        }
-
-        //NEEDS WORK
-        public void Shoot()
-        {
-            //fire right
-            if (direction == Direction.Right)
-            {
-                //for character sprite
-                //texture = Content.Load<Texture2D>("File_name");
-            }
-            //fire left
-            if (direction == Direction.Left)
-            {
-                //for character sprite
-                //texture = Content.Load<Texture2D>("File_name");
-            }
         }
 
         //NEEDS WORK
@@ -224,6 +213,16 @@ namespace blank_canvas
             string msg = "Position: " + position.X + ", " + position.Y + "\nVelocity: " + velocity.X + ", " + velocity.Y + "\nAcceleration: " + acceleration.X + ", " + acceleration.Y;
             return msg;
 
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            SpriteEffects spriteEffects;
+            if (direction == Direction.Right)
+                spriteEffects = SpriteEffects.None;
+            else spriteEffects = SpriteEffects.FlipHorizontally;
+
+            spriteBatch.Draw(texture, Rectangle, new Rectangle(0,0,width, height),Color.White, 0f, Vector2.Zero, spriteEffects, 1);
         }
         #endregion
     }

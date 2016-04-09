@@ -14,12 +14,12 @@ namespace blank_canvas
     /// </summary>
     public class Player : Character
     {
-
+        new const float MOVESPEED = 500f;
         //attributes
         bool canJump;
-        bool collisionX;    //checks if there was collision in the X-coordinate
-        bool collisionY;    //checks if there was collision in the y-coordinate
+
         Bucket bucket;
+        PaletteColor currentColor;
         //NEEDS WORK: paint attribute
 
         //properties
@@ -30,16 +30,9 @@ namespace blank_canvas
             set { canJump = value; }
         }
 
-        public bool CollisionX
+        public PaletteColor CurrentColor
         {
-            get { return collisionX; }
-            set { collisionX = value; }
-        }
-
-        public bool CollisionY
-        {
-            get { return collisionY; }
-            set { collisionY = value; }
+            get { return currentColor; }
         }
 
         //NEEDS WORK: Paint properties
@@ -48,9 +41,6 @@ namespace blank_canvas
         public Player(Rectangle pRec) : base(pRec)
         {
             canJump = false;
-            collisionX = false;
-            collisionY = false;
-
             bucket = new Bucket();
             //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
@@ -58,19 +48,9 @@ namespace blank_canvas
         //NEEDS WORK:
         public void colorChange()
         {
+
         }
 
-
-        /// <summary>
-        /// Sets up the collision variables in addition to projecting the position
-        /// </summary>
-        /// <param name="deltaTime">The timestep in miliseconds</param>
-        public override void UpdatePos(double deltaTime)
-        {
-            collisionX = false;
-            collisionY = false;
-            base.UpdatePos(deltaTime);
-        }
 
         /// <summary>
         /// Jumps
@@ -90,10 +70,11 @@ namespace blank_canvas
                 velocity.Y = -250f; 
         }
 
-        //used for testing
-        public override string ToString()
+        //depletes your buckety thing
+        public void Shoot()
         {
-            return collisionY +  base.ToString();
+            //fire right
+
         }
     }
 }

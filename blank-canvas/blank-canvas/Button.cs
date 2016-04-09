@@ -13,12 +13,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
-    class Buttons
+    class Button
     {
         
-        internal bool isPressed()
+        public bool isPressed()
         {
-            
+            return true;
         }
     }
 }

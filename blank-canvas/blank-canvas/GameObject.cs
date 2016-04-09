@@ -14,6 +14,9 @@ namespace blank_canvas
     public class GameObject
     {
         #region variables
+        protected const float FADE_INCREMENT = .70f;
+        protected int alpha;
+
         protected Texture2D texture; //may need an array instead (doesn't handle sprite sheets either)
         protected Vector2 position;
         protected Color color;
@@ -28,7 +31,13 @@ namespace blank_canvas
             width = rectangle.Width;
             height = rectangle.Height;
             position = new Vector2(rectangle.X, rectangle.Y);
-            color = Color.White;
+            alpha = 255;
+        }
+
+        public GameObject(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
         }
 
         #endregion
@@ -102,6 +111,14 @@ namespace blank_canvas
         }
         #endregion
 
+        protected void Fade()
+        {
+            Console.WriteLine(alpha);
+            if (alpha > 0)
+                alpha = (int)(alpha * FADE_INCREMENT);
+            else alpha = 0;
+        }
+
         #region methods
         /// <summary>
         /// Basic draw method, doesn't draw if texture is not instantiated. 
@@ -110,12 +127,7 @@ namespace blank_canvas
         /// <param name="spriteBatch">The current spriteBatch</param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            if (texture != null)
-            {
-                if (color != null)
-                    spriteBatch.Draw(texture, Rectangle, color);
-                else spriteBatch.Draw(texture, Rectangle, Color.White);
-            }
+           spriteBatch.Draw(texture, Rectangle, new Color(alpha,alpha,alpha,alpha));
         }
         #endregion
     }
