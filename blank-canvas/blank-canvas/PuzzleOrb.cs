@@ -14,12 +14,20 @@ namespace blank_canvas
         const int WIDTH = 64;
         const int HEIGHT = 64;
         Palette palette;
+        PaletteColor currentColor;
         PaletteColor colorKey;
         bool active;
+
+        Texture2D orbTexture;
+        Vector2 orbPosition;
         #endregion
 
         #region Properties
-        //nothing currently
+
+        public Texture2D OrbTexture
+        {
+            set { orbTexture = value; }
+        }
         #endregion
 
         #region Constructors
@@ -27,6 +35,8 @@ namespace blank_canvas
         {
             // Sets the puzzle orb position
             palette = new Palette();
+            orbPosition = new Vector2(position.X + 13, position.Y + 11);
+            currentColor = PaletteColor.White;
 
             // Sets the key for the orb to solve the puzzle
             colorKey = key;
@@ -51,7 +61,8 @@ namespace blank_canvas
         {
             if (active)
             {
-                if (palette.GetColor() == colorKey)
+                currentColor = palette.GetColor();
+                if (currentColor == colorKey)
                 {
                     active = false;
                 }
@@ -60,8 +71,48 @@ namespace blank_canvas
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            /*
+                    Red = 2,
+        Blue = 3,
+        Yellow = 5,
+        Orange = 10,
+        Green = 15,
+        Purple = 6,
+        Black = 30,
+        White = 1,
+        */
             if (active)
+            {
                 base.Draw(spriteBatch);
+                int a = alpha * 3 / 4;
+                switch (currentColor)
+                {
+                    case (PaletteColor.Red):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, 0, 0, a));
+                        break;
+                    case (PaletteColor.Blue):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(0, 0, alpha, a));
+                        break;
+                    case (PaletteColor.Yellow):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, alpha, 0, a));
+                        break;
+                    case (PaletteColor.Orange):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, alpha/2, 0, a));
+                        break;
+                    case (PaletteColor.Green):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(0, alpha, 0, a));
+                        break;
+                    case (PaletteColor.Purple):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha/2, 0, alpha/2, a));
+                        break;
+                    case (PaletteColor.Black):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(0, 0, 0, alpha));
+                        break;
+                    case (PaletteColor.White):
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, alpha, alpha, alpha));
+                        break;
+                }
+            }
         }
         #endregion
 

@@ -26,8 +26,7 @@ namespace blank_canvas
         Rectangle[] tileCollision;
         Projectile projectile;
         Texture2D projectileTexture;
-
-        Random rndm;
+        PuzzleOrb puzzleOrb;
 
         int level;
 
@@ -48,6 +47,8 @@ namespace blank_canvas
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
+            puzzleOrb = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Blue);
+            
         }
 
         //property
@@ -64,7 +65,8 @@ namespace blank_canvas
         /// <param name="enemyTexture">The texture for the enemy</param>
         /// <param name="tileTexture">The texture for the tiles</param>
         public void LoadContent(ContentManager content, string playerTexture,
-            string enemyTexture, string tileTexture, string projectileTexture)
+            string enemyTexture, string tileTexture, string projectileTexture,
+            string orbBaseTexture, string orbTexture)
         {
             player.Texture = content.Load<Texture2D>(playerTexture);
             foreach (Enemy enemy in enemies)
@@ -76,6 +78,8 @@ namespace blank_canvas
             projectile = new Projectile();
             this.projectileTexture = content.Load<Texture2D>(projectileTexture);
 
+            puzzleOrb.Texture = content.Load<Texture2D>(orbBaseTexture);
+            puzzleOrb.OrbTexture = content.Load<Texture2D>(orbTexture);
             testFont = content.Load<SpriteFont>("Arial_14");
             testTexture = content.Load<Texture2D>("testChar");
         }
@@ -142,8 +146,10 @@ namespace blank_canvas
                 player.Shoot();
                 projectile = new Projectile(player, player.Direction, PaletteColor.Yellow);
                 projectile.Texture = projectileTexture;
+                puzzleOrb.ChangeColor(projectile);
             }
 
+            puzzleOrb.Update();
         }
 
         private void NextLevel()
@@ -203,6 +209,7 @@ namespace blank_canvas
             //spriteBatch.Draw(testTexture, rect, Color.Red);
             if (projectile.Active)
                 projectile.Draw(spriteBatch);
+            puzzleOrb.Draw(spriteBatch);
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y ), Color.Black);
         }
     }

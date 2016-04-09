@@ -62,12 +62,12 @@ namespace blank_canvas
         {
             if (direction == Direction.Right)
             {
-                position = new Vector2(player.X + player.Width, player.Y + player.Height / 2 - HEIGHT);
+                position = new Vector2(player.X + player.Width, player.Y + player.Height / 3 + HEIGHT);
                 velocity = SPEED;
             }
             else
             {
-                position = new Vector2(player.X - WIDTH, player.Y + player.Height / 2 - HEIGHT);
+                position = new Vector2(player.X - WIDTH, player.Y + player.Height / 3 + HEIGHT);
                 velocity = -SPEED;
             }
 
@@ -110,16 +110,16 @@ namespace blank_canvas
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            /*
+                    /*
                     Red = 2,
-        Blue = 3,
-        Yellow = 5,
-        Orange = 10,
-        Green = 15,
-        Purple = 6,
-        Black = 30,
-        White = 1,
-        */
+                    Blue = 3,
+                    Yellow = 5,
+                    Orange = 10,
+                    Green = 15,
+                    Purple = 6,
+                    Black = 30,
+                    White = 1,
+                    */
             switch (projectileColor)
             {
                 case PaletteColor.Red:
