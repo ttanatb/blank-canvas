@@ -20,6 +20,8 @@ namespace blank_canvas
 
         Bucket bucket;
         PaletteColor currentColor;
+
+        Projectile projectile;
         //NEEDS WORK: paint attribute
 
         //properties
@@ -35,6 +37,11 @@ namespace blank_canvas
             get { return currentColor; }
         }
 
+        public Projectile Projectile
+        {
+            get { return projectile; }
+        }
+
         //NEEDS WORK: Paint properties
 
         //constructor
@@ -42,6 +49,7 @@ namespace blank_canvas
         {
             canJump = false;
             bucket = new Bucket();
+            projectile = new Projectile();
             //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
 
@@ -73,8 +81,21 @@ namespace blank_canvas
         //depletes your buckety thing
         public void Shoot()
         {
-            //fire right
+            Vector2 startingPos = Vector2.Zero;
+            if (direction == Direction.Right)
+                startingPos = new Vector2(X + width, Y + height / 3 + Projectile.HEIGHT);
+            else startingPos = new Vector2(X - Projectile.WIDTH, Y + height / 3 + Projectile.HEIGHT);
 
+            //deal with the color thing with the bucket
+
+            projectile.Shoot(startingPos, direction, currentColor);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (projectile.Active)
+                projectile.Draw(spriteBatch);
         }
     }
 }

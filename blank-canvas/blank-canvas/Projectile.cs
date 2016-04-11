@@ -11,11 +11,11 @@ namespace blank_canvas
     /// <summary>
     /// The projectile that is used by the player (yet to be utilized)
     /// </summary>
-    class Projectile : GameObject
+    public class Projectile : GameObject
     {
         #region Variables
-        const int WIDTH = 32; // Need to be changed/balanced correctly
-        const int HEIGHT = 32;
+        public const int WIDTH = 32; // Need to be changed/balanced correctly
+        public const int HEIGHT = 32;
 
         const int HORIZONTAL_OFFSET = 6; //offset up or down
         const int VERTICAL_OFFSET = 4; //offset towards the left or the right
@@ -55,31 +55,21 @@ namespace blank_canvas
         public Projectile() : base(WIDTH, HEIGHT)
         {
             active = false;
+            alpha = 255;
+            collisionBox = new Rectangle((int)position.X + VERTICAL_OFFSET,
+                (int)position.Y + HORIZONTAL_OFFSET,
+                WIDTH - VERTICAL_OFFSET,
+                HEIGHT - HORIZONTAL_OFFSET);
         }
 
         #region Constructors
-        public Projectile(Player player, Direction direction, PaletteColor color) : base(WIDTH, HEIGHT)
+        public void Shoot(Vector2 position, Direction direction, PaletteColor color)
         {
-            if (direction == Direction.Right)
-            {
-                position = new Vector2(player.X + player.Width, player.Y + player.Height / 3 + HEIGHT);
-                velocity = SPEED;
-            }
-            else
-            {
-                position = new Vector2(player.X - WIDTH, player.Y + player.Height / 3 + HEIGHT);
-                velocity = -SPEED;
-            }
-
+            velocity = SPEED * (int)direction;
+            this.position = position;
             startingPos = position.X;
-            collisionBox = new Rectangle((int)position.X + VERTICAL_OFFSET,
-                (int)position.Y + HORIZONTAL_OFFSET,
-                WIDTH - VERTICAL_OFFSET, 
-                HEIGHT - HORIZONTAL_OFFSET);
             projectileColor = color;
             active = true;
-            alpha = 255;
-            Console.WriteLine("Projectile created at (" + position.X + "," + position.Y + ") and it's " + color.ToString());
         }
 
         private bool CheckValidTarget(GameObject gameObject)

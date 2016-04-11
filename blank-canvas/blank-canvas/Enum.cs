@@ -44,7 +44,14 @@ namespace blank_canvas
 
     public enum Direction
     {
-        Left,
-        Right,
+        Left = -1,
+        Right = 1,
+    }
+
+    public enum State
+    {
+        Inactive,
+        Active = 8,
+        Completed = 1,
     }
 }

@@ -22,7 +22,7 @@ namespace blank_canvas
 
 
 
-        enum AnimState
+        protected enum AnimState
         {
             Idle,
             Walk,
@@ -49,8 +49,8 @@ namespace blank_canvas
         protected int paint;
 
 
-        Direction direction;
-        AnimState animState;
+        protected Direction direction;
+        protected AnimState animState;
 
         #endregion
 

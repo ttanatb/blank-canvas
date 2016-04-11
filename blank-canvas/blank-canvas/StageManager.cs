@@ -24,8 +24,6 @@ namespace blank_canvas
         Enemy[] enemies;
         Tile[] tiles;
         Rectangle[] tileCollision;
-        Projectile projectile;
-        Texture2D projectileTexture;
         PuzzleOrb puzzleOrb;
 
         int level;
@@ -47,7 +45,7 @@ namespace blank_canvas
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
-            puzzleOrb = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Blue);
+            puzzleOrb = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Yellow);
             
         }
 
@@ -75,8 +73,7 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load<Texture2D>(tileTexture);
 
-            projectile = new Projectile();
-            this.projectileTexture = content.Load<Texture2D>(projectileTexture);
+            player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
 
             puzzleOrb.Texture = content.Load<Texture2D>(orbBaseTexture);
             puzzleOrb.OrbTexture = content.Load<Texture2D>(orbTexture);
@@ -106,17 +103,17 @@ namespace blank_canvas
             player.Acceleration += new Vector2(0, GRAVITY);
             player.UpdateVelocity(deltaTime);
 
-            if (projectile.Active)
+            if (player.Projectile.Active)
             {
-                projectile.Update(deltaTime);
+                player.Projectile.Update(deltaTime);
             }
 
 
             foreach (Rectangle r in tileCollision)
             {
-                if (projectile.Active)
-                    if (projectile.CheckCollision(r))
-                        projectile.Active = false;
+                if (player.Projectile.Active)
+                    if (player.Projectile.CheckCollision(r))
+                        player.Projectile.Active = false;
                 if (r.Intersects(player.Rectangle))
                     FixPos(player, r);
             }
@@ -141,12 +138,10 @@ namespace blank_canvas
             else if (input.KeysUp(Keys.Left, Keys.Right))
                 player.Halt();
 
-            if (input.KeyPressed(Keys.C) && !projectile.Active)
+            if (input.KeyPressed(Keys.C) && ! player.Projectile.Active)
             {
                 player.Shoot();
-                projectile = new Projectile(player, player.Direction, PaletteColor.Yellow);
-                projectile.Texture = projectileTexture;
-                puzzleOrb.ChangeColor(projectile);
+                //puzzleOrb.ChangeColor();
             }
 
             puzzleOrb.Update();
@@ -207,8 +202,7 @@ namespace blank_canvas
             player.Draw(spriteBatch);
             // foreach (Rectangle rect in tileCollision)
             //spriteBatch.Draw(testTexture, rect, Color.Red);
-            if (projectile.Active)
-                projectile.Draw(spriteBatch);
+
             puzzleOrb.Draw(spriteBatch);
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y ), Color.Black);
         }

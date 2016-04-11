@@ -8,15 +8,27 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
+    /// <summary>
+    /// The puzzle orb can be shot (painted) by the player. 
+    /// If it matches the key color, then the corresponding gate
+    /// dematerializes. The player can also draw back a color in
+    /// the orb.
+    /// 
+    /// Things to work on:
+    /// Collision between projectile and orb
+    /// Drawing back the paint from the orb
+    /// Linking the orb to a gate
+    /// Linking multiple orbs to a gate?
+    /// </summary>
     class PuzzleOrb : GameObject
     {
         #region Variables
         const int WIDTH = 64;
-        const int HEIGHT = 64;
-        Palette palette;
-        PaletteColor currentColor;
-        PaletteColor colorKey;
-        bool active;
+        const int HEIGHT = 64; //may be subjected to change
+
+        Palette palette;            //manages the color
+        PaletteColor colorKey;      //the key required to solve the orb
+        State state;         
 
         Texture2D orbTexture;
         Vector2 orbPosition;
@@ -28,6 +40,11 @@ namespace blank_canvas
         {
             set { orbTexture = value; }
         }
+
+        public PaletteColor CurrentColor
+        {
+            get { return palette.GetColor(); }
+        }
         #endregion
 
         #region Constructors
@@ -36,11 +53,10 @@ namespace blank_canvas
             // Sets the puzzle orb position
             palette = new Palette();
             orbPosition = new Vector2(position.X + 13, position.Y + 11);
-            currentColor = PaletteColor.White;
 
             // Sets the key for the orb to solve the puzzle
             colorKey = key;
-            active = true;
+            state = State.Active;
         }
         #endregion
 
@@ -59,33 +75,22 @@ namespace blank_canvas
 
         public void Update()
         {
-            if (active)
+            if (state == State.Active)
             {
-                currentColor = palette.GetColor();
-                if (currentColor == colorKey)
+                if (CurrentColor == colorKey)
                 {
-                    active = false;
+                    state = State.Completed;
                 }
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            /*
-                    Red = 2,
-        Blue = 3,
-        Yellow = 5,
-        Orange = 10,
-        Green = 15,
-        Purple = 6,
-        Black = 30,
-        White = 1,
-        */
-            if (active)
+            if (state == State.Active || state == State.Completed)
             {
                 base.Draw(spriteBatch);
-                int a = alpha * 3 / 4;
-                switch (currentColor)
+                int a = alpha * 3 / 4 * (int)state / 8;
+                switch (CurrentColor)
                 {
                     case (PaletteColor.Red):
                         spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, 0, 0, a));
