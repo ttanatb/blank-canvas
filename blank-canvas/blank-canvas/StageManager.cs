@@ -15,46 +15,52 @@ namespace blank_canvas
     class StageManager
     {
         #region variables
-        StageReader stageReader;
-        InputManager input;
-        Camera camera;
-        SpriteFont testFont;
+        StageReader stageReader;    //reads in the text file and creates the stage
+        InputManager input;         //manages input
+        Camera camera;              //manages camera movement
 
-        Player player;
-        Enemy[] enemies;
-        Tile[] tiles;
-        Rectangle[] tileCollision;
-        PuzzleOrb puzzleOrb;
+        SpriteFont testFont;        //just a test font
+        Texture2D testTexture;      //just a test texture
 
-        int level;
+        Player player;              
+        Enemy[] enemies;            
+        Tile[] tiles;               //tiles to draw (we really don't need tiles, just rectangles)
+        Rectangle[] tileCollision;  //tiles to check collision with
 
-        const float GRAVITY = 1200f;
-        Texture2D testTexture;
+        PuzzleOrb puzzleOrb;        //this is for testing
+        //the puzzle orb should be linked to a gate
+
+        int level;                  //the level of the stage (may be unnecessary)
+
+        const float GRAVITY = 1200f;    //gravity of the whole thing (kind of unnecessary)
         #endregion
 
         //constructor
         public StageManager(Camera camera, InputManager inputManager)
         {
-            input = new InputManager();
-            stageReader = new StageReader();
-            this.camera = camera;
-            level = 0;
+            input = new InputManager();         //normal instantialization for input manager
+            stageReader = new StageReader();    //may need some tinkering?
+            this.camera = camera;               //get camera from game1
+            level = 0;                          //sets level at 0
 
+            //read file from the stage reader and get player, enemy, tile data
             stageReader.ReadFile();
             player = stageReader.Player;
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
+
+            //instantialization some for testing
             puzzleOrb = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Yellow);
-            
         }
 
-        //property
+        //properties
         public Camera Camera
         {
             get { return camera;  }
         }
 
+        #region Load Content
         /// <summary>
         /// Loads in the textures
         /// </summary>
@@ -80,6 +86,7 @@ namespace blank_canvas
             testFont = content.Load<SpriteFont>("Arial_14");
             testTexture = content.Load<Texture2D>("testChar");
         }
+        #endregion
 
         /// <summary>
         /// Updates position, takes input to update acceleration, checks collision and fix positions,
@@ -91,25 +98,27 @@ namespace blank_canvas
             //converts from time to miliseconds
             deltaTime = deltaTime / 1000.0f;
 
+            //updates the position
             player.UpdatePos(deltaTime);
-            camera.Update(player);
 
-            //updates acceleartion for players
-            player.Acceleration = new Vector2(0, GRAVITY);
+            //updates the camera and input
+            camera.Update(player);
             input.Update();
 
+            //updates acceleartion for players (kind of unnecessary because it's always the same)
+            player.Acceleration = new Vector2(0, GRAVITY);
+
+            //updates velocity
             player.UpdateVelocity(deltaTime);
 
+            //updates projectile if it is active
             if (player.Projectile.Active)
-            {
                 player.Projectile.Update(deltaTime);
-            }
-
 
             foreach (Rectangle r in tileCollision)
             {
                 if (player.Projectile.Active)
-                    player.Projectile.CheckCollision(r);
+                    //player.Projectile.CheckCollision(r);
                 if (r.Intersects(player.Rectangle))
                     FixPos(player, r);
             }
@@ -150,42 +159,33 @@ namespace blank_canvas
             //NEEDS WORK: load the new variables
         }
 
-        //NEEDS WORK
-        private Tile[] SearchClosestTiles(Character character)
-        {
-            Tile[] tiles = new Tile[4];
-            //NEEDS WORK: search the tiles in the 4 directions
-            return tiles;
-        }
-
+        /// <summary>
+        /// Fixes the position of the player based on the rectangle it intersected with
+        /// </summary>
         private void FixPos(Player player, Rectangle rect)
         {
             if (player.PrevPos.X + 4 >= rect.X + rect.Width) //prioritizes intersection from the sides
             {
                 player.X = rect.X + rect.Width;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
-                player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
             else if (player.PrevPos.X + player.Width - 4 <= rect.X)
             {
                 player.X = rect.X - player.Width;
                 player.Velocity = new Vector2(0, player.Velocity.Y);
-                player.Acceleration = new Vector2(0, player.Acceleration.Y);
                 return;
             }
             else if (player.PrevPos.Y + player.Height - 1 <= rect.Y) //intersects from top
             {
                 player.Y = rect.Y - player.Height + 1;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
-                player.Acceleration = new Vector2(player.Velocity.X, 0);
                 player.CanJump = true;
             }
             else if (player.PrevPos.Y + player.Height + 1 >= rect.Y + rect.Height)
             {
                 player.Y = rect.Y + rect.Height ;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
-                player.Acceleration = new Vector2(player.Velocity.X, 0);
             }
         }
 
@@ -196,11 +196,9 @@ namespace blank_canvas
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            // foreach (Rectangle rect in tileCollision)
-            //spriteBatch.Draw(testTexture, rect, Color.Red);
 
             puzzleOrb.Draw(spriteBatch);
-            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y ), Color.Black);
+            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y - 50 ), Color.Black);
         }
     }
 }

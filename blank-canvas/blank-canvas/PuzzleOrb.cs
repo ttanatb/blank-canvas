@@ -26,16 +26,22 @@ namespace blank_canvas
         const int WIDTH = 64;
         const int HEIGHT = 64; //may be subjected to change
 
+        const int ORB_WIDTH = 37;
+        const int ORB_HEIGHT = 41;
+
+        const int HORIZONTAL_OFFSET = 5;
+        const int VERTICAL_OFFSET = 4;
+
         Palette palette;            //manages the color
         PaletteColor colorKey;      //the key required to solve the orb
         State state;         
 
         Texture2D orbTexture;
         Vector2 orbPosition;
+        Rectangle orbCollisionBox;
         #endregion
 
         #region Properties
-
         public Texture2D OrbTexture
         {
             set { orbTexture = value; }
@@ -45,6 +51,11 @@ namespace blank_canvas
         {
             get { return palette.GetColor(); }
         }
+
+        public Rectangle CollisionBox
+        {
+            get { return orbCollisionBox; }
+        }
         #endregion
 
         #region Constructors
@@ -53,6 +64,10 @@ namespace blank_canvas
             // Sets the puzzle orb position
             palette = new Palette();
             orbPosition = new Vector2(position.X + 13, position.Y + 11);
+            orbCollisionBox = new Rectangle((int)orbPosition.X + VERTICAL_OFFSET, 
+                (int)orbPosition.Y + HORIZONTAL_OFFSET,
+                ORB_WIDTH - 2 * VERTICAL_OFFSET, 
+                ORB_HEIGHT - 2 * HORIZONTAL_OFFSET);
 
             // Sets the key for the orb to solve the puzzle
             colorKey = key;
@@ -61,12 +76,12 @@ namespace blank_canvas
         #endregion
 
         #region Methods
-        public void ChangeColor(Projectile projectile)
+        public void AddColor(Projectile projectile)
         {
             palette.AddColor(projectile.ProjectileColor);
         }
 
-        public PaletteColor TakeColor()
+        public PaletteColor DrainColor()
         {
             PaletteColor color = palette.GetColor();
             palette.ResetColor();

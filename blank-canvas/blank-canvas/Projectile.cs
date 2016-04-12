@@ -13,25 +13,25 @@ namespace blank_canvas
     /// </summary>
     public class Projectile : GameObject
     {
-        #region Variables
-        public const int WIDTH = 32; // Need to be changed/balanced correctly
+        #region Fields
+        public const int WIDTH = 32;        
         public const int HEIGHT = 32;
 
-        const int HORIZONTAL_OFFSET = 6; //offset up or down
-        const int VERTICAL_OFFSET = 4; //offset towards the left or the right
+        const int HORIZONTAL_OFFSET = 6;    //offset top or bottom
+        const int VERTICAL_OFFSET = 4;      //offset left or right
 
         const float SPEED = 900f;
         const float FADE_DISTANCE = 300f;
+        #endregion
 
-        float startingPos;
+        #region Variables
+        float startingPos;              //starting position (for distnc)
 
-        bool active;
-        Rectangle collisionBox;
-        float velocity;
+        bool active;                    //if projectile is active
+        Rectangle collisionBox;         //collision box of projectile
+        float velocity;                 //velocity, you know what that is
 
-
-        // unique variables
-        PaletteColor projectileColor;
+        PaletteColor projectileColor;   //current color of the projectile
         #endregion
 
         #region Properties
@@ -52,17 +52,23 @@ namespace blank_canvas
         }
         #endregion
 
+        /// <summary>
+        /// Instantiates the projectile, but keeps it inactive
+        /// </summary>
         public Projectile() : base(WIDTH, HEIGHT)
         {
             active = false;
             alpha = 255;
             collisionBox = new Rectangle((int)position.X + VERTICAL_OFFSET,
                 (int)position.Y + HORIZONTAL_OFFSET,
-                WIDTH - VERTICAL_OFFSET,
-                HEIGHT - HORIZONTAL_OFFSET);
+                WIDTH - 2 * VERTICAL_OFFSET,
+                HEIGHT - 2 * HORIZONTAL_OFFSET);
         }
 
         #region Constructors
+        /// <summary>
+        /// Activates the projectile from the position, direction, and color
+        /// </summary>
         public void Shoot(Vector2 position, Direction direction, PaletteColor color)
         {
             velocity = SPEED * (int)direction;
@@ -73,37 +79,48 @@ namespace blank_canvas
             alpha = 255;
         }
 
-        private bool CheckValidTarget(GameObject gameObject)
+        public bool CheckCollision(GameObject gameObj)
         {
-            if (gameObject is PuzzleOrb)
-                return true;
-            else return false;
-        }
-
-        public bool CheckCollision(Rectangle rectangle)
-        {
-            if (Rectangle.Intersects(rectangle))
+            if (Rectangle.Intersects(gameObj.Rectangle))
             {
+                if (gameObj is PuzzleOrb)
+                {
+                    PuzzleOrb puzzleOrb = (PuzzleOrb)gameObj;
+                    puzzleOrb.AddColor(this);
+                }
+
                 active = false;
                 return true;
             }
+
             else return false;
         }
 
+        /// <summary>
+        /// Updates the position of the projectile
+        /// </summary>
         public void Update(double deltaTime)
         {
+            //updates the x position
             position.X += (float)(velocity * deltaTime);
+
+            //fades if distance traveled is far enough
             if (Math.Abs(startingPos - position.X) > FADE_DISTANCE)
                 Fade();
 
+            //de-activates when transparent
             if (alpha == 0)
                active = false;
         }
 
+        /// <summary>
+        /// Draw based on its current color
+        /// </summary>
         public override void Draw(SpriteBatch spriteBatch)
         {
             switch (projectileColor)
             {
+                //the alpha represents the tint that colors the actual projectile   
                 case PaletteColor.Red:
                     spriteBatch.Draw(texture, position, new Color(alpha, 0, 0, alpha));
                     break;
@@ -114,7 +131,7 @@ namespace blank_canvas
                     spriteBatch.Draw(texture, position, new Color(alpha, alpha, 0, alpha));
                     break;
                 default:
-                    throw new Exception();
+                    throw new Exception(); //you can't shoot out non-rby colors
             }
         }
         #endregion

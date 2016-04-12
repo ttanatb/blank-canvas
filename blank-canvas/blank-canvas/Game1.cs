@@ -94,14 +94,14 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // initializes game state
             switch (state)
             {
                 case GameState.MainMenu:
                     UpdateMainMenu();
                     break;
                 case GameState.Gameplay:
-                    UpdateGameplay(gameTime);
+                    float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
+                    stageManager.Update(deltaTime);
                     break;
                 case GameState.Pause:
                     //UpdatePause();
@@ -119,12 +119,6 @@ namespace blank_canvas
         {
             if (butt.isPressed())
                 state = GameState.Gameplay;
-        }
-
-        private void UpdateGameplay(GameTime gameTime)
-        {
-            float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
-            stageManager.Update(deltaTime);
         }
 
         /// <summary>
