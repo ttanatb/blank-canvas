@@ -70,6 +70,7 @@ namespace blank_canvas
             startingPos = position.X;
             projectileColor = color;
             active = true;
+            alpha = 255;
         }
 
         private bool CheckValidTarget(GameObject gameObject)
@@ -83,6 +84,7 @@ namespace blank_canvas
         {
             if (Rectangle.Intersects(rectangle))
             {
+                active = false;
                 return true;
             }
             else return false;
@@ -100,16 +102,6 @@ namespace blank_canvas
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-                    /*
-                    Red = 2,
-                    Blue = 3,
-                    Yellow = 5,
-                    Orange = 10,
-                    Green = 15,
-                    Purple = 6,
-                    Black = 30,
-                    White = 1,
-                    */
             switch (projectileColor)
             {
                 case PaletteColor.Red:
@@ -121,12 +113,10 @@ namespace blank_canvas
                 case PaletteColor.Yellow:
                     spriteBatch.Draw(texture, position, new Color(alpha, alpha, 0, alpha));
                     break;
+                default:
+                    throw new Exception();
             }
         }
-        //methods to check intersection
-
         #endregion
-
-
     }
 }

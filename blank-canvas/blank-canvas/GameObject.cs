@@ -113,7 +113,6 @@ namespace blank_canvas
 
         protected void Fade()
         {
-            Console.WriteLine(alpha);
             if (alpha > 0)
                 alpha = (int)(alpha * FADE_INCREMENT);
             else alpha = 0;

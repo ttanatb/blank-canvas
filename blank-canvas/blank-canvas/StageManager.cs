@@ -94,13 +94,10 @@ namespace blank_canvas
             player.UpdatePos(deltaTime);
             camera.Update(player);
 
-
             //updates acceleartion for players
-            player.Acceleration = Vector2.Zero;
+            player.Acceleration = new Vector2(0, GRAVITY);
             input.Update();
 
-
-            player.Acceleration += new Vector2(0, GRAVITY);
             player.UpdateVelocity(deltaTime);
 
             if (player.Projectile.Active)
@@ -112,8 +109,7 @@ namespace blank_canvas
             foreach (Rectangle r in tileCollision)
             {
                 if (player.Projectile.Active)
-                    if (player.Projectile.CheckCollision(r))
-                        player.Projectile.Active = false;
+                    player.Projectile.CheckCollision(r);
                 if (r.Intersects(player.Rectangle))
                     FixPos(player, r);
             }

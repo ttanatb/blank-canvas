@@ -20,9 +20,7 @@ namespace blank_canvas
 
         Bucket bucket;
         PaletteColor currentColor;
-
         Projectile projectile;
-        //NEEDS WORK: paint attribute
 
         //properties
 
@@ -50,6 +48,7 @@ namespace blank_canvas
             canJump = false;
             bucket = new Bucket();
             projectile = new Projectile();
+            currentColor = PaletteColor.Yellow;
             //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
 
@@ -95,7 +94,9 @@ namespace blank_canvas
         {
             base.Draw(spriteBatch);
             if (projectile.Active)
+            {
                 projectile.Draw(spriteBatch);
+            }
         }
     }
 }
