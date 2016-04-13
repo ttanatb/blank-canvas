@@ -121,6 +121,14 @@ namespace blank_canvas
                 state = GameState.Gameplay;
         }
 
+        // changes from pause to gameplay
+        private void UpdatePause()
+        {
+            if (butt.isPressed())
+                state = GameState.Gameplay;
+        }
+
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
