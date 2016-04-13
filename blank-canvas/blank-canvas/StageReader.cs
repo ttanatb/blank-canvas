@@ -173,10 +173,11 @@ namespace blank_canvas
                         Console.WriteLine("Player created: " + xpos + ", " + ypos);
                     }
 
-                    else if (character.Equals('E'))
+                    else if (character.Equals('E')) //probably need to change this to spawn different colored enemies
                     {
-                        // initializes enemy
-                        // e[xpos] = new Enemy(new Rectangle(20, 40, 100, 100));
+                        Enemy enemy = new Enemy(new Rectangle(xpos, ypos, 64, 64), 2, /*Color assigned to yellow for now*/PaletteColor.Yellow);
+                        enemies.Add(enemy);
+                        Console.WriteLine("Enemy created: " + xpos + ", " + ypos);
                     }
 
                     else if (character.Equals('o'))

@@ -67,9 +67,6 @@ namespace blank_canvas
             acceleration = new Vector2(0, 0);
             health = 10;
 
-            acceleration = new Vector2(0, 0);
-            health = 10;
-
             direction = Direction.Right;
             animState = AnimState.Idle;
         }
@@ -119,6 +116,7 @@ namespace blank_canvas
         public Direction Direction
         {
             get { return direction; }
+            set { direction = value; }
         }
         #endregion
 
