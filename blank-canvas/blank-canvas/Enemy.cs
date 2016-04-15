@@ -19,57 +19,57 @@ namespace blank_canvas
     public class Enemy : Character
     {
         #region Variables
+        new const float MOVESPEED = 100f;
+        const double PAUSE_TIME = 2000.0;
+        const int WIDTH = 64;
+        const int HEIGHT = 64;
 
         //Prjectile variable (if we want them to shoot at the player)
-        Projectile projectile;
+        //Projectile projectile;
 
-        //a child of the character class
         PaletteColor paletteColor;
+        Random rndm;
 
-        // moving/movement variables
-        new const float MOVESPEED = 250f;
         #endregion
 
         #region Properties
 
-        public PaletteColor PaletteColor
+        public PaletteColor CurrentColor
         {
             get { return paletteColor; }
-        }
-        public Projectile Projectile
-        {
-            get { return projectile; }
         }
 
         #endregion
 
         #region Constructor
         //constructor
-        public Enemy(Rectangle eRec, int health, PaletteColor pltclr):base(eRec)
+        public Enemy(Vector2 position, PaletteColor color) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
-            paletteColor = pltclr;
-            this.health = health; //Will be set for all enemies as 1 hit (could be set as more in the future)
-            paint = 100000; //practically unlimited paint projectiles for enemy
+            paletteColor = color;
+
+            rndm = new Random();
+            
+            //Will be set for all enemies as 1 hit (could be set as more in the future)
+            //paint = 100000; //practically unlimited paint projectiles for enemy
 
             //spawn enemy facing left
 
             //possible projectile
-            projectile = new Projectile();
+            //projectile = new Projectile();
         }
         #endregion
 
-        #region
+        #region methods
         //methods
-        public void ArtificialIntelligence()
+        public void Update(double deltaTime)
         {
-            // loop movement starting with moving left
+            velocity.X = (int)direction * MOVESPEED;
+            UpdatePos(deltaTime);
+        }
 
-
-            //moving to the right
-            direction = Direction.Right;
-            velocity.X = MOVESPEED;
-
-
+        public void ChangeDirection()
+        {
+            direction = (Direction)(-1 * (int)direction);
         }
 
 

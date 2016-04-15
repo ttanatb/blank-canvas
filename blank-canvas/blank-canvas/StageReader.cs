@@ -175,8 +175,7 @@ namespace blank_canvas
 
                     else if (character.Equals('E')) //probably need to change this to spawn different colored enemies
                     {
-                        Enemy enemy = new Enemy(new Rectangle(xpos, ypos, 64, 64), 2, /*Color assigned to yellow for now*/PaletteColor.Yellow);
-                        enemies.Add(enemy);
+                        enemies.Add(new Enemy(new Vector2(xpos, ypos), PaletteColor.Yellow));
                         Console.WriteLine("Enemy created: " + xpos + ", " + ypos);
                     }
 

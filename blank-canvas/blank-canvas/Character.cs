@@ -40,14 +40,11 @@ namespace blank_canvas
 
         protected Vector2 velocity;
         protected Vector2 acceleration;
-        protected Vector2 projectedPos;
         protected Vector2 prevPos;
         protected Vector2 prevAcc;
 
         // character specific attributes
         protected int health;
-        protected int paint;
-
 
         protected Direction direction;
         protected AnimState animState;
@@ -62,7 +59,6 @@ namespace blank_canvas
             collisionBoxes = new Rectangle[1];
             collisionBoxes[0] = rectangle;
 
-            projectedPos = new Vector2((float)rectangle.X, (float)rectangle.Y);
             velocity = new Vector2(0, 0);
             acceleration = new Vector2(0, 0);
             health = 10;
@@ -77,11 +73,6 @@ namespace blank_canvas
         public Vector2 PrevPos
         {
             get { return prevPos; }
-        }
-
-        public Vector2 ProjectedPos
-        {
-            get { return projectedPos; }
         }
 
         public Vector2 Velocity
@@ -102,12 +93,6 @@ namespace blank_canvas
         }
 
         public int Health
-        {
-            get { return health; }
-            set { health = value; }
-        }
-        public int Paint
-
         {
             get { return health; }
             set { health = value; }

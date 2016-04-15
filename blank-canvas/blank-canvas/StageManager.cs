@@ -28,6 +28,7 @@ namespace blank_canvas
         Rectangle[] tileCollision;  //tiles to check collision with
 
         PuzzleOrb puzzleOrb;        //this is for testing
+        //Enemy testEnemy;
         //the puzzle orb should be linked to a gate
 
         int level;                  //the level of the stage (may be unnecessary)
@@ -52,6 +53,7 @@ namespace blank_canvas
 
             //instantialization some for testing
             puzzleOrb = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Yellow);
+            
         }
 
         //properties
@@ -83,6 +85,7 @@ namespace blank_canvas
 
             puzzleOrb.Texture = content.Load<Texture2D>(orbBaseTexture);
             puzzleOrb.OrbTexture = content.Load<Texture2D>(orbTexture);
+
             testFont = content.Load<SpriteFont>("Arial_14");
             testTexture = content.Load<Texture2D>("testChar");
         }
@@ -101,6 +104,9 @@ namespace blank_canvas
             //updates the position
             player.UpdatePos(deltaTime);
 
+            foreach( Enemy e in enemies)
+                e.Update(deltaTime);
+
             //updates the camera and input
             camera.Update(player);
             input.Update();
@@ -117,10 +123,21 @@ namespace blank_canvas
 
             foreach (Rectangle r in tileCollision)
             {
-                if (player.Projectile.Active)
-                    //player.Projectile.CheckCollision(r);
+
                 if (r.Intersects(player.Rectangle))
+                {
                     FixPos(player, r);
+                }
+
+                if (r.Intersects(enemies[0].Rectangle))
+                {
+                    enemies[0].ChangeDirection();
+                }
+            }
+
+            if (player.Rectangle.Intersects(enemies[0].Rectangle))
+            {
+                player.Y += -123;
             }
             
 
@@ -186,6 +203,32 @@ namespace blank_canvas
             {
                 player.Y = rect.Y + rect.Height ;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
+            }
+        }
+
+        private void FixPos(Enemy enemy, Rectangle rect)
+        {
+            if (enemy.PrevPos.X + 4 >= rect.X + rect.Width) //prioritizes intersection from the sides
+            {
+                enemy.X = rect.X + rect.Width;
+                enemy.Velocity = new Vector2(0, enemy.Velocity.Y);
+                return;
+            }
+            else if (enemy.PrevPos.X + enemy.Width - 4 <= rect.X)
+            {
+                enemy.X = rect.X - enemy.Width;
+                enemy.Velocity = new Vector2(0, enemy.Velocity.Y);
+                return;
+            }
+            else if (enemy.PrevPos.Y + enemy.Height - 1 <= rect.Y) //intersects from top
+            {
+                enemy.Y = rect.Y - enemy.Height + 1;
+                enemy.Velocity = new Vector2(enemy.Velocity.X, 0);
+            }
+            else if (enemy.PrevPos.Y + enemy.Height + 1 >= rect.Y + rect.Height)
+            {
+                enemy.Y = rect.Y + rect.Height;
+                enemy.Velocity = new Vector2(enemy.Velocity.X, 0);
             }
         }
 

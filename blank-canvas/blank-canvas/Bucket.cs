@@ -38,7 +38,7 @@ namespace blank_canvas
 
         public void DrawColor(Enemy enemy)
         {
-            PaletteColor color = enemy.PaletteColor;
+            PaletteColor color = enemy.CurrentColor;
             int r = (int)color % 2;
             int b = (int)color % 3;
             int y = (int)color % 5;
