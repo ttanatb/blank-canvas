@@ -104,10 +104,10 @@ namespace blank_canvas
                     stageManager.Update(deltaTime);
                     break;
                 case GameState.Pause:
-                    //UpdatePause();
+                    UpdatePause();
                     break;
                 case GameState.EndOfGame:
-                    //UpdateEndOfGame();
+                    UpdateEndOfGame();
                     break;
             }
 
@@ -121,11 +121,18 @@ namespace blank_canvas
                 state = GameState.Gameplay;
         }
 
-        // changes from pause to gameplay
+        // changes from gameplay to pause
         private void UpdatePause()
         {
             if (butt.isPressed())
-                state = GameState.Gameplay;
+                state = GameState.Pause;
+        }
+
+        // changes from gameplay to end of game
+        private void UpdateEndOfGame()
+        {
+            if (butt.isPressed())
+                state = GameState.EndOfGame;
         }
 
 
