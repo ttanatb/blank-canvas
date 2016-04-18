@@ -59,6 +59,6 @@ namespace blank_canvas
     {
         Active, //can be controlled
         Invulnerable, //recently hurt or smthng
-        Uncontrollable, //can't be controlled (in hurt animation)
+        Uncontrollable, //can't be controlled (in hurt animation) also invulnerable
     }
 }

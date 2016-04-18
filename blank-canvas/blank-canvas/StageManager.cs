@@ -135,16 +135,24 @@ namespace blank_canvas
                 }
 
                 if (player.Projectile.Active && r.Intersects(player.Projectile.CollisionBox))
+                {
                     player.Projectile.Active = false;
-
+                }
             }
 
-            if (player.Rectangle.Intersects(enemies[0].Rectangle))
-                player.TakeDamage();
-
+            foreach (Enemy enemy in enemies)
+            {
+                if (player.Rectangle.Intersects(enemy.Rectangle))
+                    player.TakeDamage();
+            }
 
             player.UpdateInput(input);
-            puzzleOrb.Update();
+
+            if (player.Projectile.Active)
+            {
+                if (player.Projectile.CheckCollision(puzzleOrb))
+                    puzzleOrb.Update();
+            }
         }
 
         private void NextLevel()
@@ -186,14 +194,15 @@ namespace blank_canvas
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Tile tile in tiles)
-                tile.Draw(spriteBatch);
+
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
             puzzleOrb.Draw(spriteBatch);
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y - 50 ), Color.Black);
+            foreach (Tile tile in tiles)
+                tile.Draw(spriteBatch);
         }
     }
 }

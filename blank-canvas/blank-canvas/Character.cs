@@ -146,7 +146,7 @@ namespace blank_canvas
                 spriteEffects = SpriteEffects.None;
             else spriteEffects = SpriteEffects.FlipHorizontally;
 
-            spriteBatch.Draw(texture, Rectangle, new Rectangle(0,0,width, height),Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+            spriteBatch.Draw(texture, Rectangle, new Rectangle(0,0,width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
         }
         #endregion
     }

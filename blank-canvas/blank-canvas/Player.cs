@@ -17,6 +17,8 @@ namespace blank_canvas
         new const float MOVESPEED = 500f;
         const float VERTICAL_KNOCK_BACK = 300f;
         const float HORIZONTAL_KNOCK_BACK = 300f;
+        const float JUMP_VELOCITY = -800f;
+        const double INVULNERABLE_TIME = 3000;
         //attributes
         bool canJump;
 
@@ -62,7 +64,7 @@ namespace blank_canvas
         }
 
         //NEEDS WORK:
-        public void colorChange()
+        private void colorChange()
         {
 
         }
@@ -70,6 +72,9 @@ namespace blank_canvas
 
         public void UpdateInput(InputManager input)
         {
+            if (playerState == PlayerState.Uncontrollable)
+                return;
+
             //checks for input for jump
             if (canJump && input.KeyPressed(Keys.Space) && velocity.Y <= 10)
                 Jump();
@@ -91,8 +96,38 @@ namespace blank_canvas
 
             if (input.KeyPressed(Keys.C) && !projectile.Active)
                 Shoot();
+
+
+        }
+        public void TakeDamage()
+        {
+            velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
+            velocity.Y -= HORIZONTAL_KNOCK_BACK;
+            //playerState = PlayerState.Uncontrollable;
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            SpriteEffects spriteEffects;
+
+            if (direction == Direction.Right)
+                spriteEffects = SpriteEffects.None;
+            else spriteEffects = SpriteEffects.FlipHorizontally;
+
+            if (playerState == PlayerState.Uncontrollable || playerState == PlayerState.Invulnerable)
+            {
+
+            }
+
+
+            spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), new Color(alpha, alpha, alpha, alpha), 0f, Vector2.Zero, spriteEffects, 1);
+
+            //base.Draw(spriteBatch);
+            if (projectile.Active)
+                projectile.Draw(spriteBatch);
+        }
+
+        #region private methods
         /// <summary>
         /// Accelerates the character to the right, then caps it
         /// </summary>
@@ -136,7 +171,7 @@ namespace blank_canvas
         /// </summary>
         private void Jump()
         {
-            velocity.Y = -500f;
+            velocity.Y = JUMP_VELOCITY;
             canJump = false;
         }
 
@@ -145,14 +180,14 @@ namespace blank_canvas
         /// </summary>
         private void ReleaseJump()
         {
-            if (velocity.Y < -250f)
-                velocity.Y = -250f; 
+            if (velocity.Y < JUMP_VELOCITY / 2)
+                velocity.Y = JUMP_VELOCITY / 2; 
         } 
 
         //depletes your buckety thing
         private void Shoot()
         {
-            Vector2 startingPos = Vector2.Zero;
+            Vector2 startingPos;// = Vector2.Zero;
             if (direction == Direction.Right)
                 startingPos = new Vector2(X + width, Y + height / 3 + Projectile.HEIGHT);
             else startingPos = new Vector2(X - Projectile.WIDTH, Y + height / 3 + Projectile.HEIGHT);
@@ -161,22 +196,6 @@ namespace blank_canvas
 
             projectile.Shoot(startingPos, direction, currentColor);
         }
-
-        public void TakeDamage()
-        {
-            velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
-            velocity.Y -= HORIZONTAL_KNOCK_BACK;
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-            if (projectile.Active)
-            {
-                projectile.Draw(spriteBatch);
-            }
-        }
-
-
+        #endregion
     }
 }

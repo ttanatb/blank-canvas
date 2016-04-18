@@ -11,7 +11,7 @@ namespace blank_canvas
     /// <summary>
     /// The projectile that is used by the player (yet to be utilized)
     /// </summary>
-    public class Projectile : GameObject
+    class Projectile : GameObject
     {
         #region Fields
         public const int WIDTH = 32;        
@@ -28,7 +28,6 @@ namespace blank_canvas
         float startingPos;              //starting position (for distnc)
 
         bool active;                    //if projectile is active
-        Rectangle collisionBox;         //collision box of projectile
         float velocity;                 //velocity, you know what that is
 
         PaletteColor projectileColor;   //current color of the projectile
@@ -37,7 +36,13 @@ namespace blank_canvas
         #region Properties
         public Rectangle CollisionBox
         {
-            get { return collisionBox; }
+            get
+            {
+                return new Rectangle((int)position.X + VERTICAL_OFFSET,
+                    (int)position.Y + HORIZONTAL_OFFSET,
+                    WIDTH - 2 * VERTICAL_OFFSET,
+                    HEIGHT - 2 * HORIZONTAL_OFFSET);
+            }
         }
 
         public PaletteColor ProjectileColor
@@ -59,10 +64,6 @@ namespace blank_canvas
         {
             active = false;
             alpha = 255;
-            collisionBox = new Rectangle((int)position.X + VERTICAL_OFFSET,
-                (int)position.Y + HORIZONTAL_OFFSET,
-                WIDTH - 2 * VERTICAL_OFFSET,
-                HEIGHT - 2 * HORIZONTAL_OFFSET);
         }
 
         #region Constructors
@@ -74,21 +75,17 @@ namespace blank_canvas
             velocity = SPEED * (int)direction;
             this.position = position;
             startingPos = position.X;
+
             projectileColor = color;
             active = true;
             alpha = 255;
         }
 
-        public bool CheckCollision(GameObject gameObj)
+        public bool CheckCollision(PuzzleOrb orb)
         {
-            if (Rectangle.Intersects(gameObj.Rectangle))
+            if (CollisionBox.Intersects(orb.CollisionBox))
             {
-                if (gameObj is PuzzleOrb)
-                {
-                    PuzzleOrb puzzleOrb = (PuzzleOrb)gameObj;
-                    puzzleOrb.AddColor(this);
-                }
-
+                orb.AddColor(this);
                 active = false;
                 return true;
             }
