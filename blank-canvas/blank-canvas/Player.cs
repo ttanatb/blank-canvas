@@ -23,6 +23,14 @@ namespace blank_canvas
         enum PlayerFrameState { Idle, Walk, Run, Shoot, Jump, Hurt};
         PlayerFrameState pfs;
 
+        //for spritesheet
+        private Texture2D image; // image to display
+        private int frame; // current frame number
+        //identify particulars of frame size when spritesheet arrives
+        private Point frameSize; // width and height of image
+        private int rows, cols; // defines how spritesheet is laid out
+        private Point currentFrame; // location of current frame on spritesheet
+
         Bucket bucket;
         PaletteColor currentColor;
         Projectile projectile;
@@ -169,6 +177,7 @@ namespace blank_canvas
         {
             velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
             velocity.Y -= HORIZONTAL_KNOCK_BACK;
+            health--;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -180,64 +189,62 @@ namespace blank_canvas
                 //animation frame states
                 if(pfs == PlayerFrameState.Idle)
                 {
-                    //for standing still
-                    SpriteEffects spriteEffects;
-                    if (direction == Direction.Right)
-                        spriteEffects = SpriteEffects.None;
-                    else spriteEffects = SpriteEffects.FlipHorizontally;
-                    //insert frame from spritesheet in line below
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    //calculate correct frame size once spritesheet arrives
+                    /*
+                    currentFrame.X = 0;
+                    currentFrame.Y = 0;
+                    */
                 }
                 if (pfs == PlayerFrameState.Jump)
                 {
-                    //for jumping
-                    SpriteEffects spriteEffects;
-                    if (direction == Direction.Right)
-                        spriteEffects = SpriteEffects.None;
-                    else spriteEffects = SpriteEffects.FlipHorizontally;
-                    //insert frame from spritesheet in line below
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    //calculate correct frame size once spritesheet arrives
+                    /*
+                    currentFrame.X = 0;
+                    currentFrame.Y = 0;
+                    */
                 }
                 if (pfs == PlayerFrameState.Run)
                 {
-                    //for going faster than walk
-                    SpriteEffects spriteEffects;
-                    if (direction == Direction.Right)
-                        spriteEffects = SpriteEffects.None;
-                    else spriteEffects = SpriteEffects.FlipHorizontally;
-                    //insert frame from spritesheet in line below
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    //calculate correct frame size once spritesheet arrives
+                    /*
+                    currentFrame.X = 0;
+                    currentFrame.Y = 0;
+                    */
                 }
                 if (pfs == PlayerFrameState.Shoot)
                 {
-                    //for firing projectiles
-                    SpriteEffects spriteEffects;
-                    if (direction == Direction.Right)
-                        spriteEffects = SpriteEffects.None;
-                    else spriteEffects = SpriteEffects.FlipHorizontally;
-                    //insert frame from spritesheet in line below
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    //calculate correct frame size once spritesheet arrives
+                    /*
+                    currentFrame.X = 0;
+                    currentFrame.Y = 0;
+                    */
                 }
                 if (pfs == PlayerFrameState.Walk)
                 {
-                    //for inbetween idle speed and running speed
-                    SpriteEffects spriteEffects;
-                    if (direction == Direction.Right)
-                        spriteEffects = SpriteEffects.None;
-                    else spriteEffects = SpriteEffects.FlipHorizontally;
-                    //insert frame from spritesheet in line below
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    //calculate correct frame size once spritesheet arrives
+                    /*
+                    currentFrame.X = 0;
+                    currentFrame.Y = 0;
+                    */
                 }
                 if (pfs == PlayerFrameState.Hurt)
                 {
-                    //for when collisions occur
-                    SpriteEffects spriteEffects;
-                    if (direction == Direction.Right)
-                        spriteEffects = SpriteEffects.None;
-                    else spriteEffects = SpriteEffects.FlipHorizontally;
-                    //insert frame from spritesheet in line below
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    //calculate correct frame size once spritesheet arrives
+                    /*
+                    currentFrame.X = 0;
+                    currentFrame.Y = 0;
+                    */
                 }
+                //for when collisions occur
+                SpriteEffects spriteEffects;
+                if (direction == Direction.Right)
+                    spriteEffects = SpriteEffects.None;
+                else spriteEffects = SpriteEffects.FlipHorizontally;
+
+                //insert frame from spritesheet in line below
+                spriteBatch.Draw(texture, Rectangle, new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+
+
                 projectile.Draw(spriteBatch);
             }
         }
