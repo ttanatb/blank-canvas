@@ -184,32 +184,6 @@ namespace blank_canvas
             }
         }
 
-        private void FixPos(Enemy enemy, Rectangle rect)
-        {
-            if (enemy.PrevPos.X + 4 >= rect.X + rect.Width) //prioritizes intersection from the sides
-            {
-                enemy.X = rect.X + rect.Width;
-                enemy.Velocity = new Vector2(0, enemy.Velocity.Y);
-                return;
-            }
-            else if (enemy.PrevPos.X + enemy.Width - 4 <= rect.X)
-            {
-                enemy.X = rect.X - enemy.Width;
-                enemy.Velocity = new Vector2(0, enemy.Velocity.Y);
-                return;
-            }
-            else if (enemy.PrevPos.Y + enemy.Height - 1 <= rect.Y) //intersects from top
-            {
-                enemy.Y = rect.Y - enemy.Height + 1;
-                enemy.Velocity = new Vector2(enemy.Velocity.X, 0);
-            }
-            else if (enemy.PrevPos.Y + enemy.Height + 1 >= rect.Y + rect.Height)
-            {
-                enemy.Y = rect.Y + rect.Height;
-                enemy.Velocity = new Vector2(enemy.Velocity.X, 0);
-            }
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (Tile tile in tiles)

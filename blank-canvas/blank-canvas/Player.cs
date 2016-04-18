@@ -94,9 +94,47 @@ namespace blank_canvas
         }
 
         /// <summary>
+        /// Accelerates the character to the right, then caps it
+        /// </summary>
+        private void MoveRight()
+        {
+            direction = Direction.Right;
+            if (velocity.X < MOVESPEED)
+            {
+                acceleration += new Vector2(10000, 0);
+                direction = Direction.Right;
+            }
+            else velocity.X = MOVESPEED;
+        }
+
+        /// <summary>
+        /// Accelerates the character to the left, then caps it
+        /// </summary>
+        private void MoveLeft()
+        {
+            direction = Direction.Left;
+            if (velocity.X > -MOVESPEED)
+            {
+                acceleration += new Vector2(-10000, 0);
+                direction = Direction.Left;
+            }
+            else velocity.X = -MOVESPEED;
+        }
+
+        /// <summary>
+        /// Halts the character to a stop
+        /// </summary>
+        private void Halt()
+        {
+            if (velocity.X > 0)
+                velocity.X = (float)Math.Floor((velocity.X / 1.2));
+            else velocity.X = (float)Math.Ceiling((velocity.X / 1.2));
+        }
+
+        /// <summary>
         /// Jumps
         /// </summary>
-        public void Jump()
+        private void Jump()
         {
             velocity.Y = -500f;
             canJump = false;
@@ -105,20 +143,14 @@ namespace blank_canvas
         /// <summary>
         /// Cuts vertical velocity during jump
         /// </summary>
-        public void ReleaseJump()
+        private void ReleaseJump()
         {
             if (velocity.Y < -250f)
                 velocity.Y = -250f; 
-        }
-
-        public void TakeDamage()
-        {
-            velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
-            velocity.Y -= HORIZONTAL_KNOCK_BACK;
-        }
+        } 
 
         //depletes your buckety thing
-        public void Shoot()
+        private void Shoot()
         {
             Vector2 startingPos = Vector2.Zero;
             if (direction == Direction.Right)
@@ -128,6 +160,12 @@ namespace blank_canvas
             //deal with the color thing with the bucket
 
             projectile.Shoot(startingPos, direction, currentColor);
+        }
+
+        public void TakeDamage()
+        {
+            velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
+            velocity.Y -= HORIZONTAL_KNOCK_BACK;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
