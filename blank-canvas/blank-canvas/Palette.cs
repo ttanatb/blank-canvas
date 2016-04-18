@@ -21,8 +21,9 @@ namespace blank_canvas
             colors[2] = false;
         }
 
-        public void AddColor(PaletteColor color)
+        public Palette(PaletteColor color)
         {
+            colors = new bool[3];
             switch (color)
             {
                 case PaletteColor.Red:
@@ -34,9 +35,49 @@ namespace blank_canvas
                 case PaletteColor.Yellow:
                     colors[2] = true;
                     break;
+                case PaletteColor.Purple:
+                    colors[0] = true;
+                    colors[1] = true;
+                    break;
+                case PaletteColor.Green:
+                    colors[1] = true;
+                    colors[2] = true;
+                    break;
+                case PaletteColor.Orange:
+                    colors[0] = true;
+                    colors[2] = true;
+                    break;
+                case PaletteColor.Black:
+                    colors[0] = true;
+                    colors[1] = true;
+                    colors[2] = true;
+                    break;
                 default:
                     break;
             }
+        }
+
+        public bool AddColor(PaletteColor color)
+        {
+            switch (color)
+            {
+                case PaletteColor.Red:
+                    if (!colors[0])
+                        colors[0] = true;
+                    else return false;
+                    break;
+                case PaletteColor.Blue:
+                    if (!colors[1])
+                        colors[1] = true;
+                    else return false;
+                    break;
+                case PaletteColor.Yellow:
+                    if (!colors[2])
+                        colors[2] = true;
+                    else return false;
+                    break;
+            }
+            return true;
         }
 
         public PaletteColor GetColor()

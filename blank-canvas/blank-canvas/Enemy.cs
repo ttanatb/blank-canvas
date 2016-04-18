@@ -16,7 +16,7 @@ namespace blank_canvas
     /// <summary>
     /// The basic enemy class
     /// </summary>
-    public class Enemy : Character
+    class Enemy : Character
     {
         #region Variables
         new const float MOVESPEED = 100f;
@@ -24,7 +24,7 @@ namespace blank_canvas
         const int WIDTH = 64;
         const int HEIGHT = 64;
 
-        PaletteColor currentColor;
+        Palette palette;
         Random rndm;
         bool active;
 
@@ -34,7 +34,12 @@ namespace blank_canvas
 
         public PaletteColor CurrentColor
         {
-            get { return currentColor; }
+            get { return palette.GetColor(); }
+        }
+
+        public bool Active
+        {
+            get { return active; }
         }
 
         #endregion
@@ -43,17 +48,10 @@ namespace blank_canvas
         //constructor
         public Enemy(Vector2 position, PaletteColor color) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
-            currentColor = color;
+            palette = new Palette(color);
+
             rndm = new Random();
             active = true;
-            
-            //Will be set for all enemies as 1 hit (could be set as more in the future)
-            //paint = 100000; //practically unlimited paint projectiles for enemy
-
-            //spawn enemy facing left
-
-            //possible projectile
-            //projectile = new Projectile();
         }
         #endregion
 
@@ -61,8 +59,11 @@ namespace blank_canvas
         //methods
         public void Update(double deltaTime)
         {
-            velocity.X = (int)direction * MOVESPEED;
-            UpdatePos(deltaTime);
+            if (active)
+            {
+                velocity.X = (int)direction * MOVESPEED;
+                UpdatePos(deltaTime);
+            }
         }
 
         public void ChangeDirection()
@@ -73,9 +74,52 @@ namespace blank_canvas
         public PaletteColor DrainColor()
         {
             active = false;
-            return currentColor;
+            PaletteColor color = CurrentColor;
+            palette.ResetColor();
+            return color;
         }
 
+        public bool AddColor(Projectile projectile)
+        {
+            active = true;
+            return palette.AddColor(projectile.ProjectileColor);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            int a = alpha * 3 / 4;
+
+            if (!active)
+                a = a / 8;
+             
+            switch (CurrentColor)
+            {
+                case (PaletteColor.Red):
+                    spriteBatch.Draw(texture, position, new Color(alpha, 0, 0, a));
+                    break;
+                case (PaletteColor.Blue):
+                    spriteBatch.Draw(texture, position, new Color(0, 0, alpha, a));
+                    break;
+                case (PaletteColor.Yellow):
+                    spriteBatch.Draw(texture, position, new Color(alpha, alpha, 0, a));
+                    break;
+                case (PaletteColor.Orange):
+                    spriteBatch.Draw(texture, position, new Color(alpha, alpha / 2, 0, a));
+                    break;
+                case (PaletteColor.Green):
+                    spriteBatch.Draw(texture, position, new Color(0, alpha, 0, a));
+                    break;
+                case (PaletteColor.Purple):
+                    spriteBatch.Draw(texture, position, new Color(alpha / 2, 0, alpha / 2, a));
+                    break;
+                case (PaletteColor.Black):
+                    spriteBatch.Draw(texture, position, new Color(0, 0, 0, alpha));
+                    break;
+                case (PaletteColor.White):
+                    spriteBatch.Draw(texture, position, new Color(alpha, alpha, alpha, alpha));
+                    break;
+            }
+        }
         #endregion
     }
 }

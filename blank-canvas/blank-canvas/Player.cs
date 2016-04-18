@@ -19,7 +19,7 @@ namespace blank_canvas
         const float VERTICAL_KNOCK_BACK = 300f;
         const float HORIZONTAL_KNOCK_BACK = 300f;
         const float JUMP_VELOCITY = -800f;
-
+        const int SEARCH_RANGE = 400;
 
 
         //attributes
@@ -37,7 +37,6 @@ namespace blank_canvas
 
         Bucket bucket;
         PaletteColor currentColor;
-        Projectile projectile;
         PlayerState playerState;
 
         //properties
@@ -55,12 +54,22 @@ namespace blank_canvas
 
         public Projectile Projectile
         {
-            get { return projectile; }
+            get { return bucket.Projectile; }
         }
 
         public PlayerState State
         {
             get { return playerState; }
+        }
+
+        public Rectangle SearchRectangle
+        {
+            get
+            {
+                if (direction == Direction.Right)
+                    return new Rectangle(Max.X, (int)position.Y, SEARCH_RANGE, height);
+                else return new Rectangle((int)position.X - SEARCH_RANGE, (int)position.Y, SEARCH_RANGE, height);
+            }
         }
 
         //NEEDS WORK: Paint properties
@@ -70,7 +79,6 @@ namespace blank_canvas
         {
             canJump = false;
             bucket = new Bucket();
-            projectile = new Projectile();
             currentColor = PaletteColor.Yellow;
             playerState = PlayerState.Active;
             //spriteOrigin = new Vector2(pRec.X, pRec.Y);
@@ -107,14 +115,29 @@ namespace blank_canvas
             else if (input.KeysUp(Keys.Left, Keys.Right))
                 Halt();
 
-            if (input.KeyPressed(Keys.C) && !projectile.Active)
-                Shoot();
+            if (input.KeyPressed(Keys.C))
+                bucket.Shoot(this);
+
+            if (input.KeyPressed(Keys.RightShift))
+                bucket.SwitchRBY();
+            else if (input.KeyPressed(Keys.LeftShift))
+                bucket.SwitchYBR();
         }
+
         public void TakeDamage()
         {
             velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
             velocity.Y -= HORIZONTAL_KNOCK_BACK;
             //playerState = PlayerState.Uncontrollable;
+        }
+        public void DrainColor(Enemy enemy)
+        {
+            bucket.AddColor(enemy);
+        }
+
+        public void DrainColor(PuzzleOrb orb)
+        {
+            bucket.AddColor(orb);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -128,12 +151,18 @@ namespace blank_canvas
             spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
 
             //base.Draw(spriteBatch);
-            if (projectile.Active)
-                projectile.Draw(spriteBatch);
+            if (Projectile.Active)
+                Projectile.Draw(spriteBatch);
+        }
+
+        public override string ToString()
+        {
+            return bucket.ToString();
         }
 
 
         #region private methods        
+
         /// <summary>
         /// Accelerates the character to the right, then caps it
         /// </summary>
@@ -190,18 +219,7 @@ namespace blank_canvas
                 velocity.Y = JUMP_VELOCITY / 2; 
         } 
 
-        //depletes your buckety thing
-        private void Shoot()
-        {
-            Vector2 startingPos;// = Vector2.Zero;
-            if (direction == Direction.Right)
-                startingPos = new Vector2(X + width, Y + height / 3 + Projectile.HEIGHT);
-            else startingPos = new Vector2(X - Projectile.WIDTH, Y + height / 3 + Projectile.HEIGHT);
 
-            //deal with the color thing with the bucket
-
-            projectile.Shoot(startingPos, direction, currentColor);
-        }
 
         #endregion
 

@@ -81,13 +81,14 @@ namespace blank_canvas
         #endregion
 
         #region Methods
-        public void AddColor(Projectile projectile)
+        public bool AddColor(Projectile projectile)
         {
-            palette.AddColor(projectile.ProjectileColor);
+            return palette.AddColor(projectile.ProjectileColor);
         }
 
         public PaletteColor DrainColor()
         {
+            Console.WriteLine("COLOR DRAINED");
             PaletteColor color = palette.GetColor();
             palette.ResetColor();
             return color;

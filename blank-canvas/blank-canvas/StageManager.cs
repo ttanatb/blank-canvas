@@ -27,7 +27,7 @@ namespace blank_canvas
         Tile[] tiles;               //tiles to draw (we really don't need tiles, just rectangles)
         Rectangle[] tileCollision;  //tiles to check collision with
 
-        PuzzleOrb puzzleOrb;        //this is for testing
+        PuzzleOrb[] puzzleOrbs;        //this is for testing
         //Enemy testEnemy;
         //the puzzle orb should be linked to a gate
 
@@ -50,9 +50,10 @@ namespace blank_canvas
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
+            puzzleOrbs = new PuzzleOrb[1];
 
             //instantialization some for testing
-            puzzleOrb = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Yellow);
+            puzzleOrbs[0] = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Black);
             
         }
 
@@ -83,8 +84,8 @@ namespace blank_canvas
 
             player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
 
-            puzzleOrb.Texture = content.Load<Texture2D>(orbBaseTexture);
-            puzzleOrb.OrbTexture = content.Load<Texture2D>(orbTexture);
+            puzzleOrbs[0].Texture = content.Load<Texture2D>(orbBaseTexture);
+            puzzleOrbs[0].OrbTexture = content.Load<Texture2D>(orbTexture);
 
             testFont = content.Load<SpriteFont>("Arial_14");
             testTexture = content.Load<Texture2D>("testChar");
@@ -150,14 +151,44 @@ namespace blank_canvas
 
             if (input.KeyPressed(Keys.X))
             {
+                Rectangle searchRect = player.SearchRectangle;
+                int index = SearchClosestEnemy(searchRect);
+                if (index == -1)
+                {
+                    index = SearchClosestPuzzleOrb(searchRect);
+                    if (index != -1 && puzzleOrbs[index].PuzzleState != PuzzleState.Completed)
+                        player.DrainColor(puzzleOrbs[index]);
+                }
+                else player.DrainColor(enemies[index]);
             }
-            
 
             if (player.Projectile.Active)
             {
-                if (player.Projectile.CheckCollision(puzzleOrb))
-                    puzzleOrb.Update();
+                if (player.Projectile.CheckCollision(puzzleOrbs[0]))
+                    puzzleOrbs[0].Update();
+                player.Projectile.CheckCollision(enemies[0]);
+
             }
+        }
+
+        private int SearchClosestEnemy(Rectangle searchRect)
+        {
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                if (searchRect.Intersects(enemies[i].Rectangle))
+                    return i;
+            }
+            return -1;
+        }
+
+        private int SearchClosestPuzzleOrb(Rectangle searchRect)
+        {
+            for (int i = 0; i < puzzleOrbs.Length; i++)
+            {
+                if (searchRect.Intersects(puzzleOrbs[i].CollisionBox))
+                    return i;
+            }
+            return -1;
         }
 
         private void NextLevel()
@@ -199,12 +230,14 @@ namespace blank_canvas
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //spriteBatch.Draw(testTexture, player.SearchRectangle, Color.Red);
+
 
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
             player.Draw(spriteBatch);
 
-            puzzleOrb.Draw(spriteBatch);
+            puzzleOrbs[0].Draw(spriteBatch);
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y - 50 ), Color.Black);
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);

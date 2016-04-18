@@ -31,6 +31,8 @@ namespace blank_canvas
         float velocity;                 //velocity, you know what that is
 
         PaletteColor projectileColor;   //current color of the projectile
+
+        Bucket bucket;
         #endregion
 
         #region Properties
@@ -60,8 +62,9 @@ namespace blank_canvas
         /// <summary>
         /// Instantiates the projectile, but keeps it inactive
         /// </summary>
-        public Projectile() : base(WIDTH, HEIGHT)
+        public Projectile(Bucket bucket) : base(WIDTH, HEIGHT)
         {
+            this.bucket = bucket;
             active = false;
             alpha = 255;
         }
@@ -85,11 +88,31 @@ namespace blank_canvas
         {
             if (CollisionBox.Intersects(orb.CollisionBox) && orb.PuzzleState != PuzzleState.Completed)
             {
-                orb.AddColor(this);
-                active = false;
+                bool used = orb.AddColor(this);
+                if (used)
+                {
+                    orb.AddColor(this);
+                    active = false;
+                    bucket.UsePaint();
+                }
                 return true;
             }
+            else return false;
+        }
 
+        public bool CheckCollision(Enemy enemy)
+        {
+            if (CollisionBox.Intersects(enemy.Rectangle) && !enemy.Active)
+            {
+                bool used = enemy.AddColor(this);
+                if (used)
+                {
+                    enemy.AddColor(this);
+                    active = false;
+                    bucket.UsePaint();
+                }
+                return true;
+            }
             else return false;
         }
 
