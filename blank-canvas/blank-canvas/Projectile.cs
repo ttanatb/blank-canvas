@@ -83,7 +83,7 @@ namespace blank_canvas
 
         public bool CheckCollision(PuzzleOrb orb)
         {
-            if (CollisionBox.Intersects(orb.CollisionBox))
+            if (CollisionBox.Intersects(orb.CollisionBox) && orb.PuzzleState != PuzzleState.Completed)
             {
                 orb.AddColor(this);
                 active = false;

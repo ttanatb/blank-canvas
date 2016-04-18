@@ -148,6 +148,11 @@ namespace blank_canvas
 
             player.UpdateInput(input);
 
+            if (input.KeyPressed(Keys.X))
+            {
+            }
+            
+
             if (player.Projectile.Active)
             {
                 if (player.Projectile.CheckCollision(puzzleOrb))

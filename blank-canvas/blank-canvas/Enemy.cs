@@ -24,11 +24,9 @@ namespace blank_canvas
         const int WIDTH = 64;
         const int HEIGHT = 64;
 
-        //Prjectile variable (if we want them to shoot at the player)
-        //Projectile projectile;
-
-        PaletteColor paletteColor;
+        PaletteColor currentColor;
         Random rndm;
+        bool active;
 
         #endregion
 
@@ -36,7 +34,7 @@ namespace blank_canvas
 
         public PaletteColor CurrentColor
         {
-            get { return paletteColor; }
+            get { return currentColor; }
         }
 
         #endregion
@@ -45,9 +43,9 @@ namespace blank_canvas
         //constructor
         public Enemy(Vector2 position, PaletteColor color) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
-            paletteColor = color;
-
+            currentColor = color;
             rndm = new Random();
+            active = true;
             
             //Will be set for all enemies as 1 hit (could be set as more in the future)
             //paint = 100000; //practically unlimited paint projectiles for enemy
@@ -72,17 +70,10 @@ namespace blank_canvas
             direction = (Direction)(-1 * (int)direction);
         }
 
-
-        //lol this isn't used
-        //collision method for an enemy (can't bump into it)
-        public bool CheckCollision(Character character)
+        public PaletteColor DrainColor()
         {
-            foreach (Rectangle r in character.CollisionBoxes)
-            {
-                if (r.Intersects(Rectangle))
-                    return true;
-            }
-            return false;
+            active = false;
+            return currentColor;
         }
 
         #endregion

@@ -56,6 +56,11 @@ namespace blank_canvas
         {
             get { return orbCollisionBox; }
         }
+
+        public PuzzleState PuzzleState
+        {
+            get { return state; }
+        }
         #endregion
 
         #region Constructors

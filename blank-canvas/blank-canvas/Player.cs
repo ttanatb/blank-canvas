@@ -19,10 +19,12 @@ namespace blank_canvas
         const float VERTICAL_KNOCK_BACK = 300f;
         const float HORIZONTAL_KNOCK_BACK = 300f;
         const float JUMP_VELOCITY = -800f;
-        const double INVULNERABLE_TIME = 3000;
+
+
+
         //attributes
         bool canJump;
-        enum PlayerFrameState { Idle, Walk, Run, Shoot, Jump, Hurt};
+        enum PlayerFrameState { Idle, Walk, Shoot, Jump, Hurt};
         PlayerFrameState pfs;
 
         //for spritesheet
@@ -74,12 +76,12 @@ namespace blank_canvas
             //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
 
-        //NEEDS WORK:
-        private void colorChange()
+        public void DrainEnemy(Enemy enemy)
         {
-
+            if (enemy == null)
+                return;
+            bucket.AddColor(enemy); 
         }
-
 
         public void UpdateInput(InputManager input)
         {
@@ -107,8 +109,6 @@ namespace blank_canvas
 
             if (input.KeyPressed(Keys.C) && !projectile.Active)
                 Shoot();
-
-
         }
         public void TakeDamage()
         {
@@ -125,20 +125,15 @@ namespace blank_canvas
                 spriteEffects = SpriteEffects.None;
             else spriteEffects = SpriteEffects.FlipHorizontally;
 
-            if (playerState == PlayerState.Uncontrollable || playerState == PlayerState.Invulnerable)
-            {
-
-            }
-
-
-            spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), new Color(alpha, alpha, alpha, alpha), 0f, Vector2.Zero, spriteEffects, 1);
+            spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
 
             //base.Draw(spriteBatch);
             if (projectile.Active)
                 projectile.Draw(spriteBatch);
         }
 
-        #region private methods
+
+        #region private methods        
         /// <summary>
         /// Accelerates the character to the right, then caps it
         /// </summary>
@@ -207,87 +202,73 @@ namespace blank_canvas
 
             projectile.Shoot(startingPos, direction, currentColor);
         }
-<<<<<<< HEAD
+
         #endregion
-=======
 
-        public void TakeDamage()
-        {
-            velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
-            velocity.Y -= HORIZONTAL_KNOCK_BACK;
-            health--;
-        }
-
+        /*
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
-            if (projectile.Active)
+            //animation frame states
+            if (pfs == PlayerFrameState.Idle)
             {
-
-                //animation frame states
-                if(pfs == PlayerFrameState.Idle)
-                {
-                    //calculate correct frame size once spritesheet arrives
-                    /*
-                    currentFrame.X = 0;
-                    currentFrame.Y = 0;
-                    */
-                }
-                if (pfs == PlayerFrameState.Jump)
-                {
-                    //calculate correct frame size once spritesheet arrives
-                    /*
-                    currentFrame.X = 0;
-                    currentFrame.Y = 0;
-                    */
-                }
-                if (pfs == PlayerFrameState.Run)
-                {
-                    //calculate correct frame size once spritesheet arrives
-                    /*
-                    currentFrame.X = 0;
-                    currentFrame.Y = 0;
-                    */
-                }
-                if (pfs == PlayerFrameState.Shoot)
-                {
-                    //calculate correct frame size once spritesheet arrives
-                    /*
-                    currentFrame.X = 0;
-                    currentFrame.Y = 0;
-                    */
-                }
-                if (pfs == PlayerFrameState.Walk)
-                {
-                    //calculate correct frame size once spritesheet arrives
-                    /*
-                    currentFrame.X = 0;
-                    currentFrame.Y = 0;
-                    */
-                }
-                if (pfs == PlayerFrameState.Hurt)
-                {
-                    //calculate correct frame size once spritesheet arrives
-                    /*
-                    currentFrame.X = 0;
-                    currentFrame.Y = 0;
-                    */
-                }
-                //for when collisions occur
-                SpriteEffects spriteEffects;
-                if (direction == Direction.Right)
-                    spriteEffects = SpriteEffects.None;
-                else spriteEffects = SpriteEffects.FlipHorizontally;
-
-                //insert frame from spritesheet in line below
-                spriteBatch.Draw(texture, Rectangle, new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
-
-
-                projectile.Draw(spriteBatch);
+                //calculate correct frame size once spritesheet arrives
+                /*
+                currentFrame.X = 0;
+                currentFrame.Y = 0;
             }
+            if (pfs == PlayerFrameState.Jump)
+            {
+                //calculate correct frame size once spritesheet arrives
+                /*
+                currentFrame.X = 0;
+                currentFrame.Y = 0;
+
+            }
+            if (pfs == PlayerFrameState.Run)
+            {
+                //calculate correct frame size once spritesheet arrives
+                /*
+                currentFrame.X = 0;
+                currentFrame.Y = 0;
+                
+            }
+            if (pfs == PlayerFrameState.Shoot)
+            {
+                //calculate correct frame size once spritesheet arrives
+                /*
+                currentFrame.X = 0;
+                currentFrame.Y = 0;
+                
+            }
+            if (pfs == PlayerFrameState.Walk)
+            {
+                //calculate correct frame size once spritesheet arrives
+                /*
+                currentFrame.X = 0;
+                currentFrame.Y = 0;
+                
+            }
+            if (pfs == PlayerFrameState.Hurt)
+            {
+                //calculate correct frame size once spritesheet arrives
+                /*
+                currentFrame.X = 0;
+                currentFrame.Y = 0;
+                
+            }
+
+            //for when collisions occur
+            SpriteEffects spriteEffects;
+            if (direction == Direction.Right)
+                spriteEffects = SpriteEffects.None;
+            else spriteEffects = SpriteEffects.FlipHorizontally;
+
+            //insert frame from spritesheet in line below
+            spriteBatch.Draw(texture, Rectangle, new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+
+            if (projectile.Active)
+                projectile.Draw(spriteBatch);
         }
-
-
->>>>>>> 9eb3ad62c4f2192eb6a2e9b9a154bfcec5bcf411
+        */
     }
 }

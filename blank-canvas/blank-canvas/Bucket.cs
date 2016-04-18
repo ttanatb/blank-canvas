@@ -45,9 +45,8 @@ namespace blank_canvas
 
         public void AddColor(Enemy enemy)
         {
-            PaletteColor color = enemy.CurrentColor;
+            PaletteColor color = enemy.DrainColor();
             DistributeColor(color);
-            //enemy.RemoveColor()?
         }
 
         public void AddColor(PuzzleOrb puzzleOrb)
