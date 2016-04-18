@@ -34,7 +34,7 @@ namespace blank_canvas
 
         Palette palette;            //manages the color
         PaletteColor colorKey;      //the key required to solve the orb
-        State state;         
+        PuzzleState state;         
 
         Texture2D orbTexture;
         Vector2 orbPosition;
@@ -71,7 +71,7 @@ namespace blank_canvas
 
             // Sets the key for the orb to solve the puzzle
             colorKey = key;
-            state = State.Active;
+            state = PuzzleState.Active;
         }
         #endregion
 
@@ -90,18 +90,18 @@ namespace blank_canvas
 
         public void Update()
         {
-            if (state == State.Active)
+            if (state == PuzzleState.Active)
             {
                 if (CurrentColor == colorKey)
                 {
-                    state = State.Completed;
+                    state = PuzzleState.Completed;
                 }
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (state == State.Active || state == State.Completed)
+            if (state == PuzzleState.Active || state == PuzzleState.Completed)
             {
                 base.Draw(spriteBatch);
                 int a = alpha * 3 / 4 * (int)state / 8;

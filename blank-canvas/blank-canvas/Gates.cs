@@ -23,7 +23,7 @@ namespace blank_canvas
         // int HORIZONTAL_OFFSET = //num;
         // const int VERTICAL_OFFSET = //num;
 
-        State doorState;
+        PuzzleState doorState;
 
         Texture2D doorTexture;
         Vector2 doorPosition;

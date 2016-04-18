@@ -48,10 +48,17 @@ namespace blank_canvas
         Right = 1,
     }
 
-    public enum State
+    public enum PuzzleState
     {
         Inactive,
         Active = 8,
         Completed = 1,
+    }
+
+    public enum PlayerState
+    {
+        Active, //can be controlled
+        Invulnerable, //recently hurt or smthng
+        Uncontrollable, //can't be controlled (in hurt animation)
     }
 }

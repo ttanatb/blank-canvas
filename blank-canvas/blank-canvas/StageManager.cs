@@ -97,7 +97,11 @@ namespace blank_canvas
         /// </summary>
         /// <param name="deltaTime">The amount of miliseconds passed since previous update</param>
         public void Update(float deltaTime)
-        {           
+        {                       
+            //updates the camera and input
+            camera.Update(player);
+            input.Update();
+
             //converts from time to miliseconds
             deltaTime = deltaTime / 1000.0f;
 
@@ -106,10 +110,6 @@ namespace blank_canvas
 
             foreach( Enemy e in enemies)
                 e.Update(deltaTime);
-
-            //updates the camera and input
-            camera.Update(player);
-            input.Update();
 
             //updates acceleartion for players (kind of unnecessary because it's always the same)
             player.Acceleration = new Vector2(0, GRAVITY);
@@ -121,7 +121,7 @@ namespace blank_canvas
             if (player.Projectile.Active)
                 player.Projectile.Update(deltaTime);
 
-            foreach (Rectangle r in tileCollision)
+            foreach (Rectangle r in tileCollision) //may need some streamlining
             {
 
                 if (r.Intersects(player.Rectangle))
@@ -133,39 +133,17 @@ namespace blank_canvas
                 {
                     enemies[0].ChangeDirection();
                 }
+
+                if (player.Projectile.Active && r.Intersects(player.Projectile.CollisionBox))
+                    player.Projectile.Active = false;
+
             }
 
             if (player.Rectangle.Intersects(enemies[0].Rectangle))
-            {
-                player.Y += -123;
-            }
-            
+                player.TakeDamage();
 
-            //checks for input for jump
-            if (player.CanJump && input.KeyPressed(Keys.Space) && player.Velocity.Y <= 10)
-                player.Jump();
 
-            //checks if jump was released early
-            if (input.KeyRelease(Keys.Space))
-                player.ReleaseJump();
-
-            if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
-                player.MoveLeft();
-
-            //checks for input towards the right
-            else if (input.KeyDown(Keys.Right) && input.KeyUp(Keys.Left))
-                player.MoveRight();
-
-            //checks for no input
-            else if (input.KeysUp(Keys.Left, Keys.Right))
-                player.Halt();
-
-            if (input.KeyPressed(Keys.C) && ! player.Projectile.Active)
-            {
-                player.Shoot();
-                //puzzleOrb.ChangeColor();
-            }
-
+            player.UpdateInput(input);
             puzzleOrb.Update();
         }
 

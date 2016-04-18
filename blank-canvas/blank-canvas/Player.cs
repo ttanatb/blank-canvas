@@ -12,15 +12,18 @@ namespace blank_canvas
     /// <summary>
     /// The child of the character class that the player controls
     /// </summary>
-    public class Player : Character
+     class Player : Character
     {
         new const float MOVESPEED = 500f;
+        const float VERTICAL_KNOCK_BACK = 300f;
+        const float HORIZONTAL_KNOCK_BACK = 300f;
         //attributes
         bool canJump;
 
         Bucket bucket;
         PaletteColor currentColor;
         Projectile projectile;
+        PlayerState playerState;
 
         //properties
 
@@ -40,6 +43,11 @@ namespace blank_canvas
             get { return projectile; }
         }
 
+        public PlayerState State
+        {
+            get { return playerState; }
+        }
+
         //NEEDS WORK: Paint properties
 
         //constructor
@@ -49,6 +57,7 @@ namespace blank_canvas
             bucket = new Bucket();
             projectile = new Projectile();
             currentColor = PaletteColor.Yellow;
+            playerState = PlayerState.Active;
             //spriteOrigin = new Vector2(pRec.X, pRec.Y);
         }
 
@@ -58,6 +67,31 @@ namespace blank_canvas
 
         }
 
+
+        public void UpdateInput(InputManager input)
+        {
+            //checks for input for jump
+            if (canJump && input.KeyPressed(Keys.Space) && velocity.Y <= 10)
+                Jump();
+
+            //checks if jump was released early
+            if (input.KeyRelease(Keys.Space))
+                ReleaseJump();
+
+            if (input.KeyDown(Keys.Left) && input.KeyUp(Keys.Right))
+                MoveLeft();
+
+            //checks for input towards the right
+            else if (input.KeyDown(Keys.Right) && input.KeyUp(Keys.Left))
+                MoveRight();
+
+            //checks for no input
+            else if (input.KeysUp(Keys.Left, Keys.Right))
+                Halt();
+
+            if (input.KeyPressed(Keys.C) && !projectile.Active)
+                Shoot();
+        }
 
         /// <summary>
         /// Jumps
@@ -75,6 +109,12 @@ namespace blank_canvas
         {
             if (velocity.Y < -250f)
                 velocity.Y = -250f; 
+        }
+
+        public void TakeDamage()
+        {
+            velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
+            velocity.Y -= HORIZONTAL_KNOCK_BACK;
         }
 
         //depletes your buckety thing
@@ -98,5 +138,7 @@ namespace blank_canvas
                 projectile.Draw(spriteBatch);
             }
         }
+
+
     }
 }
