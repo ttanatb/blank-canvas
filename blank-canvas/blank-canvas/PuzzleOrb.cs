@@ -88,7 +88,6 @@ namespace blank_canvas
 
         public PaletteColor DrainColor()
         {
-            Console.WriteLine("COLOR DRAINED");
             PaletteColor color = palette.GetColor();
             palette.ResetColor();
             return color;
@@ -110,7 +109,9 @@ namespace blank_canvas
             if (state == PuzzleState.Active || state == PuzzleState.Completed)
             {
                 base.Draw(spriteBatch);
-                int a = alpha * 3 / 4 * (int)state / 8;
+                int a = alpha * 3 / 4;
+                if (state == PuzzleState.Completed)
+                    alpha = 150;
                 switch (CurrentColor)
                 {
                     case (PaletteColor.Red):
