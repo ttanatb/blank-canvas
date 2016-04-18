@@ -117,6 +117,7 @@ namespace blank_canvas
         // changes from main menu to gameplay
         private void UpdateMainMenu()
         {
+            //currently in Main Menu state
             if (butt.isPressed())
                 state = GameState.Gameplay;
         }
@@ -124,13 +125,15 @@ namespace blank_canvas
         // changes from gameplay to pause
         private void UpdatePause()
         {
+            //currently in pause state
             if (butt.isPressed())
-                state = GameState.Pause;
+                state = GameState.Gameplay;
         }
 
         // changes from gameplay to end of game
         private void UpdateEndOfGame()
         {
+            //currently in gameplay state
             if (butt.isPressed())
                 state = GameState.EndOfGame;
         }
