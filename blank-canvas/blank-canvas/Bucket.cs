@@ -22,9 +22,9 @@ namespace blank_canvas
         public Bucket()
         {
             projectile = new Projectile(this);
-            red = 3;
-            blue = 3;
-            yellow = 3;
+            red = 1;
+            blue = 1;
+            yellow = 1;
             currentColor = PaletteColor.Red;
         }
 
@@ -140,14 +140,18 @@ namespace blank_canvas
 
         public void Shoot(Player player)
         {
-            Vector2 startingPos;// = Vector2.Zero;
-            if (player.Direction == Direction.Right)
-                startingPos = new Vector2(player.Max.X, player.Y + player.Height / 3 + Projectile.HEIGHT);
-            else startingPos = new Vector2(player.X - Projectile.WIDTH, player.Y + player.Height / 3 + Projectile.HEIGHT);
+            if (!(blue == 0 && red == 0 && yellow == 0))
+            {
+                Vector2 startingPos;// = Vector2.Zero;
+                if (player.Direction == Direction.Right)
+                    startingPos = new Vector2(player.Max.X, player.Y + player.Height / 3 + Projectile.HEIGHT);
+                else startingPos = new Vector2(player.X - Projectile.WIDTH, player.Y + player.Height / 3 + Projectile.HEIGHT);
 
-            //deal with the color thing with the bucket
+                //deal with the color thing with the bucket
 
-            projectile.Shoot(startingPos, player.Direction, currentColor);
+                projectile.Shoot(startingPos, player.Direction, currentColor);
+            }
+
         }
 
         public PaletteColor UsePaint()
@@ -158,6 +162,8 @@ namespace blank_canvas
                     if (red > 0)
                     {
                         red--;
+                        if (red == 0)
+                            SwitchRBY();
                         return PaletteColor.Red;
                     }
                     break;
@@ -165,6 +171,8 @@ namespace blank_canvas
                     if (blue > 0)
                     {
                         blue--;
+                        if (blue == 0)
+                            SwitchRBY();
                         return PaletteColor.Blue;
                     }
                     break;
@@ -172,6 +180,8 @@ namespace blank_canvas
                     if (yellow > 0)
                     {
                         yellow--;
+                        if (yellow == 0)
+                            SwitchRBY();
                         return PaletteColor.Yellow;
                     }
                     break;
