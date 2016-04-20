@@ -22,7 +22,7 @@ namespace blank_canvas
         List<Tile> tiles;
         List<Enemy> enemies;
         List<Rectangle> collisionBoxes;
-        List<PuzzleOrb> puzzleOrbs;
+        List<PuzzleOrb> orbs;
 
         // position counter
         int xpos;
@@ -37,12 +37,11 @@ namespace blank_canvas
             enemies = new List<Enemy>();
             tiles = new List<Tile>();
             collisionBoxes = new List<Rectangle>();
-            puzzleOrbs = new List<PuzzleOrb>();
 
             try
             {
                 sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug"); //doesn't handle multiple text files
-                fileNames = Directory.GetFiles(sourcePath, "Orb.txt");
+                fileNames = Directory.GetFiles(sourcePath, "*.txt");
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
             catch (DirectoryNotFoundException)
@@ -90,17 +89,6 @@ namespace blank_canvas
                 for (int i = 0; i < collisionBoxes.Count; i++)
                     boxes[i] = collisionBoxes[i];
                 return boxes;
-            }
-        }
-
-        public PuzzleOrb[] PuzzleOrbs
-        {
-            get
-            {
-                PuzzleOrb[] orb = new PuzzleOrb[puzzleOrbs.Count];
-                for (int i = 0; i < puzzleOrbs.Count; i++)
-                    orb[i] = puzzleOrbs[i];
-                return orb;
             }
         }
 
@@ -166,7 +154,6 @@ namespace blank_canvas
                 {
                     character = reader.ReadChar();
 
-                    #region Tile Creation
                     if (character.Equals('_'))
                     {
                         // initializes new ground tile
@@ -179,16 +166,13 @@ namespace blank_canvas
 
                         i++;
                     }
-                    #endregion
 
-                    #region Player Spawn
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
                         player = new Player(new Rectangle(xpos, ypos, 64, 128)); //
                         Console.WriteLine("Player created: " + xpos + ", " + ypos);
                     }
-                    #endregion
 
                     #region Enemy Spawning
                     // Enemy Spawning
@@ -210,59 +194,55 @@ namespace blank_canvas
                     }
                     #endregion
 
-                    #region Orb Creation
+                    #region Orb
                     else if (character.Equals('R'))
                     {
-                        puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Red));
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Red));
                         Console.WriteLine("Red Orb created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('B'))
                     {
-                        puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Blue));
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Blue));
                         Console.WriteLine("Blue Orb created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('Y'))
                     {
-                        puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Red));
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Red));
                         Console.WriteLine("Yellow Orb created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('O'))
                     {
-                        puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Orange));
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Orange));
                         Console.WriteLine("Orange Orb created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('R'))
                     {
-                        puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Purple));
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Purple));
                         Console.WriteLine("Purple Orb created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('G'))
                     {
-                        puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Green));
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Green));
                         Console.WriteLine("Green Orb created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('A'))
                     {
-                        puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Black));
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Black));
                         Console.WriteLine("Black Orb created: " + xpos + ", " + ypos);
                     }
                     #endregion
-                                        
-                    #region Door
-                    else if (character.Equals('/'))
-                    {
-                        // initializes door
-                        // class not created yet
-                    }
-                    #endregion
 
-                    #region Level End Orb
                     else if (character.Equals('0'))
                     {
                         // initializes end orb
                         // class not created yet
                     }
-                    #endregion
+
+                    else if (character.Equals('|'))
+                    {
+                        // initializes door
+                        // class not created yet
+                    }
 
                     else if ((character.Equals(' ')) || (reader.BaseStream.Position == reader.BaseStream.Length) || character.Equals('\r'))
                     {
