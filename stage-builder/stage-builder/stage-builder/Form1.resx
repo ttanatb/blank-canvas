@@ -122,6 +122,8 @@
    Blank Tile
 _  Ground Tile
 -  Secondary Tile
+|  Wall Tile
+~  Custom Tile
 
 Player Objects:
 P  Player
@@ -141,7 +143,8 @@ G  Orb (Green)
 A  Orb (Black)
 
 Other:
-|  Door</value>
+/  Door
+0  End Level Orb</value>
   </data>
   <metadata name="compilebutton.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
