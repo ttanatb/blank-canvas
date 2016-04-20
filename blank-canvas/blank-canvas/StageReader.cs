@@ -22,6 +22,7 @@ namespace blank_canvas
         List<Tile> tiles;
         List<Enemy> enemies;
         List<Rectangle> collisionBoxes;
+        List<PuzzleOrb> orbs;
 
         // position counter
         int xpos;
@@ -173,17 +174,63 @@ namespace blank_canvas
                         Console.WriteLine("Player created: " + xpos + ", " + ypos);
                     }
 
-                    else if (character.Equals('E')) //probably need to change this to spawn different colored enemies
+                    #region Enemy Spawning
+                    // Enemy Spawning
+                    // Red
+                    else if (character.Equals('r')) //probably need to change this to spawn different colored enemies
+                    {
+                        enemies.Add(new Enemy(new Vector2(xpos, ypos), PaletteColor.Red));
+                        Console.WriteLine("Red enemy created: " + xpos + ", " + ypos);
+                    }
+                    else if (character.Equals('y')) //probably need to change this to spawn different colored enemies
                     {
                         enemies.Add(new Enemy(new Vector2(xpos, ypos), PaletteColor.Yellow));
-                        Console.WriteLine("Enemy created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Yellow enemy created: " + xpos + ", " + ypos);
                     }
-
-                    else if (character.Equals('o'))
+                    else if (character.Equals('b')) //probably need to change this to spawn different colored enemies
                     {
-                        // initializes puzzle orb
-                        // class not created yet
+                        enemies.Add(new Enemy(new Vector2(xpos, ypos), PaletteColor.Blue));
+                        Console.WriteLine("Blue enemy created: " + xpos + ", " + ypos);
                     }
+                    #endregion
+
+                    #region Orb
+                    else if (character.Equals('R'))
+                    {
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Red));
+                        Console.WriteLine("Red Orb created: " + xpos + ", " + ypos);
+                    }
+                    else if (character.Equals('B'))
+                    {
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Blue));
+                        Console.WriteLine("Blue Orb created: " + xpos + ", " + ypos);
+                    }
+                    else if (character.Equals('Y'))
+                    {
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Red));
+                        Console.WriteLine("Yellow Orb created: " + xpos + ", " + ypos);
+                    }
+                    else if (character.Equals('O'))
+                    {
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Orange));
+                        Console.WriteLine("Orange Orb created: " + xpos + ", " + ypos);
+                    }
+                    else if (character.Equals('R'))
+                    {
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Purple));
+                        Console.WriteLine("Purple Orb created: " + xpos + ", " + ypos);
+                    }
+                    else if (character.Equals('G'))
+                    {
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Green));
+                        Console.WriteLine("Green Orb created: " + xpos + ", " + ypos);
+                    }
+                    else if (character.Equals('A'))
+                    {
+                        orbs.Add(new PuzzleOrb(new Vector2(250, 704), PaletteColor.Black));
+                        Console.WriteLine("Black Orb created: " + xpos + ", " + ypos);
+                    }
+                    #endregion
 
                     else if (character.Equals('0'))
                     {
