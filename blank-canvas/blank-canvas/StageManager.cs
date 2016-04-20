@@ -50,10 +50,11 @@ namespace blank_canvas
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
-            puzzleOrbs = new PuzzleOrb[1];
+            puzzleOrbs = stageReader.PuzzleOrbs;
 
             //instantialization some for testing
-            puzzleOrbs[0] = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Black);
+            //puzzleOrbs = new puzzleOrb[1];
+            //puzzleOrbs[0] = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Black);
             
         }
 
@@ -75,17 +76,32 @@ namespace blank_canvas
             string enemyTexture, string tileTexture, string projectileTexture,
             string orbBaseTexture, string orbTexture)
         {
-            player.Texture = content.Load<Texture2D>(playerTexture);
+            try
+            {
+                player.Texture = content.Load<Texture2D>(playerTexture);
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("You didn't make a character you are dumb af.");
+                throw Ex;
+            }
+
             foreach (Enemy enemy in enemies)
                 enemy.Texture = content.Load<Texture2D>(enemyTexture);
 
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load<Texture2D>(tileTexture);
+            
+            //puzzleOrbs[0].Texture = content.Load<Texture2D>(orbBaseTexture);
+            //puzzleOrbs[0].OrbTexture = content.Load<Texture2D>(orbTexture);
+            
+            foreach (PuzzleOrb puzzleorb in puzzleOrbs)
+            {
+                puzzleorb.Texture = content.Load<Texture2D>(orbBaseTexture);
+                puzzleorb.OrbTexture = content.Load<Texture2D>(orbTexture);
+            }
 
             player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
-
-            puzzleOrbs[0].Texture = content.Load<Texture2D>(orbBaseTexture);
-            puzzleOrbs[0].OrbTexture = content.Load<Texture2D>(orbTexture);
 
             testFont = content.Load<SpriteFont>("Arial_14");
             testTexture = content.Load<Texture2D>("testChar");
@@ -162,6 +178,8 @@ namespace blank_canvas
                 else player.DrainColor(enemies[index]);
             }
 
+
+            // Needs to be adjusted with change to construction of orb
             if (player.Projectile.Active)
             {
                 if (player.Projectile.CheckCollision(puzzleOrbs[0]))
@@ -233,14 +251,35 @@ namespace blank_canvas
             //spriteBatch.Draw(testTexture, player.SearchRectangle, Color.Red);
 
 
-            foreach (Enemy enemy in enemies)
-                enemy.Draw(spriteBatch);
-            player.Draw(spriteBatch);
-
-            puzzleOrbs[0].Draw(spriteBatch);
-            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X , player.Y - 50 ), Color.Black);
+            // Drawing from Background to front
+            #region Tiles
+            // First Tiles
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
+            #endregion
+
+            #region Orbs
+
+            //puzzleOrbs[0].Draw(spriteBatch);
+
+            foreach (PuzzleOrb puzzleorb in puzzleOrbs)
+                puzzleorb.Draw(spriteBatch);
+
+            #endregion
+
+            foreach (Enemy enemy in enemies)
+                enemy.Draw(spriteBatch);
+
+            player.Draw(spriteBatch);
+
+            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X, player.Y - 50), Color.Black);
+            foreach (Tile tile in tiles)
+                tile.Draw(spriteBatch);
+
+            //TANAT TEST COLLISION ENEMY
+            //foreach (Rectangle r in tileCollision)
+            //    spriteBatch.Draw(testTexture, r, Color.Red);
         }
+
     }
 }
