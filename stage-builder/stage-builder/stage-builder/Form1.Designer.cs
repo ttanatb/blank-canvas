@@ -46,7 +46,7 @@
             // 
             this.stagenamelabel.AutoSize = true;
             this.stagenamelabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.stagenamelabel.Location = new System.Drawing.Point(0, 50);
+            this.stagenamelabel.Location = new System.Drawing.Point(0, 73);
             this.stagenamelabel.Name = "stagenamelabel";
             this.stagenamelabel.Size = new System.Drawing.Size(131, 20);
             this.stagenamelabel.TabIndex = 0;
@@ -55,7 +55,7 @@
             // stagenamebox
             // 
             this.stagenamebox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.stagenamebox.Location = new System.Drawing.Point(137, 50);
+            this.stagenamebox.Location = new System.Drawing.Point(137, 70);
             this.stagenamebox.Name = "stagenamebox";
             this.stagenamebox.Size = new System.Drawing.Size(191, 26);
             this.stagenamebox.TabIndex = 1;
@@ -64,7 +64,7 @@
             // levelnumberbox
             // 
             this.levelnumberbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.levelnumberbox.Location = new System.Drawing.Point(137, 83);
+            this.levelnumberbox.Location = new System.Drawing.Point(137, 112);
             this.levelnumberbox.Name = "levelnumberbox";
             this.levelnumberbox.Size = new System.Drawing.Size(25, 26);
             this.levelnumberbox.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             this.stagelevellabel.AutoSize = true;
             this.stagelevellabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.stagelevellabel.Location = new System.Drawing.Point(19, 85);
+            this.stagelevellabel.Location = new System.Drawing.Point(21, 115);
             this.stagelevellabel.Name = "stagelevellabel";
             this.stagelevellabel.Size = new System.Drawing.Size(110, 20);
             this.stagelevellabel.TabIndex = 3;
@@ -83,7 +83,7 @@
             // 
             this.StageBuilderTitle.AutoSize = true;
             this.StageBuilderTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StageBuilderTitle.Location = new System.Drawing.Point(172, 9);
+            this.StageBuilderTitle.Location = new System.Drawing.Point(398, 9);
             this.StageBuilderTitle.Name = "StageBuilderTitle";
             this.StageBuilderTitle.Size = new System.Drawing.Size(278, 25);
             this.StageBuilderTitle.TabIndex = 4;
@@ -92,11 +92,11 @@
             // stagebuildertextbox
             // 
             this.stagebuildertextbox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stagebuildertextbox.Location = new System.Drawing.Point(195, 151);
+            this.stagebuildertextbox.Location = new System.Drawing.Point(248, 182);
             this.stagebuildertextbox.Multiline = true;
             this.stagebuildertextbox.Name = "stagebuildertextbox";
             this.stagebuildertextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.stagebuildertextbox.Size = new System.Drawing.Size(392, 269);
+            this.stagebuildertextbox.Size = new System.Drawing.Size(697, 356);
             this.stagebuildertextbox.TabIndex = 5;
             this.stagebuildertextbox.WordWrap = false;
             // 
@@ -104,7 +104,7 @@
             // 
             this.stagebuilderlabel.AutoSize = true;
             this.stagebuilderlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.stagebuilderlabel.Location = new System.Drawing.Point(283, 130);
+            this.stagebuilderlabel.Location = new System.Drawing.Point(244, 159);
             this.stagebuilderlabel.Name = "stagebuilderlabel";
             this.stagebuilderlabel.Size = new System.Drawing.Size(192, 20);
             this.stagebuilderlabel.TabIndex = 6;
@@ -114,7 +114,7 @@
             // 
             this.keyLabel.AutoSize = true;
             this.keyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.keyLabel.Location = new System.Drawing.Point(71, 130);
+            this.keyLabel.Location = new System.Drawing.Point(8, 159);
             this.keyLabel.Name = "keyLabel";
             this.keyLabel.Size = new System.Drawing.Size(38, 20);
             this.keyLabel.TabIndex = 7;
@@ -123,18 +123,18 @@
             // keyBox
             // 
             this.keyBox.Font = new System.Drawing.Font("Courier New", 10F);
-            this.keyBox.Location = new System.Drawing.Point(13, 153);
+            this.keyBox.Location = new System.Drawing.Point(12, 182);
             this.keyBox.Multiline = true;
             this.keyBox.Name = "keyBox";
             this.keyBox.ReadOnly = true;
             this.keyBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.keyBox.Size = new System.Drawing.Size(166, 267);
+            this.keyBox.Size = new System.Drawing.Size(194, 356);
             this.keyBox.TabIndex = 8;
             this.keyBox.Text = resources.GetString("keyBox.Text");
             // 
             // compilebutton
             // 
-            this.compilebutton.Location = new System.Drawing.Point(462, 425);
+            this.compilebutton.Location = new System.Drawing.Point(696, 552);
             this.compilebutton.Margin = new System.Windows.Forms.Padding(2);
             this.compilebutton.Name = "compilebutton";
             this.compilebutton.Size = new System.Drawing.Size(124, 38);
@@ -145,7 +145,7 @@
             // 
             // fileExistsButton
             // 
-            this.fileExistsButton.Location = new System.Drawing.Point(178, 425);
+            this.fileExistsButton.Location = new System.Drawing.Point(353, 552);
             this.fileExistsButton.Margin = new System.Windows.Forms.Padding(2);
             this.fileExistsButton.Name = "fileExistsButton";
             this.fileExistsButton.Size = new System.Drawing.Size(124, 38);
@@ -158,7 +158,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(603, 471);
+            this.ClientSize = new System.Drawing.Size(982, 601);
             this.Controls.Add(this.fileExistsButton);
             this.Controls.Add(this.compilebutton);
             this.Controls.Add(this.keyBox);
