@@ -22,15 +22,7 @@ namespace blank_canvas
 
 
 
-        protected enum AnimState
-        {
-            Idle,
-            Walk,
-            Jump,
-            Hurt,
-            Shoot,
-            Draw,
-        }
+
 
         #region variables
         //variables

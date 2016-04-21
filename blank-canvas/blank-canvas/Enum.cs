@@ -55,10 +55,13 @@ namespace blank_canvas
         Completed = 1,
     }
 
-    public enum PlayerState
+    public enum AnimState
     {
-        Active, //can be controlled
-        Invulnerable, //recently hurt or smthng
-        Uncontrollable, //can't be controlled (in hurt animation) also invulnerable
+        Idle,
+        Walk,
+        Jump,
+        Hurt,
+        Shoot,
+        Drain,
     }
 }

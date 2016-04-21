@@ -43,6 +43,11 @@ namespace blank_canvas
         #endregion
 
         #region properties
+        public Vector2 Center
+        {
+            get { return new Vector2(X + width / 2, Y + height / 2); }
+        }
+
         /// <summary>
         /// The X position of upper left corner
         /// </summary>

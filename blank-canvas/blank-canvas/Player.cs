@@ -21,30 +21,48 @@ namespace blank_canvas
         const float JUMP_VELOCITY = -800f;
         const int SEARCH_RANGE = 400;
 
+        const int WIDTH = 89;
+        const int HEIGHT = 137;
+        const double FRAME_TIMER = 0.2;
+
+        public const int LEFT_MARGIN = 16;
+        public const int RIGHT_MARGIN = 36;
+        public const int TOP_MARGIN = 11;
+        public const int BOTTOM_MARGIN = 16;
+
 
         //attributes
         bool canJump;
-        enum PlayerFrameState { Idle, Walk, Shoot, Jump, Hurt};
-        PlayerFrameState pfs;
+        double elapsedTime;
 
         //for spritesheet
-        private Texture2D image; // image to display
         private int frame; // current frame number
-        //identify particulars of frame size when spritesheet arrives
-        private Point frameSize; // width and height of image
-        private int rows, cols; // defines how spritesheet is laid out
-        private Point currentFrame; // location of current frame on spritesheet
 
         Bucket bucket;
         PaletteColor currentColor;
-        PlayerState playerState;
 
         //properties
 
         public bool CanJump
         {
             get { return canJump; }
-            set { canJump = value; }
+            set
+            {
+                if (animState == AnimState.Jump)
+                    animState = AnimState.Idle;
+                canJump = value;
+            }
+        }
+
+        public new Rectangle Rectangle
+        {
+            get
+            {
+                if (direction == Direction.Right)
+                    return new Rectangle((int)position.X + LEFT_MARGIN, (int)position.Y + TOP_MARGIN, WIDTH - LEFT_MARGIN - RIGHT_MARGIN, HEIGHT - TOP_MARGIN);
+                else
+                    return new Rectangle((int)position.X + RIGHT_MARGIN, (int)position.Y + TOP_MARGIN, WIDTH - LEFT_MARGIN - RIGHT_MARGIN, HEIGHT - TOP_MARGIN);
+            }
         }
 
         public PaletteColor CurrentColor
@@ -57,11 +75,6 @@ namespace blank_canvas
             get { return bucket.Projectile; }
         }
 
-        public PlayerState State
-        {
-            get { return playerState; }
-        }
-
         public Rectangle SearchRectangle
         {
             get
@@ -72,16 +85,25 @@ namespace blank_canvas
             }
         }
 
+        public AnimState AnimState
+        {
+            get { return animState; }
+            set
+            {
+                 frame = 0;
+                 animState = value;
+            }
+        }
+
         //NEEDS WORK: Paint properties
 
         //constructor
-        public Player(Rectangle pRec) : base(pRec)
+        public Player(Vector2 position) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
             canJump = false;
             bucket = new Bucket();
             currentColor = PaletteColor.Yellow;
-            playerState = PlayerState.Active;
-            //spriteOrigin = new Vector2(pRec.X, pRec.Y);
+            elapsedTime = 0;
         }
 
         public void DrainEnemy(Enemy enemy)
@@ -93,7 +115,7 @@ namespace blank_canvas
 
         public void UpdateInput(InputManager input)
         {
-            if (playerState == PlayerState.Uncontrollable)
+            if (animState == AnimState.Hurt)
                 return;
 
             //checks for input for jump
@@ -115,8 +137,15 @@ namespace blank_canvas
             else if (input.KeysUp(Keys.Left, Keys.Right))
                 Halt();
 
+            if (animState == AnimState.Shoot || animState == AnimState.Drain)
+                return;
+
             if (input.KeyPressed(Keys.C))
+            {
                 bucket.Shoot(this);
+                frame = 0;
+                animState = AnimState.Shoot;
+            }
 
             if (input.KeyPressed(Keys.RightShift))
                 bucket.SwitchRBY();
@@ -126,6 +155,8 @@ namespace blank_canvas
 
         public void TakeDamage()
         {
+            animState = AnimState.Hurt;
+            frame = 0;
             velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
             velocity.Y -= HORIZONTAL_KNOCK_BACK;
             //playerState = PlayerState.Uncontrollable;
@@ -140,6 +171,16 @@ namespace blank_canvas
             bucket.AddColor(orb);
         }
 
+        public void UpdateAnim(double deltaTime)
+        {
+            elapsedTime += deltaTime;
+            if (elapsedTime > FRAME_TIMER)
+            {
+                elapsedTime -= FRAME_TIMER;
+                frame++;
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             SpriteEffects spriteEffects;
@@ -147,8 +188,53 @@ namespace blank_canvas
             if (direction == Direction.Right)
                 spriteEffects = SpriteEffects.None;
             else spriteEffects = SpriteEffects.FlipHorizontally;
+            
+            switch(animState)
+            {
+                case AnimState.Idle:
+                    if (velocity.Y != 0)
+                        goto case AnimState.Jump;
+                    animState = AnimState.Idle;
+                    spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT), new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+                case AnimState.Walk:
+                    if (frame > 3)
+                        frame = 0;
 
-            spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT), new Rectangle(frame * WIDTH, 1 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+                case AnimState.Shoot:
+                    if (frame > 2)
+                        goto case AnimState.Idle;
+
+                    spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT), new Rectangle((1 + frame) * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+
+                    break;
+                case AnimState.Hurt:
+                    if (frame > 4)
+                        goto case AnimState.Idle;
+                    
+                    spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT), new Rectangle(frame * WIDTH, 2 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+                case AnimState.Drain:
+                    if (frame > 2)
+                        goto case AnimState.Idle;
+
+                    spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT), new Rectangle(frame * WIDTH, 3 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+
+                    break;
+                case AnimState.Jump:
+                    animState = AnimState.Jump;
+                    if (velocity.Y < JUMP_VELOCITY / 2)
+                        frame = 0;
+                    else if(velocity.Y > -JUMP_VELOCITY/2)
+                        frame = 2;
+                    else frame = 1;
+
+                    spriteBatch.Draw(texture, new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT), new Rectangle(frame * WIDTH, 4 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+            }
+
 
             //base.Draw(spriteBatch);
             if (Projectile.Active)
@@ -168,6 +254,9 @@ namespace blank_canvas
         /// </summary>
         private void MoveRight()
         {
+            if (animState == AnimState.Idle)
+                animState = AnimState.Walk;
+
             direction = Direction.Right;
             if (velocity.X < MOVESPEED)
             {
@@ -182,6 +271,9 @@ namespace blank_canvas
         /// </summary>
         private void MoveLeft()
         {
+            if (animState == AnimState.Idle)
+                animState = AnimState.Walk;
+
             direction = Direction.Left;
             if (velocity.X > -MOVESPEED)
             {
@@ -196,6 +288,9 @@ namespace blank_canvas
         /// </summary>
         private void Halt()
         {
+            if (animState == AnimState.Walk)
+                animState = AnimState.Idle;
+
             if (velocity.X > 0)
                 velocity.X = (float)Math.Floor((velocity.X / 1.2));
             else velocity.X = (float)Math.Ceiling((velocity.X / 1.2));
@@ -206,6 +301,8 @@ namespace blank_canvas
         /// </summary>
         private void Jump()
         {
+            animState = AnimState.Jump;
+            frame = 0;
             velocity.Y = JUMP_VELOCITY;
             canJump = false;
         }

@@ -78,7 +78,7 @@ namespace blank_canvas
         {
             try
             {
-                player.Texture = content.Load<Texture2D>(playerTexture);
+                player.Texture = content.Load<Texture2D>("playerSpriteSheet");
             }
             catch(Exception Ex)
             {
@@ -146,9 +146,10 @@ namespace blank_canvas
                     FixPos(player, r);
                 }
 
-                if (r.Intersects(enemies[0].Rectangle))
+                foreach (Enemy e in enemies)
                 {
-                    enemies[0].ChangeDirection();
+                    if (e.Active && r.Intersects(e.Rectangle))
+                        e.ChangeDirection();
                 }
 
                 if (player.Projectile.Active && r.Intersects(player.Projectile.CollisionBox))
@@ -165,8 +166,9 @@ namespace blank_canvas
 
             player.UpdateInput(input);
 
-            if (input.KeyPressed(Keys.X))
+            if (input.KeyPressed(Keys.X) && (player.AnimState == AnimState.Jump || player.AnimState == AnimState.Walk || player.AnimState == AnimState.Idle))
             {
+                player.AnimState = AnimState.Drain;
                 Rectangle searchRect = player.SearchRectangle;
                 int index = SearchClosestEnemy(searchRect);
                 if (index == -1)
@@ -178,13 +180,19 @@ namespace blank_canvas
                 else player.DrainColor(enemies[index]);
             }
 
+            player.UpdateAnim(deltaTime);
 
             // Needs to be adjusted with change to construction of orb
             if (player.Projectile.Active)
             {
-                if (player.Projectile.CheckCollision(puzzleOrbs[0]))
-                    puzzleOrbs[0].Update();
-                player.Projectile.CheckCollision(enemies[0]);
+                foreach (PuzzleOrb orb in puzzleOrbs)
+                {
+                    if (player.Projectile.CheckCollision(orb))
+                        orb.Update();
+                }
+
+                foreach (Enemy e in enemies)
+                    player.Projectile.CheckCollision(e);
 
             }
         }
@@ -221,29 +229,84 @@ namespace blank_canvas
         /// </summary>
         private void FixPos(Player player, Rectangle rect)
         {
-            if (player.PrevPos.X + 4 >= rect.X + rect.Width) //prioritizes intersection from the sides
+
+
+            if (player.PrevPos.X + Player.RIGHT_MARGIN >= rect.X + rect.Width)
             {
-                player.X = rect.X + rect.Width;
-                player.Velocity = new Vector2(0, player.Velocity.Y);
+                Console.WriteLine(player.PrevPos.X + Player.RIGHT_MARGIN + " " + (rect.X + rect.Width));
+                if (player.Direction == Direction.Right)
+                {
+                    player.X = rect.X + rect.Width - Player.LEFT_MARGIN;
+                }
+                else player.X = rect.X + rect.Width - Player.RIGHT_MARGIN;
                 return;
             }
-            else if (player.PrevPos.X + player.Width - 4 <= rect.X)
+            if (player.PrevPos.X + player.Width - Player.RIGHT_MARGIN - 1 <= rect.X)
             {
-                player.X = rect.X - player.Width;
-                player.Velocity = new Vector2(0, player.Velocity.Y);
+                if (player.Direction == Direction.Right)
+                    player.X = rect.X - player.Width + Player.RIGHT_MARGIN;
+                else player.X = rect.X - player.Width + Player.LEFT_MARGIN;
+                //player.Velocity = new Vector2(0, player.Velocity.Y);
                 return;
             }
-            else if (player.PrevPos.Y + player.Height - 1 <= rect.Y) //intersects from top
+            if (player.PrevPos.Y <= rect.Y - rect.Height / 2)
             {
                 player.Y = rect.Y - player.Height + 1;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
                 player.CanJump = true;
+                return;
             }
-            else if (player.PrevPos.Y + player.Height + 1 >= rect.Y + rect.Height)
+            if (player.PrevPos.Y + Player.TOP_MARGIN > rect.Y + rect.Height / 2)
             {
-                player.Y = rect.Y + rect.Height ;
+
+                player.Y = rect.Y + rect.Height;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
+                return;
             }
+
+            /*
+            float wy = (player.Width + rect.Width) * (player.Center.Y - rect.Center.Y);
+            float hx = (player.Height + rect.Height) * (player.Center.X - rect.Center.X);
+
+            Console.WriteLine(wy + " " + hx);
+            if (wy+1 >= hx)
+            {
+                if (wy > -hx)
+                {
+
+                    player.Y = rect.Y + rect.Height;
+                    player.Velocity = new Vector2(player.Velocity.X, 0);
+                    return;
+                }
+                else
+                {
+                    if (player.Direction == Direction.Right)
+                        player.X = rect.X - player.Width + Player.RIGHT_MARGIN;
+                    else player.X = rect.X - player.Width + Player.LEFT_MARGIN;
+                    player.Velocity = new Vector2(0, player.Velocity.Y);
+                    return;
+                }
+            }
+            else
+            {
+                if (wy >= -hx)
+                {
+                    if (player.Direction == Direction.Right)
+                        player.X = rect.X + rect.Width - Player.LEFT_MARGIN;
+                    else player.X = rect.X + rect.Width - Player.RIGHT_MARGIN;
+                    player.Velocity = new Vector2(0, player.Velocity.Y);
+                    return;
+                }
+                else
+                {
+
+                    player.Y = rect.Y - player.Height + 1;
+                    player.Velocity = new Vector2(player.Velocity.X, 0);
+                    player.CanJump = true;
+                    return;
+                }
+            }
+            */
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -270,15 +333,12 @@ namespace blank_canvas
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
 
+
             player.Draw(spriteBatch);
 
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X, player.Y - 50), Color.Black);
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
-
-            //TANAT TEST COLLISION ENEMY
-            //foreach (Rectangle r in tileCollision)
-            //    spriteBatch.Draw(testTexture, r, Color.Red);
         }
 
     }

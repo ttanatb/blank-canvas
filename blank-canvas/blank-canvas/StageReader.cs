@@ -185,7 +185,7 @@ namespace blank_canvas
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
-                        player = new Player(new Rectangle(xpos, ypos, 64, 128)); //
+                        player = new Player(new Vector2(xpos, ypos)); //
                         Console.WriteLine("Player created: " + xpos + ", " + ypos);
                     }
                     #endregion
@@ -268,7 +268,7 @@ namespace blank_canvas
                     {
                         if (i != 0)
                         {
-                            collisionBoxes.Add(new Rectangle(startingPos, ypos, 64 * i, 64));
+                            collisionBoxes.Add(new Rectangle(startingPos, ypos, 64 * i, 50));
                             Console.WriteLine("CollisionBox added at: " + startingPos + " to " + 64*i + startingPos);
                             i = 0;
                         }

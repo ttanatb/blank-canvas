@@ -84,6 +84,9 @@
     <Content Include="Content\playerIdle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\playerSpriteSheet.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\projectile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
