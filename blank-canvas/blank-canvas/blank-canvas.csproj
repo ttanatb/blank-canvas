@@ -75,6 +75,9 @@
     <Content Include="Content\enemyNoColor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\mainmenu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\orb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
