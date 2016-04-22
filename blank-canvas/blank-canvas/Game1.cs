@@ -25,6 +25,8 @@ namespace blank_canvas
         Texture2D backgroundTexture;
         Texture2D menuTexture;
         Vector2 menuPosition;
+        Texture2D pauseTexture;
+        
 
         // game state
         GameState state;
@@ -81,6 +83,9 @@ namespace blank_canvas
             // main menu screen
             menuPosition = new Vector2(0,0);
             menuTexture = Content.Load<Texture2D>("mainmenu");
+
+            // pause screen
+            pauseTexture = Content.Load<Texture2D>("pausemenu");
         }
 
         /// <summary>
@@ -134,7 +139,7 @@ namespace blank_canvas
         {
             KeyboardState key = Keyboard.GetState();
             if (key.IsKeyDown(Keys.Back))
-                state = GameState.Gameplay;
+                state = GameState.Pause;
         }
 
         // changes from gameplay to pause
@@ -149,11 +154,10 @@ namespace blank_canvas
         }
 
         // changes from gameplay to end of game
+        // exits until scores are calculated
         private void UpdateEndOfGame()
         {
-            //currently in gameplay state
-            if (butt.isPressed())
-                state = GameState.EndOfGame;
+            Exit();
         }
 
 
@@ -180,9 +184,11 @@ namespace blank_canvas
                     stageManager.Draw(spriteBatch);
                     break;
                 case GameState.Pause:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(pauseTexture, menuPosition, Color.White);
                     break;
-                case GameState.EndOfGame:
-                    break;
+                //case GameState.EndOfGame:
+                //    break;
             }
             spriteBatch.End();
             //for camera

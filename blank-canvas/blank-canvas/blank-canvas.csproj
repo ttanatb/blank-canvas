@@ -84,6 +84,9 @@
     <Content Include="Content\orbBase.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\pausemenu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\playerIdle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
