@@ -49,7 +49,7 @@ namespace blank_canvas
 
         public PaletteColor CurrentColor
         {
-            get { return palette.GetColor(); }
+            get { return palette.CurrentColor; }
         }
 
         public Rectangle CollisionBox
@@ -67,7 +67,7 @@ namespace blank_canvas
         public PuzzleOrb(Vector2 position, PaletteColor key):base(new Rectangle((int)position.X, (int)position.Y,WIDTH, HEIGHT))
         {
             // Sets the puzzle orb position
-            palette = new Palette();
+            palette = new Palette(PaletteColor.White);
             orbPosition = new Vector2(position.X + 13, position.Y + 11);
             orbCollisionBox = new Rectangle((int)orbPosition.X + VERTICAL_OFFSET, 
                 (int)orbPosition.Y + HORIZONTAL_OFFSET,
@@ -88,7 +88,7 @@ namespace blank_canvas
 
         public PaletteColor DrainColor()
         {
-            PaletteColor color = palette.GetColor();
+            PaletteColor color = palette.CurrentColor;
             palette.ResetColor();
             return color;
         }

@@ -34,7 +34,7 @@ namespace blank_canvas
 
         public PaletteColor CurrentColor
         {
-            get { return palette.GetColor(); }
+            get { return palette.CurrentColor; }
         }
 
         public bool Active
