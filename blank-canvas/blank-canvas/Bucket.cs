@@ -63,7 +63,6 @@ namespace blank_canvas
         {
             PaletteColor color = puzzleOrb.DrainColor();
             DistributeColor(color);
-            //puzzleOrb.RemoveColor()?
         }
 
         /// <summary>
@@ -142,7 +141,7 @@ namespace blank_canvas
         {
             if (!(blue == 0 && red == 0 && yellow == 0))
             {
-                Vector2 startingPos;// = Vector2.Zero;
+                Vector2 startingPos;
                 if (player.Direction == Direction.Right)
                     startingPos = new Vector2(player.Max.X, player.Y + player.Height / 3 + Projectile.HEIGHT);
                 else startingPos = new Vector2(player.X - Projectile.WIDTH, player.Y + player.Height / 3 + Projectile.HEIGHT);

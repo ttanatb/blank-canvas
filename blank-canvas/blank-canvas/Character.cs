@@ -18,24 +18,16 @@ namespace blank_canvas
     /// </summary>
     public class Character : GameObject
     {
-        //states to help govern animation states and which way projectile should fire
-
-
-
-
 
         #region variables
         //variables
-        protected const float MOVESPEED = 300f;
+        protected const float MAX_MOVE_SPEED = 300f;
 
         protected Rectangle[] collisionBoxes;
 
         protected Vector2 velocity;
-        protected Vector2 acceleration;
         protected Vector2 prevPos;
-        protected Vector2 prevAcc;
 
-        // character specific attributes
         protected int health;
 
         protected Direction direction;
@@ -52,7 +44,7 @@ namespace blank_canvas
             collisionBoxes[0] = rectangle;
 
             velocity = new Vector2(0, 0);
-            acceleration = new Vector2(0, 0);
+            //acceleration = new Vector2(0, 0);
             health = 10;
 
             direction = Direction.Right;
@@ -73,11 +65,13 @@ namespace blank_canvas
             set { velocity = value; }
         }
 
+        /*
         public Vector2 Acceleration
         {
             get { return acceleration; }
             set { acceleration = value; }
         }
+        */
 
         public Rectangle[] CollisionBoxes
         {
@@ -97,7 +91,7 @@ namespace blank_canvas
         }
         #endregion
 
-        #region Methods
+        #region methods
 
         /// <summary>
         /// Moves the character based on the previous position, velocity, time step, and acceleration
@@ -107,26 +101,26 @@ namespace blank_canvas
         {
             prevPos.X = position.X;
             prevPos.Y = position.Y;
-            position.X += (float)(velocity.X * deltaTime + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
-            position.Y += (float)(velocity.Y * deltaTime + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
-            prevAcc = acceleration;
+            position.X += (float)(velocity.X * deltaTime);// + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
+            position.Y += (float)(velocity.Y * deltaTime);// + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
+            //prevAcc = acceleration;
         }
 
         /// <summary>
         /// Updates the velocity of a character based on the average acceleration and time step
         /// </summary>
         /// <param name="deltaTime">Time step in miliseconds</param>
-        public void UpdateVelocity(double deltaTime)
+        /*public void UpdateVelocity(double deltaTime)
         {
             velocity.Y += (float)(((prevAcc.Y + acceleration.Y) * deltaTime) / 2);
             velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
 
-        }
+        }*/
 
         //used for testing
         public override string ToString()
         {
-            string msg = "Position: " + position.X + ", " + position.Y + "\nVelocity: " + velocity.X + ", " + velocity.Y + "\nAcceleration: " + acceleration.X + ", " + acceleration.Y;
+            string msg = "Position: " + position.X + ", " + position.Y + "\nVelocity: " + velocity.X + ", " + velocity.Y;// + "\nAcceleration: " + acceleration.X + ", " + acceleration.Y;
             return msg;
 
         }

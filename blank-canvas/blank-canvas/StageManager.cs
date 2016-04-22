@@ -33,7 +33,7 @@ namespace blank_canvas
 
         int level;                  //the level of the stage (may be unnecessary)
 
-        const float GRAVITY = 1200f;    //gravity of the whole thing (kind of unnecessary)
+        const float GRAVITY = 24f;    //gravity of the whole thing (kind of unnecessary)
         #endregion
 
         //constructor
@@ -50,12 +50,7 @@ namespace blank_canvas
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
-            puzzleOrbs = stageReader.PuzzleOrbs;
-
-            //instantialization some for testing
-            //puzzleOrbs = new puzzleOrb[1];
-            //puzzleOrbs[0] = new PuzzleOrb(new Vector2(250, 704), PaletteColor.Black);
-            
+            puzzleOrbs = stageReader.PuzzleOrbs;            
         }
 
         //properties
@@ -79,11 +74,12 @@ namespace blank_canvas
             try
             {
                 player.Texture = content.Load<Texture2D>("playerSpriteSheet");
+                player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
             }
-            catch(Exception Ex)
+            catch (Exception e)
             {
                 Console.WriteLine("You didn't make a character you are dumb af.");
-                throw Ex;
+                throw e;
             }
 
             foreach (Enemy enemy in enemies)
@@ -92,16 +88,11 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load<Texture2D>(tileTexture);
             
-            //puzzleOrbs[0].Texture = content.Load<Texture2D>(orbBaseTexture);
-            //puzzleOrbs[0].OrbTexture = content.Load<Texture2D>(orbTexture);
-            
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
             {
                 puzzleorb.Texture = content.Load<Texture2D>(orbBaseTexture);
                 puzzleorb.OrbTexture = content.Load<Texture2D>(orbTexture);
             }
-
-            player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
 
             testFont = content.Load<SpriteFont>("Arial_14");
             testTexture = content.Load<Texture2D>("testChar");
@@ -114,107 +105,98 @@ namespace blank_canvas
         /// </summary>
         /// <param name="deltaTime">The amount of miliseconds passed since previous update</param>
         public void Update(float deltaTime)
-        {                       
+        {
             //updates the camera and input
+            deltaTime = deltaTime / 1000.0f;
             camera.Update(player);
             input.Update();
-
-            //converts from time to miliseconds
-            deltaTime = deltaTime / 1000.0f;
-
-            //updates the position
-            player.UpdatePos(deltaTime);
-
-            foreach( Enemy e in enemies)
-                e.Update(deltaTime);
-
-            //updates acceleartion for players (kind of unnecessary because it's always the same)
-            player.Acceleration = new Vector2(0, GRAVITY);
-
-            //updates velocity
-            player.UpdateVelocity(deltaTime);
-
-            //updates projectile if it is active
-            if (player.Projectile.Active)
-                player.Projectile.Update(deltaTime);
-
-            foreach (Rectangle r in tileCollision) //may need some streamlining
-            {
-
-                if (r.Intersects(player.Rectangle))
-                {
-                    FixPos(player, r);
-                }
-
-                foreach (Enemy e in enemies)
-                {
-                    if (e.Active && r.Intersects(e.Rectangle))
-                        e.ChangeDirection();
-                }
-
-                if (player.Projectile.Active && r.Intersects(player.Projectile.CollisionBox))
-                {
-                    player.Projectile.Active = false;
-                }
-            }
-
-            foreach (Enemy enemy in enemies)
-            {
-                if (player.Rectangle.Intersects(enemy.Rectangle))
-                    player.TakeDamage();
-            }
 
             player.UpdateInput(input);
 
             if (input.KeyPressed(Keys.X) && (player.AnimState == AnimState.Jump || player.AnimState == AnimState.Walk || player.AnimState == AnimState.Idle))
-            {
-                player.AnimState = AnimState.Drain;
-                Rectangle searchRect = player.SearchRectangle;
-                int index = SearchClosestEnemy(searchRect);
-                if (index == -1)
-                {
-                    index = SearchClosestPuzzleOrb(searchRect);
-                    if (index != -1 && puzzleOrbs[index].PuzzleState != PuzzleState.Completed)
-                        player.DrainColor(puzzleOrbs[index]);
-                }
-                else player.DrainColor(enemies[index]);
-            }
+                PlayerDrainColor();
 
+            player.Velocity += new Vector2(0, GRAVITY);
+
+            player.UpdatePos(deltaTime);
             player.UpdateAnim(deltaTime);
 
-            // Needs to be adjusted with change to construction of orb
             if (player.Projectile.Active)
             {
-                foreach (PuzzleOrb orb in puzzleOrbs)
-                {
-                    if (player.Projectile.CheckCollision(orb))
-                        orb.Update();
-                }
-
-                foreach (Enemy e in enemies)
-                    player.Projectile.CheckCollision(e);
-
+                player.Projectile.Update(deltaTime);
+                player.Projectile.CheckCollision(puzzleOrbs, enemies);
             }
+
+            foreach (Enemy enemy in enemies)
+            {
+                if (!enemy.Active)
+                    continue;
+
+                enemy.Update(deltaTime);
+
+                if (player.CollisionBox.Intersects(enemy.Rectangle))
+                    player.TakeDamage(enemy);
+            }
+
+            foreach (Rectangle r in tileCollision)
+            {
+
+                if (r.Intersects(player.CollisionBox))
+                    FixPos(player, r);
+
+                if (player.Projectile.Active && r.Intersects(player.Projectile.CollisionBox))
+                    player.Projectile.Active = false;
+
+                foreach (Enemy enemy in enemies)
+                {
+                    if (enemy.Active && r.Intersects(enemy.Rectangle))
+                        enemy.ChangeDirection();
+                }
+            }
+        }
+
+        private void PlayerDrainColor()
+        {
+            player.AnimState = AnimState.Drain;
+            Rectangle searchRect = player.SearchRectangle;
+            int index = SearchClosestEnemy(searchRect);
+            if (index == -1)
+            {
+                index = SearchClosestPuzzleOrb(searchRect);
+                if (index != -1 && puzzleOrbs[index].PuzzleState != PuzzleState.Completed)
+                    player.DrainColor(puzzleOrbs[index]);
+            }
+            else player.DrainColor(enemies[index]);
         }
 
         private int SearchClosestEnemy(Rectangle searchRect)
         {
+            int index = -1;
+            float dist = 99999;
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (searchRect.Intersects(enemies[i].Rectangle))
-                    return i;
+                if (enemies[i].Active && searchRect.Intersects(enemies[i].Rectangle) && ((int)player.Direction * (enemies[i].X - player.X) < dist))
+                {
+                    index = i;
+                    dist = (int)player.Direction * (enemies[i].X - player.X);
+                }
             }
-            return -1;
+            return index;
         }
 
         private int SearchClosestPuzzleOrb(Rectangle searchRect)
         {
+            int index = -1;
+            float dist = 99999;
             for (int i = 0; i < puzzleOrbs.Length; i++)
             {
-                if (searchRect.Intersects(puzzleOrbs[i].CollisionBox))
-                    return i;
+                if (searchRect.Intersects(puzzleOrbs[i].CollisionBox) && ((int)player.Direction * puzzleOrbs[i].X - player.X < dist))
+                {
+                    index = i;
+                    dist = (int)player.Direction * (puzzleOrbs[i].X - player.X);
+                }
             }
-            return -1;
+            return index;
         }
 
         private void NextLevel()
@@ -339,6 +321,9 @@ namespace blank_canvas
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X, player.Y - 50), Color.Black);
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
+
+            //spriteBatch.Draw(testTexture, player.SearchRectangle, Color.Red);
+           
         }
 
     }

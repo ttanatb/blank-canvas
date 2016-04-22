@@ -84,9 +84,27 @@ namespace blank_canvas
             alpha = 255;
         }
 
-        public bool CheckCollision(PuzzleOrb orb)
+        public void CheckCollision(PuzzleOrb[] puzzleOrbs, Enemy[] enemies)
         {
-            if (CollisionBox.Intersects(orb.CollisionBox) && orb.PuzzleState != PuzzleState.Completed)
+            foreach (PuzzleOrb orb in puzzleOrbs)
+            {
+                if (CheckCollision(orb))
+                {
+                    orb.Update();
+                    return;
+                }
+            }
+
+            foreach (Enemy enemy in enemies)
+            {
+                if (CheckCollision(enemy))
+                    return;
+            }
+        }
+
+        private bool CheckCollision(PuzzleOrb orb)
+        { 
+            if (orb.PuzzleState != PuzzleState.Completed && CollisionBox.Intersects(orb.CollisionBox))
             {
                 bool used = orb.AddColor(this);
                 if (used)
@@ -100,10 +118,11 @@ namespace blank_canvas
             else return false;
         }
 
-        public bool CheckCollision(Enemy enemy)
+        private bool CheckCollision(Enemy enemy)
         {
-            if (CollisionBox.Intersects(enemy.Rectangle) && !enemy.Active)
+            if (!enemy.Active && CollisionBox.Intersects(enemy.Rectangle))
             {
+                Console.WriteLine("adsf");
                 bool used = enemy.AddColor(this);
                 if (used)
                 {
@@ -128,8 +147,8 @@ namespace blank_canvas
             if (Math.Abs(startingPos - position.X) > FADE_DISTANCE)
                 Fade();
 
-            //de-activates when transparent
-            if (alpha == 0)
+            //de-activates when basically almost transparent
+            if (alpha < 15)
                active = false;
         }
 
@@ -154,6 +173,8 @@ namespace blank_canvas
                     throw new Exception(); //you can't shoot out non-rby colors
             }
         }
+
+
         #endregion
     }
 }
