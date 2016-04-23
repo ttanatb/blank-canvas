@@ -20,14 +20,14 @@ namespace blank_canvas
         const int DOOR_WIDTH = 37;
         const int DOOR_HEIGHT = 41;
 
-        // int HORIZONTAL_OFFSET = //num;
-        // const int VERTICAL_OFFSET = //num;
+        int doorNum;
 
         PuzzleState doorState;
+        List<PuzzleOrb> puzzleVariables;
 
         Texture2D doorTexture;
         Vector2 doorPosition;
-        Rectangle doorCollisionBox;
+        //Rectangle doorCollisionBox;
         #endregion
 
         #region Properties
@@ -36,18 +36,45 @@ namespace blank_canvas
             set { doorTexture = value; }
         }
 
-        public Rectangle CollisionBox
+        /*public Rectangle CollisionBox
         {
             get { return doorCollisionBox; }
+        }
+        */
+        public PuzzleState DoorState
+        {
+            get { return doorState; }
+        }
+
+        public int DoorNum
+        {
+            get { return doorNum; }
         }
         #endregion
 
 
-        public Gates(Rectangle rect) : base(rect)
+        public Gates(Vector2 position, char prevChar) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
-
+            doorPosition = new Vector2(position.X, position.Y);
+            doorNum = Convert.ToInt32(prevChar);
+            doorState = PuzzleState.Active;
         }
 
+
+        #region Methods
+        public bool CheckCollision(Player player)
+        {
+            if (doorState == PuzzleState.Active)
+            {
+                if ((Max.Y >= player.Min.Y) && (Min.Y < player.Max.Y) && (Max.X > player.Min.X) && (Min.X < player.Max.X))
+                {
+                    return true; // Only returns true when colliding and the door is active
+                }
+                else return false;
+            }
+            else return false;
+        }
+        #endregion
 
     }
 }
