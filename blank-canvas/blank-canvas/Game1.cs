@@ -71,8 +71,12 @@ namespace blank_canvas
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+<<<<<<< HEAD
             //loads in all the texture that the stage manager requries
             stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "tileGround5", "projectile", "orbBase", "orb");
+=======
+            stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "tileGround5", "projectile", "orbBase", "orb", "Door");
+>>>>>>> 35aed0cc605b6713867426a80e1c89f947662f68
 
             // gameplay textures
             backgroundTexture = Content.Load<Texture2D>("testBackground");

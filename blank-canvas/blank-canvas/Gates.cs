@@ -17,17 +17,13 @@ namespace blank_canvas
         const int WIDTH = 64;
         const int HEIGHT = 128; //may be subjected to change
 
-        const int DOOR_WIDTH = 37;
-        const int DOOR_HEIGHT = 41;
-
-        // int HORIZONTAL_OFFSET = //num;
-        // const int VERTICAL_OFFSET = //num;
+        int doorNum;
 
         PuzzleState doorState;
+        List<PuzzleOrb> puzzleVariables;
 
         Texture2D doorTexture;
         Vector2 doorPosition;
-        Rectangle doorCollisionBox;
         #endregion
 
         #region Properties
@@ -36,18 +32,49 @@ namespace blank_canvas
             set { doorTexture = value; }
         }
 
-        public Rectangle CollisionBox
+        public PuzzleState DoorState
         {
-            get { return doorCollisionBox; }
+            get { return doorState; }
+        }
+
+        public int DoorNum
+        {
+            get { return doorNum; }
+        }
+
+        public List<PuzzleOrb> PuzzleVariables
+        {
+            get { return puzzleVariables; }
+            set { puzzleVariables = value; }
         }
         #endregion
 
 
-        public Gates(Rectangle rect) : base(rect)
+        public Gates(Vector2 position, char prevChar) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
+            puzzleVariables = new List<PuzzleOrb>();
+            doorPosition = new Vector2(position.X, position.Y);
+            doorNum = Convert.ToInt32(prevChar);
+            doorState = PuzzleState.Active;
 
         }
 
+
+
+        #region Methods
+        public void Update()
+        {
+            foreach(PuzzleOrb orbs in puzzleVariables)
+            {
+                if(orbs.PuzzleState == PuzzleState.Active)
+                {
+                    return;
+                }               
+            }
+            // all PuzzleStates are complete
+            doorState = PuzzleState.Completed;
+        }
+        #endregion
 
     }
 }

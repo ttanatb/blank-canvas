@@ -1,5 +1,15 @@
 To Do List:
 
 Bugs/Needs Fixing:
+Technical:
 ~When an enemy without color and an enemy with color are within color taking power, you cannot take the color of the colored enemy.
-~Texture: Jumping texture has a little bit of the next texture peeping into the character's box
+~Enemies Float
+
+Texture:
+~Jumping texture has a little bit of the next texture peeping into the character's box
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Features to be implemented:
+~Sign object that gives user instructions/hints for puzzle
+~Clearing Character Paint Barrier
+~For the StageBuilder/StageReader read the first level file and create level gamestates that reads the next level in

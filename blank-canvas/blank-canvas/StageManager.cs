@@ -26,6 +26,7 @@ namespace blank_canvas
         Enemy[] enemies;            
         Tile[] tiles;               //tiles to draw (we really don't need tiles, just rectangles)
         Rectangle[] tileCollision;  //tiles to check collision with
+        Gates[] gates;
 
         PuzzleOrb[] puzzleOrbs;        //this is for testing
         //Enemy testEnemy;
@@ -50,7 +51,8 @@ namespace blank_canvas
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
-            puzzleOrbs = stageReader.PuzzleOrbs;            
+            puzzleOrbs = stageReader.PuzzleOrbs;
+            gates = stageReader.PuzzleGates;       
         }
 
         //properties
@@ -69,7 +71,7 @@ namespace blank_canvas
         /// <param name="tileTexture">The texture for the tiles</param>
         public void LoadContent(ContentManager content, string playerTexture,
             string enemyTexture, string tileTexture, string projectileTexture,
-            string orbBaseTexture, string orbTexture)
+            string orbBaseTexture, string orbTexture, string gateTexture)
         {
             try
             {
@@ -92,6 +94,11 @@ namespace blank_canvas
             {
                 puzzleorb.Texture = content.Load<Texture2D>(orbBaseTexture);
                 puzzleorb.OrbTexture = content.Load<Texture2D>(orbTexture);
+            }
+
+            foreach(Gates gate in gates)
+            {
+                gate.Texture = content.Load<Texture2D>(gateTexture);
             }
 
             testFont = content.Load<SpriteFont>("Arial_14");
@@ -128,6 +135,11 @@ namespace blank_canvas
                 player.Projectile.CheckCollision(puzzleOrbs, enemies);
             }
 
+            foreach(Gates gate in gates)
+            {
+                gate.Update();
+            }
+
             foreach (Enemy enemy in enemies)
             {
                 if (!enemy.Active)
@@ -153,7 +165,14 @@ namespace blank_canvas
                     if (enemy.Active && r.Intersects(enemy.Rectangle))
                         enemy.ChangeDirection();
                 }
+                foreach(Gates gate in gates)
+                {
+                    if (gate.DoorState == PuzzleState.Active && gate.Rectangle.Intersects(player.CollisionBox))
+                        FixPos(player, gate.Rectangle);
+                }
             }
+
+
         }
 
         private void PlayerDrainColor()
@@ -311,6 +330,11 @@ namespace blank_canvas
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
                 puzzleorb.Draw(spriteBatch);
 
+            #endregion
+
+            #region Gates
+            foreach (Gates gate in gates)
+                gate.Draw(spriteBatch);
             #endregion
 
             foreach (Enemy enemy in enemies)
