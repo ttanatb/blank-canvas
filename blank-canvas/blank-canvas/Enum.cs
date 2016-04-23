@@ -13,7 +13,9 @@ namespace blank_canvas
     /// </summary>
     public enum PaletteColor
     {
-        //the numbers are used to determine the color in an easy way
+        //the red, blue and yellow represents 3 different prime numbers
+        //if a color is divisible by one of the primary colors, it contains that primary color
+
         Red = 2,
         Blue = 3,
         Yellow = 5,
@@ -22,18 +24,11 @@ namespace blank_canvas
         Purple = 6,
         Black = 30,
         White = 1,
-
-        /*
-        here's how:
-        int r = (int)color % 2;
-        int b = (int)color % 3;
-        int y = (int)color % 5;
-
-        The check if r, b, or y is 0
-        if so add to its respective int
-        */
     }
 
+    /// <summary>
+    /// The state of the game itself
+    /// </summary>
     public enum GameState
     {
         MainMenu,
@@ -42,19 +37,29 @@ namespace blank_canvas
         EndOfGame
     }
 
+    /// <summary>
+    /// The direction of the character
+    /// </summary>
     public enum Direction
     {
         Left = -1,
         Right = 1,
     }
 
+    /// <summary>
+    /// The state of the puzzle
+    /// </summary>
     public enum PuzzleState
     {
+        //the int value is used for drawing (transparency)
         Inactive,
         Active = 8,
         Completed = 1,
     }
 
+    /// <summary>
+    /// The animation state of the player
+    /// </summary>
     public enum AnimState
     {
         Idle,

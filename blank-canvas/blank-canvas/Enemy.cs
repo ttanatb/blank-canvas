@@ -6,11 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-/*
-    Class: Enemy
-    Purpose: creates enemy and all movement required for it
-*/
-
 namespace blank_canvas
 {
     /// <summary>
@@ -18,11 +13,17 @@ namespace blank_canvas
     /// </summary>
     class Enemy : Character
     {
-        #region Variables
-        new const float MOVESPEED = 100f;
-        const double PAUSE_TIME = 2000.0;
+        #region fields
+
+        const float MOVESPEED = 100f;
+        const double PAUSE_TIME = 2000.0; //the amount of time to take for pausing
+
         const int WIDTH = 64;
         const int HEIGHT = 64;
+
+        #endregion
+
+        #region variables
 
         Palette palette;
         Random rndm;
@@ -30,13 +31,19 @@ namespace blank_canvas
 
         #endregion
 
-        #region Properties
+        #region properties
 
+        /// <summary>
+        /// The current color based on the palette
+        /// </summary>
         public PaletteColor CurrentColor
         {
             get { return palette.CurrentColor; }
         }
 
+        /// <summary>
+        /// Wether or not is the enemy active
+        /// </summary>
         public bool Active
         {
             get { return active; }
@@ -44,21 +51,24 @@ namespace blank_canvas
 
         #endregion
 
-        #region Constructor
-        //constructor
+        #region constructor
         public Enemy(Vector2 position, PaletteColor color) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
+            //instantializing the variables
             palette = new Palette(color);
-
             rndm = new Random();
             active = true;
         }
         #endregion
 
         #region methods
-        //methods
+        /// <summary>
+        /// Updates the position of the enemy based on the velocity and direction
+        /// </summary>
+        /// <param name="deltaTime">The time since the last update</param>
         public void Update(double deltaTime)
         {
+            //checks to make sure that it is active
             if (active)
             {
                 velocity.X = (int)direction * MOVESPEED;
@@ -66,59 +76,74 @@ namespace blank_canvas
             }
         }
 
+        /// <summary>
+        /// Changes the direction
+        /// </summary>
         public void ChangeDirection()
         {
             direction = (Direction)(-1 * (int)direction);
         }
 
+        /// <summary>
+        /// Resets the color of the enemy
+        /// </summary>
+        /// <returns>The current color of the enemy</returns>
         public PaletteColor DrainColor()
         {
+            //sets the enemy inactive
             active = false;
+
+            //get the color from the palette
             PaletteColor color = CurrentColor;
+
+            //reset the palette
             palette.ResetColor();
-            return color;
+
+            //return the color from the palette
+            return color; 
         }
 
-        public bool AddColor(Projectile projectile)
+        /// <summary>
+        /// Reinvigorates the enemy with a projectile
+        /// </summary>
+        /// <param name="projectile">The projectile to add the color</param>
+        public void AddColor(Projectile projectile)
         {
-            active = true;
-            return palette.AddColor(projectile.ProjectileColor);
+            palette.AddColor(projectile.ProjectileColor);
         }
 
+        /// <summary>
+        /// Draw the enemy based on its current color
+        /// </summary>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            int a = alpha * 3 / 4;
+            //sprite effect that reflect the direction that the enemy is facing
+            SpriteEffects spriteEffects;
+            Color color;
+            if (direction == Direction.Right)
+                spriteEffects = SpriteEffects.None;
+            else spriteEffects = SpriteEffects.FlipHorizontally;
 
-            if (!active)
-                a = a / 8;
-             
+            //the overlaying color is based on the palette
             switch (CurrentColor)
             {
                 case (PaletteColor.Red):
-                    spriteBatch.Draw(texture, position, new Color(alpha, 0, 0, a));
+                    color = new Color(alpha, 0, 0, alpha);
                     break;
                 case (PaletteColor.Blue):
-                    spriteBatch.Draw(texture, position, new Color(0, 0, alpha, a));
+                    color = new Color(0, 0, alpha, alpha);
                     break;
                 case (PaletteColor.Yellow):
-                    spriteBatch.Draw(texture, position, new Color(alpha, alpha, 0, a));
+                    color = new Color(alpha, alpha, 0, alpha);
                     break;
-                case (PaletteColor.Orange):
-                    spriteBatch.Draw(texture, position, new Color(alpha, alpha / 2, 0, a));
-                    break;
-                case (PaletteColor.Green):
-                    spriteBatch.Draw(texture, position, new Color(0, alpha, 0, a));
-                    break;
-                case (PaletteColor.Purple):
-                    spriteBatch.Draw(texture, position, new Color(alpha / 2, 0, alpha / 2, a));
-                    break;
-                case (PaletteColor.Black):
-                    spriteBatch.Draw(texture, position, new Color(0, 0, 0, alpha));
-                    break;
-                case (PaletteColor.White):
-                    spriteBatch.Draw(texture, position, new Color(alpha, alpha, alpha, alpha));
+                default:
+                    color = new Color(alpha, alpha, alpha, alpha);
                     break;
             }
+
+            //actual draw method
+            spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), color, 0f, Vector2.Zero, spriteEffects, 1);
+
         }
         #endregion
     }

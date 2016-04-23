@@ -6,11 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-/*
-    Class: Character
-    Purpose: creates character and all movement required for it
-*/
-
 namespace blank_canvas
 {
     /// <summary>
@@ -20,15 +15,9 @@ namespace blank_canvas
     {
 
         #region variables
-        //variables
-        protected const float MAX_MOVE_SPEED = 300f;
-
-        protected Rectangle[] collisionBoxes;
 
         protected Vector2 velocity;
         protected Vector2 prevPos;
-
-        protected int health;
 
         protected Direction direction;
         protected AnimState animState;
@@ -36,95 +25,74 @@ namespace blank_canvas
         #endregion
 
         #region constructors
-        //constructor
+
         public Character(Rectangle rectangle) : base(rectangle)
         {
-            //NEEDS WORK (Collision box still only has one box)
-            collisionBoxes = new Rectangle[1];
-            collisionBoxes[0] = rectangle;
-
             velocity = new Vector2(0, 0);
-            //acceleration = new Vector2(0, 0);
-            health = 10;
-
+            prevPos = position;
             direction = Direction.Right;
             animState = AnimState.Idle;
         }
+
         #endregion
 
         #region properties
-        //properties
+
+        /// <summary>
+        /// Returns the position of the character in the previous frame
+        /// </summary>
         public Vector2 PrevPos
         {
             get { return prevPos; }
         }
 
+        /// <summary>
+        /// The velocity, sometimes you just gotta go fast
+        /// </summary>
         public Vector2 Velocity
         {
             get { return velocity; }
             set { velocity = value; }
         }
 
-        /*
-        public Vector2 Acceleration
-        {
-            get { return acceleration; }
-            set { acceleration = value; }
-        }
-        */
-
-        public Rectangle[] CollisionBoxes
-        {
-            get { return collisionBoxes; }
-        }
-
-        public int Health
-        {
-            get { return health; }
-            set { health = value; }
-        }
-
+        /// <summary>
+        /// The direction that the character is facing
+        /// </summary>
         public Direction Direction
         {
             get { return direction; }
             set { direction = value; }
         }
+
         #endregion
 
         #region methods
 
         /// <summary>
-        /// Moves the character based on the previous position, velocity, time step, and acceleration
+        /// Moves the character based on the previous position, velocity, and time step
         /// </summary>
         /// <param name="deltaTime">The time step from the previous update call</param>
         public virtual void UpdatePos(double deltaTime)
         {
-            prevPos.X = position.X;
-            prevPos.Y = position.Y;
-            position.X += (float)(velocity.X * deltaTime);// + (0.5 * prevAcc.X * Math.Pow(deltaTime, 2.0)));
-            position.Y += (float)(velocity.Y * deltaTime);// + (0.5 * prevAcc.Y * Math.Pow(deltaTime, 2.0)));
-            //prevAcc = acceleration;
+            prevPos = position;
+            position.X += (float)(velocity.X * deltaTime);
+            position.Y += (float)(velocity.Y * deltaTime);
         }
 
         /// <summary>
-        /// Updates the velocity of a character based on the average acceleration and time step
+        /// Used to show the variables when testing
         /// </summary>
-        /// <param name="deltaTime">Time step in miliseconds</param>
-        /*public void UpdateVelocity(double deltaTime)
-        {
-            velocity.Y += (float)(((prevAcc.Y + acceleration.Y) * deltaTime) / 2);
-            velocity.X += (float)(((prevAcc.X + acceleration.X) * deltaTime) / 2);
-
-        }*/
-
-        //used for testing
         public override string ToString()
         {
-            string msg = "Position: " + position.X + ", " + position.Y + "\nVelocity: " + velocity.X + ", " + velocity.Y;// + "\nAcceleration: " + acceleration.X + ", " + acceleration.Y;
+            string msg = "Position: " + position.X + ", " + position.Y + "\nVelocity: " + velocity.X + ", " + velocity.Y;
             return msg;
 
         }
 
+        /// <summary>
+        /// Draw method that flips the character correctly
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             SpriteEffects spriteEffects;

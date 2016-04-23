@@ -6,12 +6,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-/*
-    Class: Camera  
-    Purpose: controls the viewport of the game
-*/
-
-
 namespace blank_canvas
 {
     /// <summary>
