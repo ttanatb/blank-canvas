@@ -13,19 +13,23 @@ namespace blank_canvas
     /// </summary>
     public class GameObject
     {
-        #region variables
-        protected const float FADE_INCREMENT = .70f;
-        protected int alpha;
+        #region field and variables
 
-        protected Texture2D texture; //may need an array instead (doesn't handle sprite sheets either)
+        //the value that the alpha value will be divided by
+        protected const float FADE_INCREMENT = .70f;
+
+        //value used to instantiate the overlaying color
+        protected int alpha; 
+
+        protected Texture2D texture; 
         protected Vector2 position;
-        protected Color color;
         protected int width;
         protected int height;
+
         #endregion
 
+
         #region constructor
-        /// <param name="rectangle">Target Rectangle</param>
         public GameObject(Rectangle rectangle)
         {
             width = rectangle.Width;
@@ -34,6 +38,9 @@ namespace blank_canvas
             alpha = 255;
         }
 
+        /// <summary>
+        /// Constructor for projectile
+        /// </summary>
         public GameObject(int width, int height)
         {
             this.width = width;
@@ -43,6 +50,10 @@ namespace blank_canvas
         #endregion
 
         #region properties
+
+        /// <summary>
+        /// The center of the sprite
+        /// </summary>
         public Vector2 Center
         {
             get { return new Vector2(X + width / 2, Y + height / 2); }
@@ -116,14 +127,18 @@ namespace blank_canvas
         }
         #endregion
 
-        protected void Fade()
+         #region methods
+
+        /// <summary>
+        /// The method that fades a sprite
+        /// </summary>
+        protected virtual void Fade()
         {
             if (alpha > 0)
                 alpha = (int)(alpha * FADE_INCREMENT);
             else alpha = 0;
         }
 
-        #region methods
         /// <summary>
         /// Basic draw method, doesn't draw if texture is not instantiated. 
         /// Default color is white.
@@ -131,8 +146,9 @@ namespace blank_canvas
         /// <param name="spriteBatch">The current spriteBatch</param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-           spriteBatch.Draw(texture, Rectangle, new Color(alpha,alpha,alpha,alpha));
+            spriteBatch.Draw(texture, Rectangle, new Color(alpha,alpha,alpha,alpha));
         }
+
         #endregion
     }
 }

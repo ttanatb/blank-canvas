@@ -16,9 +16,8 @@ namespace blank_canvas
      class Player : Character
     {
         #region fields
-
         //movespeed of the player
-        new const float MAX_MOVE_SPEED = 500f;
+        const float MAX_MOVE_SPEED = 500f;
         const float MOVE_SPEED = 40f;
         const float HALT_RATE = 1.18f;
 
@@ -45,6 +44,9 @@ namespace blank_canvas
         public const int TOP_MARGIN = 11;
         public const int BOTTOM_MARGIN = 16;
 
+        //maximum health
+        const int MAX_HEALTH = 3;
+        const int FADE_DECREMENT = 30;
         #endregion
 
         #region variables
@@ -52,8 +54,11 @@ namespace blank_canvas
         bool canJump;
         Bucket bucket;
 
+        //used for animation
         double elapsedTime;
         int frame;
+
+        int health;
 
         #endregion
 
@@ -135,6 +140,7 @@ namespace blank_canvas
                 animState = value;
             }
         }
+
         #endregion
 
         #region constructor
@@ -144,12 +150,20 @@ namespace blank_canvas
             canJump = false;
             bucket = new Bucket();
             elapsedTime = 0;
+            health = MAX_HEALTH;
         }
 
         #endregion
 
+        #region methods
+
+        /// <summary>
+        /// Updates the input based on the input manager
+        /// </summary>
+        /// <param name="input">The input manager</param>
         public void UpdateInput(InputManager input)
         {
+            //if the player is in its hurt animation, return
             if (animState == AnimState.Hurt)
                 return;
 
@@ -172,124 +186,24 @@ namespace blank_canvas
             else if (input.KeysUp(Keys.Left, Keys.Right))
                 Halt();
 
+            //shifts through the primary colors
+            if (input.KeyPressed(Keys.RightShift))
+                bucket.SwitchRBY();
+            else if (input.KeyPressed(Keys.LeftShift))
+                bucket.SwitchYBR();
+
+            //the player shouldn't be able to shoot or drain if she is shooting or draining
             if (animState == AnimState.Shoot || animState == AnimState.Drain)
                 return;
 
+            //shoots
             if (input.KeyPressed(Keys.C))
             {
                 bucket.Shoot(this);
                 frame = 0;
                 animState = AnimState.Shoot;
             }
-
-            if (input.KeyPressed(Keys.RightShift))
-                bucket.SwitchRBY();
-            else if (input.KeyPressed(Keys.LeftShift))
-                bucket.SwitchYBR();
         }
-
-        public void TakeDamage(Enemy enemy)
-        {
-            frame = 0;
-            animState = AnimState.Hurt;
-
-            if (enemy.X - X > 0)
-            {
-                direction = Direction.Right;
-            }
-            else direction = Direction.Left;
-
-            velocity.Y -= HORIZONTAL_KNOCK_BACK;
-            velocity.X -= (float)direction * VERTICAL_KNOCK_BACK;
-            //playerState = PlayerState.Uncontrollable;
-        }
-        public void DrainColor(Enemy enemy)
-        {
-            bucket.AddColor(enemy);
-        }
-
-        public void DrainColor(PuzzleOrb orb)
-        {
-            bucket.AddColor(orb);
-        }
-
-        public void UpdateAnim(double deltaTime)
-        {
-            elapsedTime += deltaTime;
-            if (elapsedTime > FRAME_TIMER)
-            {
-                elapsedTime -= FRAME_TIMER;
-                frame++;
-            }
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            SpriteEffects spriteEffects;
-
-            if (direction == Direction.Right)
-                spriteEffects = SpriteEffects.None;
-            else spriteEffects = SpriteEffects.FlipHorizontally;
-            
-            switch(animState)
-            {
-                case AnimState.Idle:
-                    if (velocity.Y != 0)
-                        goto case AnimState.Jump;
-                    animState = AnimState.Idle;
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
-                    break;
-                case AnimState.Walk:
-                    if (frame > 3)
-                        frame = 0;
-
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 1 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
-                    break;
-                case AnimState.Shoot:
-                    if (frame > 2)
-                        goto case AnimState.Idle;
-
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle((1 + frame) * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
-
-                    break;
-                case AnimState.Hurt:
-                    if (frame > 4)
-                        goto case AnimState.Idle;
-                    
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 2 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
-                    break;
-                case AnimState.Drain:
-                    if (frame > 2)
-                        goto case AnimState.Idle;
-
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 3 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
-
-                    break;
-                case AnimState.Jump:
-                    animState = AnimState.Jump;
-                    if (velocity.Y < JUMP_VELOCITY / 2)
-                        frame = 0;
-                    else if(velocity.Y > -JUMP_VELOCITY/2)
-                        frame = 2;
-                    else frame = 1;
-
-                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 4 * HEIGHT, WIDTH, HEIGHT), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
-                    break;
-            }
-
-
-            //base.Draw(spriteBatch);
-            if (Projectile.Active)
-                Projectile.Draw(spriteBatch);
-        }
-
-        /*
-        public override string ToString()
-        {
-            return bucket.ToString();
-        }
-        */
-
 
         #region private methods        
 
@@ -358,77 +272,173 @@ namespace blank_canvas
         private void ReleaseJump()
         {
             if (velocity.Y < JUMP_VELOCITY / 2)
-                velocity.Y = JUMP_VELOCITY / 2; 
-        } 
-
-
-
+                velocity.Y = JUMP_VELOCITY / 2;
+        }
         #endregion
 
-        /*
+        /// <summary>
+        /// Reduces the health of the player when collided with an enemy
+        /// </summary>
+        /// <param name="enemy">The enemy that the player collided with</param>
+        public void TakeDamage(Enemy enemy)
+        {
+            //If the player is already in the hurting animation, return
+            if (animState == AnimState.Hurt)
+                return;
+
+            //reduces the health
+            health--;
+
+            //set initial frame and animation state
+            frame = 0;
+            animState = AnimState.Hurt;
+
+            //determine direction after collision
+            if (enemy.Center.X - Center.X > 0)
+                direction = Direction.Right;
+            else direction = Direction.Left;
+
+            //sets the player up the knocks the player back
+            position.Y -= 1;
+            velocity.Y = -HORIZONTAL_KNOCK_BACK;
+            velocity.X = -(float)direction * VERTICAL_KNOCK_BACK;
+        }
+
+        /// <summary>
+        /// Drains the color from an enemy
+        /// </summary>
+        public void DrainColor(Enemy enemy)
+        {
+            bucket.AddColor(enemy);
+        }
+
+        /// <summary>
+        /// Drains the color from a puzzle orb
+        /// </summary>
+        public void DrainColor(PuzzleOrb orb)
+        {
+            bucket.AddColor(orb);
+        }
+
+        /// <summary>
+        /// Updates the frame of animation
+        /// </summary>
+        /// <param name="deltaTime">Time elapsed since last update</param>
+        public void UpdateAnim(double deltaTime)
+        {
+            //increases total elapsed time
+            elapsedTime += deltaTime;
+
+            //determines if frame should increment
+            if (elapsedTime > FRAME_TIMER)
+            {
+                elapsedTime -= FRAME_TIMER;
+                frame++;
+            }
+        }
+
+        /// <summary>
+        /// Draw the player as well as deal with the animation
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //animation frame states
-            if (pfs == PlayerFrameState.Idle)
-            {
-                //calculate correct frame size once spritesheet arrives
-                /*
-                currentFrame.X = 0;
-                currentFrame.Y = 0;
-            }
-            if (pfs == PlayerFrameState.Jump)
-            {
-                //calculate correct frame size once spritesheet arrives
-                /*
-                currentFrame.X = 0;
-                currentFrame.Y = 0;
-
-            }
-            if (pfs == PlayerFrameState.Run)
-            {
-                //calculate correct frame size once spritesheet arrives
-                /*
-                currentFrame.X = 0;
-                currentFrame.Y = 0;
-                
-            }
-            if (pfs == PlayerFrameState.Shoot)
-            {
-                //calculate correct frame size once spritesheet arrives
-                /*
-                currentFrame.X = 0;
-                currentFrame.Y = 0;
-                
-            }
-            if (pfs == PlayerFrameState.Walk)
-            {
-                //calculate correct frame size once spritesheet arrives
-                /*
-                currentFrame.X = 0;
-                currentFrame.Y = 0;
-                
-            }
-            if (pfs == PlayerFrameState.Hurt)
-            {
-                //calculate correct frame size once spritesheet arrives
-                /*
-                currentFrame.X = 0;
-                currentFrame.Y = 0;
-                
-            }
-
-            //for when collisions occur
+            //sprite effects used for flipping the character based on the direction
             SpriteEffects spriteEffects;
+
             if (direction == Direction.Right)
                 spriteEffects = SpriteEffects.None;
             else spriteEffects = SpriteEffects.FlipHorizontally;
 
-            //insert frame from spritesheet in line below
-            spriteBatch.Draw(texture, Rectangle, new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0f, Vector2.Zero, spriteEffects, 1);
+            //the transparency of the sprite
+            int a = alpha - (MAX_HEALTH - health) * FADE_DECREMENT;
+            Color color = new Color(a, a, a, a);
+            
+            switch(animState)
+            {
+                case AnimState.Idle:
+                    //checks if the plater is moving vertically
+                    if (velocity.Y != 0)
+                    {
+                        animState = AnimState.Jump;
+                        goto case AnimState.Jump;
+                    }
 
-            if (projectile.Active)
-                projectile.Draw(spriteBatch);
+                    //makes sure that the animation state is idle
+                    animState = AnimState.Idle;
+
+                    spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+
+                case AnimState.Walk:
+                    //loops the animation
+                    if (frame > 3)
+                        frame = 0;
+
+                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 1 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+
+                case AnimState.Shoot:
+                    //goes to idle animation after shooting animation is done
+                    if (frame > 2)
+                    {
+                        animState = AnimState.Idle;
+                        goto case AnimState.Idle;
+                    }
+
+                    spriteBatch.Draw(texture, Rectangle, new Rectangle((1 + frame) * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+
+                case AnimState.Hurt:
+                    //changes animation after hurting animation is done
+                    if (frame > 4)
+                    {
+                        animState = AnimState.Idle;
+                        goto case AnimState.Idle;
+                    }
+
+                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 2 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+
+                case AnimState.Drain:
+                    //changes animation after draining animation is done
+                    if (frame > 2)
+                    {
+                        animState = AnimState.Idle;
+                        goto case AnimState.Idle;
+                    }
+
+                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 3 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+
+                case AnimState.Jump:
+                    //determines the frame from the vertical velocity
+                    if (velocity.Y < JUMP_VELOCITY / 2)
+                        frame = 0;
+                    else if(velocity.Y > -JUMP_VELOCITY/2)
+                        frame = 2;
+                    else frame = 1;
+
+                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 4 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
+            }
+
+            //draws the projectile if it is active
+            if (Projectile.Active)
+                Projectile.Draw(spriteBatch);
         }
-        */
+
+        //used to test
+        public override string ToString()
+        {
+            string msg = base.ToString();
+            if (health > 0)
+                msg += "\nHealth: " + health;
+            else msg += "You should be dead now, but I haven't implemented that yet";
+            return msg;
+        }
+
+        #endregion
+
     }
 }

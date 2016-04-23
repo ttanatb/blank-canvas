@@ -112,13 +112,14 @@ namespace blank_canvas
             input.Update();
 
             player.UpdateInput(input);
+            player.UpdatePos(deltaTime);
+
 
             if (input.KeyPressed(Keys.X) && (player.AnimState == AnimState.Jump || player.AnimState == AnimState.Walk || player.AnimState == AnimState.Idle))
                 PlayerDrainColor();
 
             player.Velocity += new Vector2(0, GRAVITY);
 
-            player.UpdatePos(deltaTime);
             player.UpdateAnim(deltaTime);
 
             if (player.Projectile.Active)

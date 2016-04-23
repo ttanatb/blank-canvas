@@ -9,56 +9,102 @@ using Microsoft.Xna.Framework.Input;
 namespace blank_canvas
 {
     /// <summary>
-    /// The data structure that represents 
+    /// The data structure that represents the paint values of the player
     /// </summary>
     class Bucket
     {
+        #region variables
+
+        //the amount of primary color paint
         int red;
         int blue;
         int yellow;
+
+        //the current color that's being used
         PaletteColor currentColor;
+
+        //an instance of a projectile
         Projectile projectile;
+
+        #endregion
+
+        #region constructor
 
         public Bucket()
         {
+            //instantializes the projectile
             projectile = new Projectile(this);
+
+            //right now it sets everything at 1 for testing
             red = 1;
             blue = 1;
             yellow = 1;
+
+            //an initial color
             currentColor = PaletteColor.Red;
         }
 
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// To be used for the GUI
+        /// </summary>
         public int Red
         {
             get { return red; }
         }
 
+        /// <summary>
+        /// To be used for the GUI
+        /// </summary>
         public int Blue
         {
             get { return blue; }
         }
 
+        /// <summary>
+        /// To be used for the GUI
+        /// </summary>
         public int Yellow
         {
             get { return yellow; }
         }
 
+        /// <summary>
+        /// To be used for the GUI
+        /// </summary>
         public PaletteColor CurrentColor
         {
             get { return currentColor; }
         }
 
+        /// <summary>
+        /// An instance of the projectile class
+        /// </summary>
         public Projectile Projectile
         {
             get { return projectile; }
         }
 
+        #endregion
+
+        #region methods
+
+        /// <summary>
+        /// Adds a color by draining an enemy's color
+        /// </summary>
+        /// <param name="enemy">The enemy to drain the color of</param>
         public void AddColor(Enemy enemy)
         {
             PaletteColor color = enemy.DrainColor();
             DistributeColor(color);
         }
 
+        /// <summary>
+        /// Adds a color by draining a puzzle orb's color
+        /// </summary>
+        /// <param name="enemy">The puzzle orb to drain the color of</param>
         public void AddColor(PuzzleOrb puzzleOrb)
         {
             PaletteColor color = puzzleOrb.DrainColor();
@@ -66,37 +112,77 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// switches through red blue yellow
+        /// Distributes the given color by its primary colors
+        /// </summary>
+        /// <param name="color">Color to distribute</param>
+        private void DistributeColor(PaletteColor color)
+        {
+            //if a color is divisible by 2 it contains red
+            int r = (int)color % 2;
+
+            //if a color is divisible by 3 it contains blue
+            int b = (int)color % 3;
+
+            //if a color is divisible by 5 it contains yellow
+            int y = (int)color % 5;
+
+            //increments the current paint amount based on the divisibility
+            if (r == 0)
+                red++;
+            if (b == 0)
+                blue++;
+            if (y == 0)
+                yellow++;
+        }
+
+        /// <summary>
+        /// Switches in the order of red, blue, yellow, then back to red
         /// </summary>
         public void SwitchRBY()
         {
+            //checks to make sure there are any paint left
             if (blue == 0 && red == 0 && yellow == 0)
                 return;
 
             switch (currentColor)
             {
                 case PaletteColor.Red:
+                    //switches to blue if it exists
                     if (blue > 0)
+                    {
                         currentColor = PaletteColor.Blue;
+                        break;
+                    }
+
+                    //otherwise move to case of blue
                     else goto case PaletteColor.Blue;
-                    break;
 
                 case PaletteColor.Blue:
+                    //switches to yellow
                     if (yellow > 0)
+                    {
                         currentColor = PaletteColor.Yellow;
+                        break;
+                    }
+
+                    //otherwise move to the case of yellow
                     else goto case PaletteColor.Yellow;
-                    break;
 
                 case PaletteColor.Yellow:
+                    //switches to red
                     if (red > 0)
+                    {
                         currentColor = PaletteColor.Red;
+                        break;
+                    }
+
+                    //otherwise move to the case of red
                     else goto case PaletteColor.Red;
-                    break;
             }
         }
 
         /// <summary>
-        /// switches through yellow blue red
+        /// Switches through the order of yellow, blue, red, then back to yellow
         /// </summary>
         public void SwitchYBR()
         {
@@ -106,55 +192,70 @@ namespace blank_canvas
             switch (currentColor)
             {
                 case PaletteColor.Yellow:
+                    //switches to blue if it exists
                     if (blue > 0)
+                    {
                         currentColor = PaletteColor.Blue;
+                        break;
+                    }
+
+                    //otherwise move to case of blue
                     else goto case PaletteColor.Blue;
-                    break;
+
                 case PaletteColor.Blue:
-                    if (red > 0)
-                        currentColor = PaletteColor.Red;
-                    else goto case PaletteColor.Red;
-                    break;
-                case PaletteColor.Red:
+                    //switches to yellow
                     if (yellow > 0)
+                    {
+                        currentColor = PaletteColor.Red;
+                        break;
+                    }
+
+                    //otherwise move to the case of yellow
+                    else goto case PaletteColor.Red;
+
+                case PaletteColor.Red:
+                    //switches to red
+                    if (red > 0)
+                    {
                         currentColor = PaletteColor.Yellow;
+                        break;
+                    }
+
+                    //otherwise move to the case of red
                     else goto case PaletteColor.Yellow;
-                    break;
             }
         }
 
-        private void DistributeColor(PaletteColor color)
-        {
-            int r = (int)color % 2;
-            int b = (int)color % 3;
-            int y = (int)color % 5;
-
-            if (r == 0)
-                red++;
-            if (b == 0)
-                blue++;
-            if (y == 0)
-                yellow++;
-        }
-
+        /// <summary>
+        /// Shoots out a projectile
+        /// </summary>
+        /// <param name="player">The player position to start the projectile</param>
         public void Shoot(Player player)
         {
+            //makes sure that there actually is paint
             if (!(blue == 0 && red == 0 && yellow == 0))
             {
+                //starting position
                 Vector2 startingPos;
-                if (player.Direction == Direction.Right)
-                    startingPos = new Vector2(player.Max.X, player.Y + player.Height / 3 + Projectile.HEIGHT);
-                else startingPos = new Vector2(player.X - Projectile.WIDTH, player.Y + player.Height / 3 + Projectile.HEIGHT);
 
-                //deal with the color thing with the bucket
+                //starting position depends on the current position
+                if (player.Direction == Direction.Right)
+                    startingPos = new Vector2(player.Max.X - Player.RIGHT_MARGIN, player.Y + player.Height / 3 + Projectile.HEIGHT);
+                else startingPos = new Vector2(player.X - Projectile.WIDTH + Player.RIGHT_MARGIN, player.Y + player.Height / 3 + Projectile.HEIGHT);
 
                 projectile.Shoot(startingPos, player.Direction, currentColor);
             }
 
         }
 
-        public PaletteColor UsePaint()
+        /// <summary>
+        /// Uses up a color based on the current color
+        /// </summary>
+        /// <returns></returns>
+        public void UsePaint()
         {
+            //uses up paint only if it exists
+            //if paint is used up, it cycles to the next one
             switch(currentColor)
             {
                 case PaletteColor.Red:
@@ -163,7 +264,7 @@ namespace blank_canvas
                         red--;
                         if (red == 0)
                             SwitchRBY();
-                        return PaletteColor.Red;
+                        return;
                     }
                     break;
                 case PaletteColor.Blue:
@@ -172,7 +273,7 @@ namespace blank_canvas
                         blue--;
                         if (blue == 0)
                             SwitchRBY();
-                        return PaletteColor.Blue;
+                        return;
                     }
                     break;
                 case PaletteColor.Yellow:
@@ -181,13 +282,15 @@ namespace blank_canvas
                         yellow--;
                         if (yellow == 0)
                             SwitchRBY();
-                        return PaletteColor.Yellow;
+                        return;
                     }
                     break;
             }
-            return PaletteColor.White;
         }
 
+        /// <summary>
+        /// Shows the current paint values and current color
+        /// </summary>
         public override string ToString()
         {
             string msg = "";
@@ -195,5 +298,7 @@ namespace blank_canvas
             msg += "\nCurrent color: " + currentColor;
             return msg;
         }
+
+        #endregion
     }
 }

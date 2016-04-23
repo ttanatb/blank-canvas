@@ -13,51 +13,72 @@ namespace blank_canvas
     /// </summary>
     class Projectile : GameObject
     {
-        #region Fields
-        public const int WIDTH = 32;        
+        #region fields
+
+        public const int WIDTH = 32; 
         public const int HEIGHT = 32;
+        
+        //offsets from the left & right or top &bottom
+        const int LR_MARGIN = 6;    
+        const int TB_MARGIN = 4;     
 
-        const int HORIZONTAL_OFFSET = 6;    //offset top or bottom
-        const int VERTICAL_OFFSET = 4;      //offset left or right
-
+        //speed of the projectile
         const float SPEED = 900f;
+
+        //the distance to fade
         const float FADE_DISTANCE = 300f;
+
         #endregion
 
-        #region Variables
-        float startingPos;              //starting position (for distnc)
+        #region variables
 
-        bool active;                    //if projectile is active
-        float velocity;                 //velocity, you know what that is
+        //starting position
+        float startingPos;              
 
-        PaletteColor projectileColor;   //current color of the projectile
+        bool active;   
+        float velocity;   
+
+        PaletteColor projectileColor; 
 
         Bucket bucket;
+
         #endregion
 
-        #region Properties
+        #region properties
+
+        /// <summary>
+        /// Gets the collision box of the projectile
+        /// </summary>
         public Rectangle CollisionBox
         {
             get
             {
-                return new Rectangle((int)position.X + VERTICAL_OFFSET,
-                    (int)position.Y + HORIZONTAL_OFFSET,
-                    WIDTH - 2 * VERTICAL_OFFSET,
-                    HEIGHT - 2 * HORIZONTAL_OFFSET);
+                return new Rectangle((int)position.X + LR_MARGIN,
+                    (int)position.Y + TB_MARGIN,
+                    WIDTH - 2 * LR_MARGIN,
+                    HEIGHT - 2 * TB_MARGIN);
             }
         }
 
+        /// <summary>
+        /// The color of the projectile
+        /// </summary>
         public PaletteColor ProjectileColor
         {
             get { return projectileColor; }
         }
 
+        /// <summary>
+        /// Wether or not is the projectile active
+        /// </summary>
         public bool Active
         {
             get { return active; }
             set { active = value; }
         }
         #endregion
+
+        #region constructors
 
         /// <summary>
         /// Instantiates the projectile, but keeps it inactive
@@ -69,69 +90,97 @@ namespace blank_canvas
             alpha = 255;
         }
 
-        #region Constructors
+        #endregion
+
+        #region methods
         /// <summary>
         /// Activates the projectile from the position, direction, and color
         /// </summary>
         public void Shoot(Vector2 position, Direction direction, PaletteColor color)
         {
+            //sets the initial velocity and position
             velocity = SPEED * (int)direction;
             this.position = position;
             startingPos = position.X;
 
+            //sets the color
             projectileColor = color;
+
+            //makes the projectile and sets the alpha value to maximum
             active = true;
             alpha = 255;
         }
 
+        /// <summary>
+        /// Checks collision with all of the puzzleOrbs and enemies
+        /// </summary>
+        /// <param name="puzzleOrbs">An array of puzzle orbs</param>
+        /// <param name="enemies">An array of enemies</param>
         public void CheckCollision(PuzzleOrb[] puzzleOrbs, Enemy[] enemies)
         {
+            //loops through all the orbs
             foreach (PuzzleOrb orb in puzzleOrbs)
             {
+                //checks if it collides with the orb
                 if (CheckCollision(orb))
                 {
+                    //updates the orb
                     orb.Update();
                     return;
                 }
             }
 
+            //loops through all the enemies
             foreach (Enemy enemy in enemies)
             {
+                //checks if the enemies collide with the orb
                 if (CheckCollision(enemy))
                     return;
             }
         }
 
+        /// <summary>
+        /// Method that checks collision then deals with the changing of color when it collides with the orb
+        /// </summary>
         private bool CheckCollision(PuzzleOrb orb)
         { 
+            //checks if the puzzle is not completed, then checks if it actually intersects
             if (orb.PuzzleState != PuzzleState.Completed && CollisionBox.Intersects(orb.CollisionBox))
             {
-                bool used = orb.AddColor(this);
-                if (used)
+                //checks if the AddColor method that was called was valid (if it actually added a new color)
+                bool added = orb.AddColor(this);
+
+                if (added)
                 {
-                    orb.AddColor(this);
+                    //sets the projectile to inactive
                     active = false;
+
+                    //uses up the paint from the bucket
                     bucket.UsePaint();
                 }
+
                 return true;
             }
+
             else return false;
         }
 
+        /// <summary>
+        /// Method that check collision then deals with the changing of color when it collides with the enemy
+        /// </summary>
+        /// <returns></returns>
         private bool CheckCollision(Enemy enemy)
         {
+            //checks if the enemy is active, then checks for collision
             if (!enemy.Active && CollisionBox.Intersects(enemy.Rectangle))
             {
-                Console.WriteLine("adsf");
-                bool used = enemy.AddColor(this);
-                if (used)
-                {
-                    enemy.AddColor(this);
-                    active = false;
-                    bucket.UsePaint();
-                }
+                //enemies that are not active will always be valid targets to be added color
+                enemy.AddColor(this);
+                active = false;
+                bucket.UsePaint();
                 return true;
             }
+
             else return false;
         }
 
@@ -170,7 +219,7 @@ namespace blank_canvas
                     spriteBatch.Draw(texture, position, new Color(alpha, alpha, 0, alpha));
                     break;
                 default:
-                    throw new Exception(); //you can't shoot out non-rby colors
+                    throw new Exception(); //enemies can only be rby, you can't shoot out non-rby colors
             }
         }
 

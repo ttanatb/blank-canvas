@@ -7,11 +7,17 @@ namespace blank_canvas
     /// </summary>
     class InputManager
     {
+        #region variables 
+
         //variables
         KeyboardState kb;
         KeyboardState prevKb;
         MouseState prevMouse;
         MouseState mouse;
+
+        #endregion
+
+        #region properties
 
         /// <summary>
         /// The keyboard state in the previous frame
@@ -49,6 +55,10 @@ namespace blank_canvas
             set { mouse = value; }
         }
 
+        #endregion
+
+        #region methods
+
         /// <summary>
         /// Updates the current and previous keyboard states
         /// </summary>
@@ -79,10 +89,10 @@ namespace blank_canvas
         {
             foreach(Keys k in keys)
             {
-                if (!(kb.IsKeyDown(k) && prevKb.IsKeyUp(k)))
-                    return false;
+                if (kb.IsKeyDown(k) && prevKb.IsKeyUp(k))
+                    return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -104,10 +114,10 @@ namespace blank_canvas
         {
             foreach(Keys k in keys)
             {
-                if (!kb.IsKeyDown(k))
-                    return false; 
+                if (kb.IsKeyDown(k))
+                    return true; 
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -129,10 +139,10 @@ namespace blank_canvas
         {
             foreach(Keys k in keys)
             {
-                if (!kb.IsKeyUp(k))
-                    return false;
+                if (kb.IsKeyUp(k))
+                    return true;
             }
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -154,10 +164,10 @@ namespace blank_canvas
         {
             foreach(Keys k in keys)
             {
-                if (!(prevKb.IsKeyDown(k) && kb.IsKeyUp(k)))
-                    return false;
+                if ((prevKb.IsKeyDown(k) && kb.IsKeyUp(k)))
+                    return true;
             }
-            return true;
+            return false;
         }
         /// <summary>
         /// Checks to see if the left click is pressed (not held)
@@ -178,5 +188,7 @@ namespace blank_canvas
                 return true;
             else return false;
         }
+
+        #endregion
     }
 }

@@ -18,21 +18,14 @@ namespace blank_canvas
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         StageManager stageManager;
+        InputManager input;
 
-        //this shouldn't be here
-        //background position
-        Vector2 backgroundPosition;
         Texture2D backgroundTexture;
         Texture2D menuTexture;
-        Vector2 menuPosition;
         Texture2D pauseTexture;
-        
 
         // game state
         GameState state;
-
-        // creates button
-        Button butt;
 
         public GameState gameState
         {
@@ -43,6 +36,8 @@ namespace blank_canvas
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            
+            //updates the dimensions of the game screen
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
             graphics.ApplyChanges();
@@ -58,8 +53,10 @@ namespace blank_canvas
         /// </summary>
         protected override void Initialize()
         {
-            stageManager = new StageManager(new Camera(GraphicsDevice.Viewport), new InputManager());
+            input = new InputManager();
+            stageManager = new StageManager(new Camera(GraphicsDevice.Viewport), input);
 
+            //instantializes the initial GameState
             state = GameState.MainMenu;
 
             base.Initialize();
@@ -74,14 +71,13 @@ namespace blank_canvas
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            //loads in all the texture that the stage manager requries
             stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "tileGround5", "projectile", "orbBase", "orb");
 
             // gameplay textures
-            backgroundPosition = new Vector2(-500, 0);
             backgroundTexture = Content.Load<Texture2D>("testBackground");
 
             // main menu screen
-            menuPosition = new Vector2(0,0);
             menuTexture = Content.Load<Texture2D>("mainmenu");
 
             // pause screen
@@ -94,7 +90,7 @@ namespace blank_canvas
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -104,19 +100,28 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //updates input
+            input.Update();
+
+            //updates the current state
             switch (state)
             {
                 case GameState.MainMenu:
                     UpdateMainMenu();
                     break;
+
                 case GameState.Gameplay:
                     float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
+
                     stageManager.Update(deltaTime);
-                    UpdateGamePlay(deltaTime);
+                    UpdateGamePlay();
+
                     break;
+
                 case GameState.Pause:
                     UpdatePause();
                     break;
+
                 case GameState.EndOfGame:
                     UpdateEndOfGame();
                     break;
@@ -125,38 +130,39 @@ namespace blank_canvas
             base.Update(gameTime);
         }
 
-        // changes from main menu to gameplay
+        ///<summary>
+        ///Changes from main menu to gameplay
+        ///</summary>
         private void UpdateMainMenu()
         {
             //currently in Main Menu state
-            KeyboardState key = Keyboard.GetState();
-            if (key.IsKeyDown(Keys.Space))
+            if (input.KeyPressed(Keys.Space))
                 state = GameState.Gameplay;
         }
 
-        // changes from gameplay to pause screen
-        private void UpdateGamePlay(float deltaTime)
+        /// <summary>
+        /// Changes from gameplay to pause screen
+        /// </summary>
+        private void UpdateGamePlay()
         {
-            KeyboardState key = Keyboard.GetState();
-            if (key.IsKeyDown(Keys.Back))
+            if (input.KeysPressed(Keys.Back, Keys.Escape))
                 state = GameState.Pause;
         }
 
-        // changes from gameplay to pause
+        /// <summary>
+        /// Changes from gameplay to pause
+        /// </summary>
         private void UpdatePause()
         {
-            KeyboardState key = Keyboard.GetState();
-            //currently in pause state
-            if (key.IsKeyDown(Keys.Enter))
+            if (input.KeyPressed(Keys.Enter))
                 state = GameState.Gameplay;
-            if (key.IsKeyDown(Keys.Escape))
+            else if (input.KeyPressed(Keys.Escape))
                 state = GameState.EndOfGame;
         }
 
-        // changes from gameplay to end of game
-        // exits until scores are calculated
         private void UpdateEndOfGame()
         {
+
             Exit();
         }
 
@@ -167,32 +173,35 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Beige);
 
-            base.Draw(gameTime);
 
-            
             switch (state)
             {
                 case GameState.MainMenu:
                     spriteBatch.Begin();
-                    spriteBatch.Draw(menuTexture, menuPosition, Color.White);
+                    spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
                     break;
+
                 case GameState.Gameplay:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, stageManager.Camera.Transform);
-                    spriteBatch.Draw(backgroundTexture, backgroundPosition, Color.White);
+                    spriteBatch.Draw(backgroundTexture, new Vector2(-500,0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
+
                 case GameState.Pause:
                     spriteBatch.Begin();
-                    spriteBatch.Draw(pauseTexture, menuPosition, Color.White);
+                    spriteBatch.Draw(pauseTexture, Vector2.Zero, Color.White);
                     break;
-                //case GameState.EndOfGame:
-                //    break;
-            }
-            spriteBatch.End();
-            //for camera
 
+                case GameState.EndOfGame:
+                    spriteBatch.Begin();
+
+                    break;
+            }
+
+            spriteBatch.End();
+            base.Draw(gameTime);
         }
     }
 }
