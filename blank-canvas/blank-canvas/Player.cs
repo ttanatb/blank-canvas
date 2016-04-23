@@ -434,7 +434,7 @@ namespace blank_canvas
             string msg = base.ToString();
             if (health > 0)
                 msg += "\nHealth: " + health;
-            else msg += "You should be dead now, but I haven't implemented that yet";
+            else msg += "\nYou should be dead now, but I haven't implemented that yet";
             return msg;
         }
 

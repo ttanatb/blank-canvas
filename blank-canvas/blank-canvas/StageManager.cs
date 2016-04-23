@@ -235,7 +235,6 @@ namespace blank_canvas
 
             if (player.PrevPos.X + Player.RIGHT_MARGIN >= rect.X + rect.Width)
             {
-                Console.WriteLine(player.PrevPos.X + Player.RIGHT_MARGIN + " " + (rect.X + rect.Width));
                 if (player.Direction == Direction.Right)
                 {
                     player.X = rect.X + rect.Width - Player.LEFT_MARGIN;
@@ -265,57 +264,10 @@ namespace blank_canvas
                 player.Velocity = new Vector2(player.Velocity.X, 0);
                 return;
             }
-
-            /*
-            float wy = (player.Width + rect.Width) * (player.Center.Y - rect.Center.Y);
-            float hx = (player.Height + rect.Height) * (player.Center.X - rect.Center.X);
-
-            Console.WriteLine(wy + " " + hx);
-            if (wy+1 >= hx)
-            {
-                if (wy > -hx)
-                {
-
-                    player.Y = rect.Y + rect.Height;
-                    player.Velocity = new Vector2(player.Velocity.X, 0);
-                    return;
-                }
-                else
-                {
-                    if (player.Direction == Direction.Right)
-                        player.X = rect.X - player.Width + Player.RIGHT_MARGIN;
-                    else player.X = rect.X - player.Width + Player.LEFT_MARGIN;
-                    player.Velocity = new Vector2(0, player.Velocity.Y);
-                    return;
-                }
-            }
-            else
-            {
-                if (wy >= -hx)
-                {
-                    if (player.Direction == Direction.Right)
-                        player.X = rect.X + rect.Width - Player.LEFT_MARGIN;
-                    else player.X = rect.X + rect.Width - Player.RIGHT_MARGIN;
-                    player.Velocity = new Vector2(0, player.Velocity.Y);
-                    return;
-                }
-                else
-                {
-
-                    player.Y = rect.Y - player.Height + 1;
-                    player.Velocity = new Vector2(player.Velocity.X, 0);
-                    player.CanJump = true;
-                    return;
-                }
-            }
-            */
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.Draw(testTexture, player.SearchRectangle, Color.Red);
-
-
             // Drawing from Background to front
             #region Tiles
             // First Tiles
@@ -347,7 +299,6 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
 
-            //spriteBatch.Draw(testTexture, player.SearchRectangle, Color.Red);
            
         }
 
