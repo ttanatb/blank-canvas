@@ -226,37 +226,37 @@ namespace blank_canvas
                     else if (character.Equals('R'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Red, prevCharacter));
-                        Console.WriteLine("Red Orb created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Red Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('B'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Blue, prevCharacter));
-                        Console.WriteLine("Blue Orb created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Blue Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('Y'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Yellow, prevCharacter));
-                        Console.WriteLine("Yellow Orb created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Yellow Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('O'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Orange, prevCharacter));
-                        Console.WriteLine("Orange Orb created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Orange Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('R'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Purple, prevCharacter));
-                        Console.WriteLine("Purple Orb created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Purple Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('G'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Green, prevCharacter));
-                        Console.WriteLine("Green Orb created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Green Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
                     else if (character.Equals('A'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Black, prevCharacter));
-                        Console.WriteLine("Black Orb created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Black Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
                     #endregion
 
@@ -301,6 +301,19 @@ namespace blank_canvas
                     prevCharacter = character;
 
                 }
+
+                // Linking the Orbs to the gates
+                foreach(Gates gate in puzzleGates)
+                {
+                    foreach(PuzzleOrb orb in puzzleOrbs)
+                    {
+                        if(gate.DoorNum == orb.OrbNum)
+                        {
+                            gate.PuzzleVariables.Add(orb);
+                        }
+                    }
+                }
+
             }
             catch (FileNotFoundException)
             {

@@ -17,9 +17,6 @@ namespace blank_canvas
         const int WIDTH = 64;
         const int HEIGHT = 128; //may be subjected to change
 
-        const int DOOR_WIDTH = 37;
-        const int DOOR_HEIGHT = 41;
-
         int doorNum;
 
         PuzzleState doorState;
@@ -27,7 +24,6 @@ namespace blank_canvas
 
         Texture2D doorTexture;
         Vector2 doorPosition;
-        //Rectangle doorCollisionBox;
         #endregion
 
         #region Properties
@@ -36,11 +32,6 @@ namespace blank_canvas
             set { doorTexture = value; }
         }
 
-        /*public Rectangle CollisionBox
-        {
-            get { return doorCollisionBox; }
-        }
-        */
         public PuzzleState DoorState
         {
             get { return doorState; }
@@ -50,29 +41,38 @@ namespace blank_canvas
         {
             get { return doorNum; }
         }
+
+        public List<PuzzleOrb> PuzzleVariables
+        {
+            get { return puzzleVariables; }
+            set { puzzleVariables = value; }
+        }
         #endregion
 
 
         public Gates(Vector2 position, char prevChar) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
+            puzzleVariables = new List<PuzzleOrb>();
             doorPosition = new Vector2(position.X, position.Y);
             doorNum = Convert.ToInt32(prevChar);
             doorState = PuzzleState.Active;
+
         }
 
 
+
         #region Methods
-        public bool CheckCollision(Player player)
+        public void Update()
         {
-            if (doorState == PuzzleState.Active)
+            foreach(PuzzleOrb orbs in puzzleVariables)
             {
-                if ((Max.Y >= player.Min.Y) && (Min.Y < player.Max.Y) && (Max.X > player.Min.X) && (Min.X < player.Max.X))
+                if(orbs.PuzzleState == PuzzleState.Active)
                 {
-                    return true; // Only returns true when colliding and the door is active
-                }
-                else return false;
+                    return;
+                }               
             }
-            else return false;
+            // all PuzzleStates are complete
+            doorState = PuzzleState.Completed;
         }
         #endregion
 

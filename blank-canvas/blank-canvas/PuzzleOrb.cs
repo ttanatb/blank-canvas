@@ -62,6 +62,11 @@ namespace blank_canvas
         {
             get { return state; }
         }
+
+        public int OrbNum
+        {
+            get { return orbNum; }
+        }
         #endregion
 
         #region Constructors

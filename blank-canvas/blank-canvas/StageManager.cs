@@ -134,6 +134,11 @@ namespace blank_canvas
                 player.Projectile.CheckCollision(puzzleOrbs, enemies);
             }
 
+            foreach(Gates gate in gates)
+            {
+                gate.Update();
+            }
+
             foreach (Enemy enemy in enemies)
             {
                 if (!enemy.Active)
@@ -165,6 +170,8 @@ namespace blank_canvas
                         FixPos(player, gate.Rectangle);
                 }
             }
+
+
         }
 
         private void PlayerDrainColor()
