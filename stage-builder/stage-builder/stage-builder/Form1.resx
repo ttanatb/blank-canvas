@@ -133,17 +133,19 @@ r  Red Enemy
 y  Yellow Enemy
 b  Blue Enemy
 
+Puzzle Elements:
 Orbs (color key):
-R  Orb (Red)
-B  Orb (Blue)
-Y  Orb (Yellow)
-O  Orb (Orange)
-P  Orb (Purple)
-G  Orb (Green)
-A  Orb (Black)
+#R  Orb (Red)
+#B  Orb (Blue)
+#Y  Orb (Yellow)
+#O  Orb (Orange)
+#P  Orb (Purple)
+#G  Orb (Green)
+#A  Orb (Black)
 
-Other:
-/  Door
-0  End Level Orb</value>
+Barriers:
+#/  Door
+
+0  Level End Orb</value>
   </data>
 </root>
