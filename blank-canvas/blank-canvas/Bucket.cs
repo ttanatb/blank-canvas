@@ -46,7 +46,7 @@ namespace blank_canvas
 
         #endregion
 
-        #region Properties
+        #region properties
         /// <summary>
         /// To be used for the GUI
         /// </summary>

@@ -1,9 +1,13 @@
 To Do List:
+- Make it so that stage builder builds a stage into blank canvas instead of vice versa
+- Make sure the filepath for blank canvas is changed to fit this update
+- Make sure the gate's graphic correspond to its state
 
 Bugs/Needs Fixing:
 Technical:
-~When an enemy without color and an enemy with color are within color taking power, you cannot take the color of the colored enemy.
 ~Enemies Float
+- Fix player turning around a wall
+- Fix player clipping off an edge
 
 Texture:
 ~Jumping texture has a little bit of the next texture peeping into the character's box

@@ -431,7 +431,7 @@ namespace blank_canvas
         //used to test
         public override string ToString()
         {
-            string msg = base.ToString();
+            string msg = bucket.ToString();
             if (health > 0)
                 msg += "\nHealth: " + health;
             else msg += "\nYou should be dead now, but I haven't implemented that yet";

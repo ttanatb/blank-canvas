@@ -109,6 +109,7 @@ namespace blank_canvas
         /// <param name="projectile">The projectile to add the color</param>
         public void AddColor(Projectile projectile)
         {
+            active = true;
             palette.AddColor(projectile.ProjectileColor);
         }
 
