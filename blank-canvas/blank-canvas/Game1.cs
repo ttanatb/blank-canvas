@@ -20,13 +20,15 @@ namespace blank_canvas
         StageManager stageManager;
         InputManager input;
 
+        // creates variables for textures of background, main menu, and pause screen
         Texture2D backgroundTexture;
         Texture2D menuTexture;
         Texture2D pauseTexture;
 
-        // game state
+        // creates game state
         GameState state;
 
+        // game state property
         public GameState gameState
         {
             get { return state; }
@@ -77,10 +79,10 @@ namespace blank_canvas
             // gameplay textures
             backgroundTexture = Content.Load<Texture2D>("testBackground");
 
-            // main menu screen
+            // main menu screen texture
             menuTexture = Content.Load<Texture2D>("mainmenu");
 
-            // pause screen
+            // pause screen texture
             pauseTexture = Content.Load<Texture2D>("pausemenu");
         }
 
@@ -106,22 +108,28 @@ namespace blank_canvas
             //updates the current state
             switch (state)
             {
+                // if mainmenu state
                 case GameState.MainMenu:
                     UpdateMainMenu();
                     break;
 
+                // if gameplay state
                 case GameState.Gameplay:
+
+                    // updates the level based on the amount of time that has passed
                     float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
-
                     stageManager.Update(deltaTime);
+
+                    //  updates the gameplay based on any input to change the state
                     UpdateGamePlay();
-
                     break;
-
+                    
+                // if pause state
                 case GameState.Pause:
                     UpdatePause();
                     break;
 
+                // if game over or exit
                 case GameState.EndOfGame:
                     UpdateEndOfGame();
                     break;
@@ -150,7 +158,7 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// Changes from gameplay to pause
+        /// Changes from pause to gameplay or exit
         /// </summary>
         private void UpdatePause()
         {
@@ -160,9 +168,11 @@ namespace blank_canvas
                 state = GameState.EndOfGame;
         }
 
+        /// <summary>
+        /// Exits the game
+        /// </summary>
         private void UpdateEndOfGame()
         {
-
             Exit();
         }
 
@@ -175,28 +185,32 @@ namespace blank_canvas
         {
             GraphicsDevice.Clear(Color.Beige);
 
-
+            // switches the state based on current GameState
             switch (state)
             {
+
+                // draws the main menu
                 case GameState.MainMenu:
                     spriteBatch.Begin();
                     spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
                     break;
 
+                // draws gameplay and focuses the camera
                 case GameState.Gameplay:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, stageManager.Camera.Transform);
                     spriteBatch.Draw(backgroundTexture, new Vector2(-500,0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 
+                // draws pause screen
                 case GameState.Pause:
                     spriteBatch.Begin();
                     spriteBatch.Draw(pauseTexture, Vector2.Zero, Color.White);
                     break;
 
+                // draws end screen, which then exits
                 case GameState.EndOfGame:
                     spriteBatch.Begin();
-
                     break;
             }
 
