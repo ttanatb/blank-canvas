@@ -118,23 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="keyBox.Text" xml:space="preserve">
-    <value>Tiles:
+    <value>Tiles[1x1]:
    Blank Tile
 _  Ground Tile
--  Secondary Tile
-|  Wall Tile
-~  Custom Tile
 
-Player Objects:
+Player[1x2]:
 P  Player
 
-Enemies:
+Enemies[1x1]:
 r  Red Enemy
 y  Yellow Enemy
 b  Blue Enemy
 
-Puzzle Elements:
-Orbs (color key):
+Orbs(color key)[1x1]:
 #R  Orb (Red)
 #B  Orb (Blue)
 #Y  Orb (Yellow)
@@ -143,9 +139,7 @@ Orbs (color key):
 #G  Orb (Green)
 #A  Orb (Black)
 
-Barriers:
-#/  Door
-
-0  Level End Orb</value>
+Barriers[1x2]:
+#/  Door</value>
   </data>
 </root>

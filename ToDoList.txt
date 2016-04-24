@@ -17,3 +17,10 @@ Features to be implemented:
 ~Sign object that gives user instructions/hints for puzzle
 ~Clearing Character Paint Barrier
 ~For the StageBuilder/StageReader read the first level file and create level gamestates that reads the next level in
+~Create the end of level objective (adding paint to a huge orb/flag) - Removed from stage reader key until done:
+0  Level End Orb
+
+~Add ability to support multiple tiles - Removed from stage reader key until done:
+-  Secondary Tile
+|  Wall Tile
+~  Custom Tile

@@ -44,7 +44,7 @@ namespace blank_canvas
             try
             {
                 sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug"); //doesn't handle multiple text files
-                fileNames = Directory.GetFiles(sourcePath, "Orb.txt");
+                fileNames = Directory.GetFiles(sourcePath, "TestMileStone3.txt");
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
             catch (DirectoryNotFoundException)
@@ -197,8 +197,8 @@ namespace blank_canvas
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
-                        player = new Player(new Vector2(xpos, ypos)); //
-                        Console.WriteLine("Player created: " + xpos + ", " + ypos);
+                        player = new Player(new Vector2(xpos, (ypos-64))); //
+                        Console.WriteLine("Player created: " + xpos + ", " + (ypos-64));
                     }
                     #endregion
 
@@ -264,9 +264,9 @@ namespace blank_canvas
                     else if (character.Equals('/'))
                     {
 
-                        puzzleGates.Add(new Gates(new Vector2(xpos, ypos), prevCharacter));
+                        puzzleGates.Add(new Gates(new Vector2(xpos, ypos-64), prevCharacter));
 
-                        Console.WriteLine("Door(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Door(" + prevCharacter + ") " + "created: " + xpos + ", " + (ypos-64));
                     }
                     // class not created yet
 
