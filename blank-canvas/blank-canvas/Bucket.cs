@@ -38,7 +38,7 @@ namespace blank_canvas
             //right now it sets everything at 1 for testing
             red = 1;
             blue = 1;
-            yellow = 1;
+            yellow = 0;
 
             //an initial color
             currentColor = PaletteColor.Red;
@@ -204,7 +204,7 @@ namespace blank_canvas
 
                 case PaletteColor.Blue:
                     //switches to yellow
-                    if (yellow > 0)
+                    if (red > 0)
                     {
                         currentColor = PaletteColor.Red;
                         break;
@@ -215,7 +215,7 @@ namespace blank_canvas
 
                 case PaletteColor.Red:
                     //switches to red
-                    if (red > 0)
+                    if (yellow > 0)
                     {
                         currentColor = PaletteColor.Yellow;
                         break;
@@ -233,19 +233,31 @@ namespace blank_canvas
         public void Shoot(Player player)
         {
             //makes sure that there actually is paint
-            if (!(blue == 0 && red == 0 && yellow == 0))
+            switch (currentColor)
             {
-                //starting position
-                Vector2 startingPos;
-
-                //starting position depends on the current position
-                if (player.Direction == Direction.Right)
-                    startingPos = new Vector2(player.Max.X - Player.RIGHT_MARGIN, player.Y + player.Height / 3 + Projectile.HEIGHT);
-                else startingPos = new Vector2(player.X - Projectile.WIDTH + Player.RIGHT_MARGIN, player.Y + player.Height / 3 + Projectile.HEIGHT);
-
-                projectile.Shoot(startingPos, player.Direction, currentColor);
+                case PaletteColor.Blue:
+                    if (blue == 0)
+                        return;
+                    else break;
+                case PaletteColor.Red:
+                    if (red == 0)
+                        return;
+                    else break;
+                case PaletteColor.Yellow:
+                    if (yellow == 0)
+                        return;
+                    else break;
             }
 
+            //starting position
+            Vector2 startingPos;
+
+            //starting position depends on the current position
+            if (player.Direction == Direction.Right)
+                startingPos = new Vector2(player.Max.X - Player.RIGHT_MARGIN, player.Y + player.Height / 3 + Projectile.HEIGHT);
+            else startingPos = new Vector2(player.X - Projectile.WIDTH + Player.RIGHT_MARGIN, player.Y + player.Height / 3 + Projectile.HEIGHT);
+
+            projectile.Shoot(startingPos, player.Direction, currentColor);
         }
 
         /// <summary>

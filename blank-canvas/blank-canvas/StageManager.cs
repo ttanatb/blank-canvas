@@ -113,109 +113,166 @@ namespace blank_canvas
         /// <param name="deltaTime">The amount of miliseconds passed since previous update</param>
         public void Update(float deltaTime)
         {
+            if (player.Health < 1)
+                throw new GameOverException();
+
             //updates the camera and input
             deltaTime = deltaTime / 1000.0f;
             camera.Update(player);
+
+            //updates the input
             input.Update();
-
             player.UpdateInput(input);
-            player.UpdatePos(deltaTime);
 
-
+            //this input is done in the main method because it requires different interaction among the objects
             if (input.KeyPressed(Keys.X) && (player.AnimState == AnimState.Jump || player.AnimState == AnimState.Walk || player.AnimState == AnimState.Idle))
                 PlayerDrainColor();
 
+            //updates position, velocity and animation
+            player.UpdatePos(deltaTime);
             player.Velocity += new Vector2(0, GRAVITY);
-
             player.UpdateAnim(deltaTime);
 
+            //updates projectile if it is active
             if (player.Projectile.Active)
             {
+                //checks collision for all puzzle orbs and enemies
                 player.Projectile.Update(deltaTime);
                 player.Projectile.CheckCollision(puzzleOrbs, enemies);
             }
 
+            //updates the gates
             foreach(Gates gate in gates)
             {
                 gate.Update();
             }
 
+            //updates the enemies in the array
             foreach (Enemy enemy in enemies)
             {
+                //skips if enemy isn't active
                 if (!enemy.Active)
                     continue;
 
+                //updates the position
                 enemy.Update(deltaTime);
 
+                //checks for collision with player
                 if (player.CollisionBox.Intersects(enemy.Rectangle))
                     player.TakeDamage(enemy);
             }
 
+            //loops through each collision tiles in the game
             foreach (Rectangle r in tileCollision)
             {
-
+                //checks if it intersects with player, then fixes position
                 if (r.Intersects(player.CollisionBox))
                     FixPos(player, r);
 
+                //checks if it intersects with an active projectile
                 if (player.Projectile.Active && r.Intersects(player.Projectile.CollisionBox))
                     player.Projectile.Active = false;
 
+                //checks if it intersects with an enemy
                 foreach (Enemy enemy in enemies)
                 {
                     if (enemy.Active && r.Intersects(enemy.Rectangle))
                         enemy.ChangeDirection();
                 }
-                foreach(Gates gate in gates)
-                {
-                    if (gate.DoorState == PuzzleState.Active && gate.Rectangle.Intersects(player.CollisionBox))
-                        FixPos(player, gate.Rectangle);
-                }
             }
 
-
+            //loops through the gates and checks for collision with the player
+            foreach (Gates gate in gates)
+            {
+                if (gate.DoorState == PuzzleState.Active && gate.Rectangle.Intersects(player.CollisionBox))
+                    FixPos(player, gate.Rectangle);
+            }
         }
 
+        /// <summary>
+        /// This is the method that helps tie in the DrainColor method of the player
+        /// </summary>
         private void PlayerDrainColor()
         {
+            //changes the animation state
             player.AnimState = AnimState.Drain;
+
+            //updates the search rectangle
             Rectangle searchRect = player.SearchRectangle;
+
+            //searches for the closest enemy that intersects the search rectangle
             int index = SearchClosestEnemy(searchRect);
+
+            //if an enemy isn't found, search for the closesst puzzle orb
             if (index == -1)
             {
                 index = SearchClosestPuzzleOrb(searchRect);
-                if (index != -1 && puzzleOrbs[index].PuzzleState != PuzzleState.Completed)
+
+                //if a puzzle orb is found, drain the color
+                if (index != -1)
                     player.DrainColor(puzzleOrbs[index]);
             }
+
+            //drain the color
             else player.DrainColor(enemies[index]);
         }
 
+        /// <summary>
+        /// This is the method that search for the closest enemy within a search rectangle
+        /// </summary>
+        /// <param name="searchRect">A rectangle to search through</param>
+        /// <returns>The index of the enemy to pass to the player's method</returns>
         private int SearchClosestEnemy(Rectangle searchRect)
         {
+            //initial index is -1 if nothing is found
             int index = -1;
+
+            //set arbitrarily large distance
             float dist = 99999;
+
+            //loops through all the enemies
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (enemies[i].Active && searchRect.Intersects(enemies[i].Rectangle) && ((int)player.Direction * (enemies[i].X - player.X) < dist))
+                //checks if is active and intersects search rectangle and has a distance smaller than the current distance
+                if (enemies[i].Active 
+                    && ((int)player.Direction * (enemies[i].X - player.X) < dist) 
+                    && searchRect.Intersects(enemies[i].Rectangle))
                 {
+                    //sets the index to that 
                     index = i;
+
+                    //sets the new distance
                     dist = (int)player.Direction * (enemies[i].X - player.X);
                 }
             }
+
             return index;
         }
 
         private int SearchClosestPuzzleOrb(Rectangle searchRect)
         {
+            //initial index is -1 if nothing is found
             int index = -1;
+
+            //set arbitrarily large distance
             float dist = 99999;
+
+            //loops through all the enemies
             for (int i = 0; i < puzzleOrbs.Length; i++)
             {
-                if (searchRect.Intersects(puzzleOrbs[i].CollisionBox) && ((int)player.Direction * puzzleOrbs[i].X - player.X < dist))
+                //checks if is active and intersects search rectangle and has a distance smaller than the current distance
+                if (puzzleOrbs[i].PuzzleState != PuzzleState.Completed
+                    && ((int)player.Direction * puzzleOrbs[i].X - player.X < dist)
+                    && searchRect.Intersects(puzzleOrbs[i].CollisionBox))
                 {
+                    //sets the index to that 
                     index = i;
+
+                    //sets the new distance
                     dist = (int)player.Direction * (puzzleOrbs[i].X - player.X);
                 }
             }
+
             return index;
         }
 
@@ -227,36 +284,42 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// Fixes the position of the player based on the rectangle it intersected with
+        /// Fixes the position of the player based on the rectangle it intersected with.
+        /// This doesn't produce a 100% collision resolution and is subject to change.
         /// </summary>
         private void FixPos(Player player, Rectangle rect)
         {
-
-
+            //checks if player collided from the right
             if (player.PrevPos.X + Player.RIGHT_MARGIN >= rect.X + rect.Width)
             {
+                //sets the player's position based on the direction
                 if (player.Direction == Direction.Right)
-                {
                     player.X = rect.X + rect.Width - Player.LEFT_MARGIN;
-                }
                 else player.X = rect.X + rect.Width - Player.RIGHT_MARGIN;
                 return;
             }
+
+            //checks if the player collided from the left
             if (player.PrevPos.X + player.Width - Player.RIGHT_MARGIN - 1 <= rect.X)
             {
+                //sets the player's position based on the direction
                 if (player.Direction == Direction.Right)
                     player.X = rect.X - player.Width + Player.RIGHT_MARGIN;
                 else player.X = rect.X - player.Width + Player.LEFT_MARGIN;
-                //player.Velocity = new Vector2(0, player.Velocity.Y);
                 return;
             }
+            
+            //checks if the player collided from the top
             if (player.PrevPos.Y <= rect.Y - rect.Height / 2)
             {
+                //sets the velocity and position and canJump value
                 player.Y = rect.Y - player.Height + 1;
                 player.Velocity = new Vector2(player.Velocity.X, 0);
                 player.CanJump = true;
                 return;
             }
+
+            //checks if the player collided from the bottom
             if (player.PrevPos.Y + Player.TOP_MARGIN > rect.Y + rect.Height / 2)
             {
 
@@ -269,36 +332,32 @@ namespace blank_canvas
         public void Draw(SpriteBatch spriteBatch)
         {
             // Drawing from Background to front
-            #region Tiles
-            // First Tiles
-            foreach (Tile tile in tiles)
-                tile.Draw(spriteBatch);
-            #endregion
-
-            #region Orbs
-
-            //puzzleOrbs[0].Draw(spriteBatch);
-
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
                 puzzleorb.Draw(spriteBatch);
 
-            #endregion
-
-            #region Gates
             foreach (Gates gate in gates)
                 gate.Draw(spriteBatch);
-            #endregion
 
             foreach (Enemy enemy in enemies)
                 enemy.Draw(spriteBatch);
 
-
             player.Draw(spriteBatch);
 
-            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X, player.Y - 50), Color.Black);
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
 
+            //this is to show test values
+            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X, player.Y - 50), Color.Black);
+
+            //instructions
+            spriteBatch.DrawString(testFont,
+                "Use arrow keys to move\n" +
+                "Press C to shoot\n" +
+                "Press left shift/right shift to change color\n" +
+                "Press X to drain color\n" +
+                "Press Esc/Enter to Pause\n\n" +
+                "Drain color from the enemy, use those colors to fill in the puzzle orbs",
+                new Vector2(89, 300), Color.Black);
            
         }
 

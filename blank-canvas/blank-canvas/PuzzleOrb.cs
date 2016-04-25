@@ -13,12 +13,6 @@ namespace blank_canvas
     /// If it matches the key color, then the corresponding gate
     /// dematerializes. The player can also draw back a color in
     /// the orb.
-    /// 
-    /// Things to work on:
-    /// Collision between projectile and orb
-    /// Drawing back the paint from the orb
-    /// Linking the orb to a gate
-    /// Linking multiple orbs to a gate?
     /// </summary>
     class PuzzleOrb : GameObject
     {
@@ -88,11 +82,18 @@ namespace blank_canvas
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// When the projectile hits the puzzle orb, color is added to the palette
+        /// </summary>
         public bool AddColor(Projectile projectile)
         {
             return palette.AddColor(projectile.ProjectileColor);
         }
 
+        /// <summary>
+        /// Drains from the orb to the player
+        /// </summary>
         public PaletteColor DrainColor()
         {
             PaletteColor color = palette.CurrentColor;
@@ -100,6 +101,9 @@ namespace blank_canvas
             return color;
         }
 
+        /// <summary>
+        /// Updates the check if the color matches the key
+        /// </summary>
         public void Update()
         {
             if (state == PuzzleState.Active)
@@ -111,14 +115,18 @@ namespace blank_canvas
             }
         }
 
+        /// <summary>
+        /// Draw is based on the current color
+        /// </summary>
         public override void Draw(SpriteBatch spriteBatch)
         {
             if (state == PuzzleState.Active || state == PuzzleState.Completed)
             {
+                //draws the base of the actual sprite
                 base.Draw(spriteBatch);
-                int a = alpha * 3 / 4;
-                if (state == PuzzleState.Completed)
-                    alpha = 150;
+
+                //this draws the actual orb and tints it accordingly
+                int a = alpha * 3 / 4; //this makes it fade a bit
                 switch (CurrentColor)
                 {
                     case (PaletteColor.Red):

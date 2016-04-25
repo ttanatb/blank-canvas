@@ -35,6 +35,7 @@ namespace blank_canvas
         // constructor that gets string
         public StageReader()
         {
+            //instantiates everything
             enemies = new List<Enemy>();
             tiles = new List<Tile>();
             collisionBoxes = new List<Rectangle>();
@@ -43,7 +44,8 @@ namespace blank_canvas
 
             try
             {
-                sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug"); //doesn't handle multiple text files
+                //goes to the directory
+                sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug"); 
                 fileNames = Directory.GetFiles(sourcePath, "TestMileStone3.txt");
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }

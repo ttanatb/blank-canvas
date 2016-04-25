@@ -24,6 +24,7 @@ namespace blank_canvas
         Texture2D backgroundTexture;
         Texture2D menuTexture;
         Texture2D pauseTexture;
+        Texture2D gameOverTexture;
 
         // creates game state
         GameState state;
@@ -56,7 +57,6 @@ namespace blank_canvas
         protected override void Initialize()
         {
             input = new InputManager();
-            stageManager = new StageManager(new Camera(GraphicsDevice.Viewport), input);
 
             //instantializes the initial GameState
             state = GameState.MainMenu;
@@ -74,7 +74,6 @@ namespace blank_canvas
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //loads in all the texture that the stage manager requries
-            stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "tileGround5", "projectile", "orbBase", "orb", "Door");
 
             // gameplay textures
             backgroundTexture = Content.Load<Texture2D>("testBackground");
@@ -84,6 +83,9 @@ namespace blank_canvas
 
             // pause screen texture
             pauseTexture = Content.Load<Texture2D>("pausemenu");
+
+            // game over screen texture
+            gameOverTexture = Content.Load<Texture2D>("gameover");
         }
 
         /// <summary>
@@ -118,7 +120,14 @@ namespace blank_canvas
 
                     // updates the level based on the amount of time that has passed
                     float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
-                    stageManager.Update(deltaTime);
+                    try
+                    {
+                        stageManager.Update(deltaTime);
+                    }
+                    catch (GameOverException)
+                    {
+                        state = GameState.EndOfGame;
+                    }
 
                     //  updates the gameplay based on any input to change the state
                     UpdateGamePlay();
@@ -145,7 +154,13 @@ namespace blank_canvas
         {
             //currently in Main Menu state
             if (input.KeyPressed(Keys.Space))
+            {
+                //starts up the stage manager and loads in the content
+                stageManager = new StageManager(new Camera(GraphicsDevice.Viewport),input);
+                stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "tileGround5", "projectile", "orbBase", "orb", "Door");
+
                 state = GameState.Gameplay;
+            }
         }
 
         /// <summary>
@@ -162,10 +177,13 @@ namespace blank_canvas
         /// </summary>
         private void UpdatePause()
         {
+            //unpauses
             if (input.KeyPressed(Keys.Enter))
                 state = GameState.Gameplay;
+
+            //exits
             else if (input.KeyPressed(Keys.Escape))
-                state = GameState.EndOfGame;
+                Exit();
         }
 
         /// <summary>
@@ -173,7 +191,13 @@ namespace blank_canvas
         /// </summary>
         private void UpdateEndOfGame()
         {
-            Exit();
+            if (input.KeyPressed(Keys.Enter))
+            {
+                //unloads all content then loads in what is necessary for the menu states
+                Content.Unload();
+                LoadContent();
+                state = GameState.MainMenu;
+            }
         }
 
 
@@ -211,6 +235,7 @@ namespace blank_canvas
                 // draws end screen, which then exits
                 case GameState.EndOfGame:
                     spriteBatch.Begin();
+                    spriteBatch.Draw(gameOverTexture, Vector2.Zero, Color.White);
                     break;
             }
 

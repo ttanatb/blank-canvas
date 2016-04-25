@@ -141,6 +141,11 @@ namespace blank_canvas
             }
         }
 
+        public int Health
+        {
+            get { return health; }
+        }
+
         #endregion
 
         #region constructor

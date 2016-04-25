@@ -47,7 +47,7 @@ namespace blank_canvas
     }
 
     /// <summary>
-    /// The state of the puzzle
+    /// The state of the puzzle (not quite actually relevant)
     /// </summary>
     public enum PuzzleState
     {

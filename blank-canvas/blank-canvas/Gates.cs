@@ -14,34 +14,40 @@ namespace blank_canvas
     class Gates : GameObject
     {
         #region Variables
+        //constants
         const int WIDTH = 64;
         const int HEIGHT = 128; //may be subjected to change
 
+        //index
         int doorNum;
 
+        //state
         PuzzleState doorState;
-        List<PuzzleOrb> puzzleVariables;
 
-        Texture2D doorTexture;
-        Vector2 doorPosition;
+        //keys
+        List<PuzzleOrb> puzzleVariables;
         #endregion
 
         #region Properties
-        public Texture2D DoorTexture
-        {
-            set { doorTexture = value; }
-        }
-
+        /// <summary>
+        /// State of the puzzle (solved or not)
+        /// </summary>
         public PuzzleState DoorState
         {
             get { return doorState; }
         }
 
+        /// <summary>
+        /// Index to link with the puzzle orbs
+        /// </summary>
         public int DoorNum
         {
             get { return doorNum; }
         }
 
+        /// <summary>
+        /// List of puzzle orbs required to activate
+        /// </summary>
         public List<PuzzleOrb> PuzzleVariables
         {
             get { return puzzleVariables; }
@@ -50,20 +56,22 @@ namespace blank_canvas
         #endregion
 
 
+        #region constructor
+
+        //constructor
         public Gates(Vector2 position, char prevChar) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
             puzzleVariables = new List<PuzzleOrb>();
-            doorPosition = new Vector2(position.X, position.Y);
             doorNum = Convert.ToInt32(prevChar);
             doorState = PuzzleState.Active;
-
         }
-
-
+        #endregion
 
         #region Methods
+        //update method
         public void Update()
         {
+            //checks if the keys are still active
             foreach(PuzzleOrb orbs in puzzleVariables)
             {
                 if(orbs.PuzzleState == PuzzleState.Active)
@@ -71,8 +79,16 @@ namespace blank_canvas
                     return;
                 }               
             }
+
             // all PuzzleStates are complete
             doorState = PuzzleState.Completed;
+        }
+
+        //draw only if the puzzle is active
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (doorState == PuzzleState.Active)
+                base.Draw(spriteBatch);
         }
         #endregion
 
