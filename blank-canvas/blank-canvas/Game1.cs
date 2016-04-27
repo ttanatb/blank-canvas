@@ -25,6 +25,7 @@ namespace blank_canvas
         Texture2D menuTexture;
         Texture2D pauseTexture;
         Texture2D gameOverTexture;
+        Texture2D levelChangeTexture;
 
         // creates game state
         GameState state;
@@ -86,6 +87,9 @@ namespace blank_canvas
 
             // game over screen texture
             gameOverTexture = Content.Load<Texture2D>("gameover");
+
+            //level change screen texture
+            levelChangeTexture = Content.Load<Texture2D>("testlevelchange");
         }
 
         /// <summary>
@@ -142,6 +146,13 @@ namespace blank_canvas
                 case GameState.EndOfGame:
                     UpdateEndOfGame();
                     break;
+
+                // when player changes levels
+                /*
+                case GameState.LevelChange:
+                    UpdateLevelChange();
+                    break;
+                    */
             }
 
             base.Update(gameTime);
@@ -200,6 +211,22 @@ namespace blank_canvas
             }
         }
 
+        /// <summary>
+        /// Exits the game
+        /// </summary>
+        private void UpdateLevelChange()
+        {
+            //right now the player hits enter to go to the next screen
+            //would be cool if this screen displayed stats during level - number of shots, time completed, etc.
+            if (input.KeyPressed(Keys.Enter))
+            {
+                //unloads all content then loads in what is necessary for the menu states
+                Content.Unload();
+                LoadContent();
+                state = GameState.Gameplay;
+            }
+        }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -237,6 +264,14 @@ namespace blank_canvas
                     spriteBatch.Begin();
                     spriteBatch.Draw(gameOverTexture, Vector2.Zero, Color.White);
                     break;
+
+                // when player reaches end of level
+                /*
+                case GameState.LevelChange:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(levelchangetexture, Vector2.Zero, Color.White);
+                    break;
+                    */
             }
 
             spriteBatch.End();
