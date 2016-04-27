@@ -17,6 +17,7 @@ namespace blank_canvas
     {
         private string[] fileNames; // sets filename
         private string sourcePath; // the path for the original file
+        Level levelEnum;
 
         Player player;
         List<Tile> tiles;
@@ -45,8 +46,39 @@ namespace blank_canvas
             try
             {
                 //goes to the directory
-                sourcePath = Path.GetFullPath(@"..\..\..\..\..\stage-builder\stage-builder\stage-builder\bin\Debug"); 
-                fileNames = Directory.GetFiles(sourcePath, "TestMileStone3.txt");
+                sourcePath = Path.GetFullPath(@"..\..\..\..\..\blank-canvas\blank-canvas\Content"); // Correct Path
+
+                // Added this code for different levels
+                // Level 1 Desert
+                if (levelEnum == blank_canvas.Level.Forest)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
+                }
+                // Level 2 Ice Caves
+                else if (levelEnum == blank_canvas.Level.Ice_Caves)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Ice Caves.txt");
+                }
+                // Level 3 Forest
+                else if (levelEnum == blank_canvas.Level.Forest)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
+                }
+                // Level 4 Mountain
+                else if (levelEnum == blank_canvas.Level.Mountain)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Mountain.txt");
+                }
+                // Level 5 Castle
+                else if (levelEnum == blank_canvas.Level.Castle)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Caste.txt");
+                }
+                // Test file
+                else
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "TestMileStone3.txt");
+                }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
             catch (DirectoryNotFoundException)

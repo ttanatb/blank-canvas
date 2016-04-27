@@ -15,7 +15,6 @@ namespace blank_canvas
     {
         //the red, blue and yellow represents 3 different prime numbers
         //if a color is divisible by one of the primary colors, it contains that primary color
-
         Red = 2,
         Blue = 3,
         Yellow = 5,
@@ -36,6 +35,19 @@ namespace blank_canvas
         Pause,
         EndOfGame
     }
+
+    /// <summary>
+    /// The direction of the character
+    /// </summary>
+    public enum Level
+    {
+        Desert = 1,
+        Ice_Caves = 2,
+        Forest = 3,
+        Mountain = 4,
+        Castle = 5,
+    }
+
 
     /// <summary>
     /// The direction of the character
