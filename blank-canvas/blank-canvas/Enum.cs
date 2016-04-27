@@ -33,7 +33,8 @@ namespace blank_canvas
         MainMenu,
         Gameplay,
         Pause,
-        EndOfGame
+        EndOfGame,
+        LevelChange
     }
 
     /// <summary>

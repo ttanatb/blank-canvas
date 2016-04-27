@@ -25,6 +25,7 @@ namespace blank_canvas
         Texture2D menuTexture;
         Texture2D pauseTexture;
         Texture2D gameOverTexture;
+        Texture2D levelChangeTexture;
 
         // creates game state
         GameState state;
@@ -39,7 +40,7 @@ namespace blank_canvas
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            
+
             //updates the dimensions of the game screen
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
@@ -86,6 +87,9 @@ namespace blank_canvas
 
             // game over screen texture
             gameOverTexture = Content.Load<Texture2D>("gameover");
+
+            //level change screen texture
+            levelChangeTexture = Content.Load<Texture2D>("testlevelchange");
         }
 
         /// <summary>
@@ -132,7 +136,7 @@ namespace blank_canvas
                     //  updates the gameplay based on any input to change the state
                     UpdateGamePlay();
                     break;
-                    
+
                 // if pause state
                 case GameState.Pause:
                     UpdatePause();
@@ -141,6 +145,11 @@ namespace blank_canvas
                 // if game over or exit
                 case GameState.EndOfGame:
                     UpdateEndOfGame();
+                    break;
+
+                // when player changes levels
+                case GameState.LevelChange:
+                    UpdateLevelChange();
                     break;
             }
 
@@ -158,7 +167,6 @@ namespace blank_canvas
                 //starts up the stage manager and loads in the content
                 stageManager = new StageManager(new Camera(GraphicsDevice.Viewport),input);
                 stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "Tiles-Spritesheet", "projectile", "orbBase", "orb", "Door");
-
                 state = GameState.Gameplay;
             }
         }
@@ -200,6 +208,21 @@ namespace blank_canvas
             }
         }
 
+        /// <summary>
+        /// When end of level reached, end of level screen pops up and level changes
+        /// </summary>
+        private void UpdateLevelChange()
+        {
+            // test to see if level change works
+            // need to do: to check if end of level reached, changes to next level in the game
+
+            //if (input.KeyPressed(Keys.Enter))
+            //{
+            //    //unloads all content then loads in what is necessary for the menu states
+
+            //}
+        }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -222,7 +245,7 @@ namespace blank_canvas
                 // draws gameplay and focuses the camera
                 case GameState.Gameplay:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, stageManager.Camera.Transform);
-                    spriteBatch.Draw(backgroundTexture, new Vector2(-500,0), Color.White);
+                    spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 
@@ -236,6 +259,12 @@ namespace blank_canvas
                 case GameState.EndOfGame:
                     spriteBatch.Begin();
                     spriteBatch.Draw(gameOverTexture, Vector2.Zero, Color.White);
+                    break;
+
+                // when player reaches end of level
+                case GameState.LevelChange:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(levelChangeTexture, Vector2.Zero, Color.White);
                     break;
             }
 
