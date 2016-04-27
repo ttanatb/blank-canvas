@@ -121,6 +121,9 @@
     <value>Tiles[1x1]:
    Blank Tile
 _  Ground Tile
+-  Secondary Tile
+|  Wall Tile
+~  Custom Tile
 
 Player[1x2]:
 P  Player
@@ -138,8 +141,11 @@ Orbs(color key)[1x1]:
 #P  Orb (Purple)
 #G  Orb (Green)
 #A  Orb (Black)
+0   End Level Orb
 
 Barriers[1x2]:
-#/  Door</value>
+#/  Door
+]   Clear Paint Barrior
+</value>
   </data>
 </root>

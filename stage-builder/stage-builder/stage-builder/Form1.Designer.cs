@@ -57,7 +57,7 @@
             // 
             this.stagenamebox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.stagenamebox.Location = new System.Drawing.Point(183, 86);
-            this.stagenamebox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.stagenamebox.Margin = new System.Windows.Forms.Padding(4);
             this.stagenamebox.Name = "stagenamebox";
             this.stagenamebox.Size = new System.Drawing.Size(253, 30);
             this.stagenamebox.TabIndex = 1;
@@ -67,7 +67,7 @@
             // 
             this.levelnumberbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.levelnumberbox.Location = new System.Drawing.Point(183, 138);
-            this.levelnumberbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.levelnumberbox.Margin = new System.Windows.Forms.Padding(4);
             this.levelnumberbox.Name = "levelnumberbox";
             this.levelnumberbox.Size = new System.Drawing.Size(32, 30);
             this.levelnumberbox.TabIndex = 2;
@@ -98,7 +98,7 @@
             // 
             this.stagebuildertextbox.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.stagebuildertextbox.Location = new System.Drawing.Point(331, 224);
-            this.stagebuildertextbox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.stagebuildertextbox.Margin = new System.Windows.Forms.Padding(4);
             this.stagebuildertextbox.Multiline = true;
             this.stagebuildertextbox.Name = "stagebuildertextbox";
             this.stagebuildertextbox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -132,7 +132,7 @@
             // 
             this.keyBox.Font = new System.Drawing.Font("Courier New", 10F);
             this.keyBox.Location = new System.Drawing.Point(16, 224);
-            this.keyBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.keyBox.Margin = new System.Windows.Forms.Padding(4);
             this.keyBox.Multiline = true;
             this.keyBox.Name = "keyBox";
             this.keyBox.ReadOnly = true;
@@ -179,7 +179,7 @@
             this.Controls.Add(this.levelnumberbox);
             this.Controls.Add(this.stagenamebox);
             this.Controls.Add(this.stagenamelabel);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Stage Builder - Blank ";
             this.ResumeLayout(false);
