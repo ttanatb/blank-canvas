@@ -105,6 +105,7 @@
     <Content Include="Content\testChar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\testlevelchange.jpg" />
     <Content Include="Content\tileGround5.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
