@@ -40,7 +40,7 @@ namespace blank_canvas
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            
+
             //updates the dimensions of the game screen
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 768;
@@ -136,7 +136,7 @@ namespace blank_canvas
                     //  updates the gameplay based on any input to change the state
                     UpdateGamePlay();
                     break;
-                    
+
                 // if pause state
                 case GameState.Pause:
                     UpdatePause();
@@ -148,11 +148,9 @@ namespace blank_canvas
                     break;
 
                 // when player changes levels
-                /*
                 case GameState.LevelChange:
                     UpdateLevelChange();
                     break;
-                    */
             }
 
             base.Update(gameTime);
@@ -167,7 +165,7 @@ namespace blank_canvas
             if (input.KeyPressed(Keys.Space))
             {
                 //starts up the stage manager and loads in the content
-                stageManager = new StageManager(new Camera(GraphicsDevice.Viewport),input);
+                stageManager = new StageManager(new Camera(GraphicsDevice.Viewport), input);
                 stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "tileGround5", "projectile", "orbBase", "orb", "Door");
 
                 state = GameState.Gameplay;
@@ -212,19 +210,18 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// Exits the game
+        /// When end of level reached, end of level screen pops up and level changes
         /// </summary>
         private void UpdateLevelChange()
         {
-            //right now the player hits enter to go to the next screen
-            //would be cool if this screen displayed stats during level - number of shots, time completed, etc.
-            if (input.KeyPressed(Keys.Enter))
-            {
-                //unloads all content then loads in what is necessary for the menu states
-                Content.Unload();
-                LoadContent();
-                state = GameState.Gameplay;
-            }
+            // test to see if level change works
+            // need to do: to check if end of level reached, changes to next level in the game
+
+            //if (input.KeyPressed(Keys.Enter))
+            //{
+            //    //unloads all content then loads in what is necessary for the menu states
+
+            //}
         }
 
 
@@ -249,7 +246,7 @@ namespace blank_canvas
                 // draws gameplay and focuses the camera
                 case GameState.Gameplay:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, stageManager.Camera.Transform);
-                    spriteBatch.Draw(backgroundTexture, new Vector2(-500,0), Color.White);
+                    spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 
@@ -266,12 +263,10 @@ namespace blank_canvas
                     break;
 
                 // when player reaches end of level
-                /*
                 case GameState.LevelChange:
                     spriteBatch.Begin();
-                    spriteBatch.Draw(levelchangetexture, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(levelChangeTexture, Vector2.Zero, Color.White);
                     break;
-                    */
             }
 
             spriteBatch.End();
