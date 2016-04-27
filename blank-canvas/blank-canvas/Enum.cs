@@ -37,7 +37,7 @@ namespace blank_canvas
     }
 
     /// <summary>
-    /// The direction of the character
+    /// Level Enum
     /// </summary>
     public enum Level
     {
@@ -46,6 +46,18 @@ namespace blank_canvas
         Forest = 3,
         Mountain = 4,
         Castle = 5,
+    }
+
+    /// <summary>
+    /// Tile Enum - Determines what type
+    /// of tile is read in
+    /// </summary>
+    public enum TileType
+    {
+        Ground,
+        Floor,
+        Wall,
+        Theme,
     }
 
 

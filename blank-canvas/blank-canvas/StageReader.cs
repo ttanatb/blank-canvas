@@ -210,13 +210,38 @@ namespace blank_canvas
                 // checks to see if the current position is equal to the length of the text file
                 while (reader.BaseStream.Position != reader.BaseStream.Length)
                 {
+
                     character = reader.ReadChar();
 
                     #region Tile Creation
-                    if (character.Equals('_'))
+                    if (character.Equals('_') || character.Equals('|') || character.Equals('-') || character.Equals('~'))
                     {
+                        // Determines the type of tile that needs to be built
+                        TileType TT;
+
+                        if(character.Equals('_')) // Ground Tile "_"
+                        {
+                            TT = TileType.Ground;
+                        }
+                        else if (character.Equals('|')) // Wall Tile "|"
+                        {
+                            TT = TileType.Wall;
+                        }
+                        else if (character.Equals('-')) // Floor Tile "-"
+                        {
+                            TT = TileType.Floor;
+                        }
+                        else if (character.Equals('~')) // Theme Tile "~"
+                        {
+                            TT = TileType.Theme;
+                        }
+                        else // By default spawned to a ground tile
+                        {
+                            TT = TileType.Ground;
+                        }
+
                         // initializes new ground tile
-                        Tile tile = new Tile(new Vector2(xpos, ypos));
+                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
                         tiles.Add(tile);
                         Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 

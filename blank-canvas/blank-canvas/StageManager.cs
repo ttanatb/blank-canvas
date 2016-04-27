@@ -343,8 +343,12 @@ namespace blank_canvas
 
             player.Draw(spriteBatch);
 
+
+
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
+
+
 
             //this is to show test values
             spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X, player.Y - 50), Color.Black);

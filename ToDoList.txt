@@ -1,7 +1,5 @@
 To Do List:
-- Make it so that stage builder builds a stage into blank canvas instead of vice versa
-- Make sure the filepath for blank canvas is changed to fit this update
-- Make sure the gate's graphic correspond to its state
+- Enemy Animation/Enum States
 
 Bugs/Needs Fixing:
 Technical:
@@ -14,7 +12,6 @@ Texture:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Features to be implemented:
-~Sign object that gives user instructions/hints for puzzle
 ~Clearing Character Paint Barrier
 ~For the StageBuilder/StageReader read the first level file and create level gamestates that reads the next level in
 ~Create the end of level objective (adding paint to a huge orb/flag) - Removed from stage reader key until done:
