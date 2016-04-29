@@ -36,8 +36,8 @@ namespace blank_canvas
             projectile = new Projectile(this);
 
             //right now it sets everything at 1 for testing
-            red = 1;
-            blue = 1;
+            red = 0;
+            blue = 0;
             yellow = 0;
 
             //an initial color

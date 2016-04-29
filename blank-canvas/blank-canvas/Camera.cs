@@ -20,12 +20,16 @@ namespace blank_canvas
         //center of camera
         Vector2 centre;
 
+        //for gui stats
+        SpriteBatch spriteBatch;
+
         //constructor
-        public Camera(Viewport newView)
+        public Camera(Viewport newView, GraphicsDevice g)
         {
             view = newView;
             transform = new Matrix();
             centre = Vector2.Zero;
+            spriteBatch = new SpriteBatch(g);
         }
 
         //properties
@@ -42,7 +46,14 @@ namespace blank_canvas
         {
             centre = new Vector2(player.X + (player.Width / 2) - 400, player.Y + (player.Height / 2) - 400);
             transform = Matrix.CreateScale(new Vector3(1, 1, 0)) * Matrix.CreateTranslation(new Vector3(-centre.X, -centre.Y, 0));
+        }
 
+        //for gui stats
+        public void DrawStats(Texture2D testTexture)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(testTexture, new Rectangle(100, 100, 70, 70), Color.Lavender);
+            spriteBatch.End();
         }
     }
 }

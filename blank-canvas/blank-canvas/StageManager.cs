@@ -364,7 +364,10 @@ namespace blank_canvas
                 "Press Esc/Enter to Pause\n\n" +
                 "Drain color from the enemy, use those colors to fill in the puzzle orbs",
                 new Vector2(89, 300), Color.Black);
-           
+
+            //for gui stats
+            camera.DrawStats(testTexture);
+
         }
 
     }
