@@ -50,9 +50,9 @@ namespace blank_canvas
 
                 // Added this code for different levels
                 // Level 1 Desert
-                if (levelEnum == blank_canvas.Level.Forest)
+                if (levelEnum == blank_canvas.Level.Desert)
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Desert.txt");
                 }
                 // Level 2 Ice Caves
                 else if (levelEnum == blank_canvas.Level.Ice_Caves)
@@ -77,7 +77,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "TestMileStone3.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Desert.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -241,7 +241,7 @@ namespace blank_canvas
                         }
 
                         // initializes new ground tile
-                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
+                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
                         tiles.Add(tile);
                         Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
