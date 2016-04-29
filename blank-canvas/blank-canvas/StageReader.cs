@@ -77,7 +77,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "TestMileStone3.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Desert.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -241,7 +241,7 @@ namespace blank_canvas
                         }
 
                         // initializes new ground tile
-                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
+                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
                         tiles.Add(tile);
                         Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
