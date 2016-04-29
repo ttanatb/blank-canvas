@@ -71,7 +71,8 @@ namespace blank_canvas
         /// <param name="tileTexture">The texture for the tiles</param>
         public void LoadContent(ContentManager content, string playerTexture,
             string enemyTexture, string tileTexture, string projectileTexture,
-            string orbBaseTexture, string orbTexture, string gateTexture)
+            string orbBaseTexture, string orbTexture, string orbGlowTexture, 
+            string gateTexture)
         {
             try
             {
@@ -94,6 +95,7 @@ namespace blank_canvas
             {
                 puzzleorb.Texture = content.Load<Texture2D>(orbBaseTexture);
                 puzzleorb.OrbTexture = content.Load<Texture2D>(orbTexture);
+                puzzleorb.OrbGlowTexture = content.Load<Texture2D>(orbGlowTexture);
             }
 
             foreach(Gates gate in gates)
@@ -158,7 +160,7 @@ namespace blank_canvas
                 enemy.Update(deltaTime);
 
                 //checks for collision with player
-                if (player.CollisionBox.Intersects(enemy.Rectangle))
+                if (player.CollisionBox.Intersects(enemy.CollisionRect))
                     player.TakeDamage(enemy);
             }
 
@@ -176,7 +178,7 @@ namespace blank_canvas
                 //checks if it intersects with an enemy
                 foreach (Enemy enemy in enemies)
                 {
-                    if (enemy.Active && r.Intersects(enemy.Rectangle))
+                    if (enemy.Active && r.Intersects(enemy.CollisionRect))
                         enemy.ChangeDirection();
                 }
             }

@@ -14,13 +14,16 @@ namespace blank_canvas
     class Enemy : Character
     {
         #region fields
-
         const float MOVESPEED = 100f;
-        const double PAUSE_TIME = 2000.0; //the amount of time to take for pausing
 
         const int WIDTH = 64;
         const int HEIGHT = 64;
 
+        const double FRAME_TIMER = 0.2;
+
+        const int SIDE_MARGIN = 9;
+        const int TOP_MARGIN = 9;
+        const int BOTTOM_MARGIN = 9;
         #endregion
 
         #region variables
@@ -28,6 +31,8 @@ namespace blank_canvas
         Palette palette;
         Random rndm;
         bool active;
+        int frame;
+        double timer;
 
         #endregion
 
@@ -49,6 +54,11 @@ namespace blank_canvas
             get { return active; }
         }
 
+        public Rectangle CollisionRect
+        {
+            get { return new Rectangle((int)X + SIDE_MARGIN, (int)Y + TOP_MARGIN, WIDTH - SIDE_MARGIN, Height - BOTTOM_MARGIN); }
+        }
+
         #endregion
 
         #region constructor
@@ -58,6 +68,8 @@ namespace blank_canvas
             palette = new Palette(color);
             rndm = new Random();
             active = true;
+            frame = 0;
+            timer = 0;
         }
         #endregion
 
@@ -73,6 +85,16 @@ namespace blank_canvas
             {
                 velocity.X = (int)direction * MOVESPEED;
                 UpdatePos(deltaTime);
+
+                timer += deltaTime;
+
+                if (timer > FRAME_TIMER)
+                {
+                    if (frame == 0)
+                        frame = 1;
+                    else frame = 0;
+                    timer = 0;
+                }
             }
         }
 
@@ -129,21 +151,21 @@ namespace blank_canvas
             switch (CurrentColor)
             {
                 case (PaletteColor.Red):
-                    color = new Color(alpha, 0, 0, alpha);
+                    color = new Color(200, 0, 0, 255);
                     break;
                 case (PaletteColor.Blue):
-                    color = new Color(0, 0, alpha, alpha);
+                    color = new Color(20, 20, 255, 255);
                     break;
                 case (PaletteColor.Yellow):
-                    color = new Color(alpha, alpha, 0, alpha);
+                    color = new Color(255, 255, 0, 255);
                     break;
                 default:
-                    color = new Color(alpha, alpha, alpha, alpha);
+                    color = new Color(255, 255, 255, 255);
                     break;
             }
 
             //actual draw method
-            spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, width, height), color, 0f, Vector2.Zero, spriteEffects, 1);
+            spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * width, 0, width, height), color, 0f, Vector2.Zero, spriteEffects, 1);
 
         }
         #endregion

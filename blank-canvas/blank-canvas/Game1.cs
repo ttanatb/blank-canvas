@@ -166,7 +166,7 @@ namespace blank_canvas
             {
                 //starts up the stage manager and loads in the content
                 stageManager = new StageManager(new Camera(GraphicsDevice.Viewport),input);
-                stageManager.LoadContent(Content, "playerIdle", "enemyNoColor", "Tiles-Spritesheet", "projectile", "orbBase", "orb", "Door");
+                stageManager.LoadContent(Content, "playerSpriteSheet", "enemySpriteSheet", "Tiles-Spritesheet", "projectile", "orbBase", "orb", "orbGlow", "Door");
                 state = GameState.Gameplay;
             }
         }

@@ -32,6 +32,7 @@ namespace blank_canvas
         PuzzleState state;         
 
         Texture2D orbTexture;
+        Texture2D orbGlow;
         Vector2 orbPosition;
         Rectangle orbCollisionBox;
         #endregion
@@ -40,6 +41,11 @@ namespace blank_canvas
         public Texture2D OrbTexture
         {
             set { orbTexture = value; }
+        }
+
+        public Texture2D OrbGlowTexture
+        {
+            set { orbGlow = value; }
         }
 
         public PaletteColor CurrentColor
@@ -122,11 +128,40 @@ namespace blank_canvas
         {
             if (state == PuzzleState.Active || state == PuzzleState.Completed)
             {
+                //this draws the actual orb and tints it accordingly
+                int a = alpha * 3 / 4; //this makes it fade a bit
+
+                if (state != PuzzleState.Completed)
+                {
+                    switch (colorKey)
+                    {
+                        case (PaletteColor.Red):
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha, 0, 0, 100));
+                            break;
+                        case (PaletteColor.Blue):
+                            spriteBatch.Draw(orbGlow, position, new Color(0, 0, alpha, 100));
+                            break;
+                        case (PaletteColor.Yellow):
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha, 0, 100));
+                            break;
+                        case (PaletteColor.Orange):
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha / 2, 0, 100));
+                            break;
+                        case (PaletteColor.Green):
+                            spriteBatch.Draw(orbGlow, position, new Color(0, alpha, 0, 100));
+                            break;
+                        case (PaletteColor.Purple):
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha / 2, 0, alpha / 2, 100));
+                            break;
+                        case (PaletteColor.Black):
+                            spriteBatch.Draw(orbGlow, position, new Color(0, 0, 0, 100));
+                            break;
+                    }
+                }
+                
                 //draws the base of the actual sprite
                 base.Draw(spriteBatch);
 
-                //this draws the actual orb and tints it accordingly
-                int a = alpha * 3 / 4; //this makes it fade a bit
                 switch (CurrentColor)
                 {
                     case (PaletteColor.Red):
@@ -139,13 +174,13 @@ namespace blank_canvas
                         spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, alpha, 0, a));
                         break;
                     case (PaletteColor.Orange):
-                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, alpha/2, 0, a));
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha, alpha / 2, 0, a));
                         break;
                     case (PaletteColor.Green):
                         spriteBatch.Draw(orbTexture, orbPosition, new Color(0, alpha, 0, a));
                         break;
                     case (PaletteColor.Purple):
-                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha/2, 0, alpha/2, a));
+                        spriteBatch.Draw(orbTexture, orbPosition, new Color(alpha / 2, 0, alpha / 2, a));
                         break;
                     case (PaletteColor.Black):
                         spriteBatch.Draw(orbTexture, orbPosition, new Color(0, 0, 0, alpha));

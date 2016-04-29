@@ -241,7 +241,7 @@ namespace blank_canvas
                         }
 
                         // initializes new ground tile
-                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
+                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
                         tiles.Add(tile);
                         Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
