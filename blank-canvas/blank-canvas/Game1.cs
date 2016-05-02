@@ -90,6 +90,9 @@ namespace blank_canvas
 
             //level change screen texture
             levelChangeTexture = Content.Load<Texture2D>("testlevelchange");
+
+            stageManager = new StageManager(new Camera(GraphicsDevice.Viewport, GraphicsDevice), input);
+            stageManager.LoadContent(Content, "playerSpriteSheet", "enemySpriteSheet", "Tiles-Spritesheet", "projectile", "orbBase", "orb", "orbGlow", "Door");
         }
 
         /// <summary>
@@ -165,8 +168,7 @@ namespace blank_canvas
             if (input.KeyPressed(Keys.Space))
             {
                 //starts up the stage manager and loads in the content
-                stageManager = new StageManager(new Camera(GraphicsDevice.Viewport, GraphicsDevice),input);
-                stageManager.LoadContent(Content, "playerSpriteSheet", "enemySpriteSheet", "Tiles-Spritesheet", "projectile", "orbBase", "orb", "orbGlow", "Door");
+
                 state = GameState.Gameplay;
             }
         }
@@ -267,7 +269,6 @@ namespace blank_canvas
                     spriteBatch.Draw(levelChangeTexture, Vector2.Zero, Color.White);
                     break;
             }
-
             spriteBatch.End();
             base.Draw(gameTime);
         }
