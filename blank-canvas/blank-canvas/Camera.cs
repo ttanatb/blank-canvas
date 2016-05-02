@@ -51,8 +51,9 @@ namespace blank_canvas
         //for gui stats
         public void DrawStats(Texture2D testTexture)
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(testTexture, new Rectangle(100, 100, 70, 70), Color.Lavender);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+            //spriteBatch.Draw(testTexture, new Rectangle(50, 40, 300, 70), Color.Lavender);
+            spriteBatch.Draw(testTexture, new Rectangle(50, 40, 300, 70), new Rectangle(0,0,300,70),Color.Lavender, 0f, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.End();
         }
     }

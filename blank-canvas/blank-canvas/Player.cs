@@ -57,7 +57,6 @@ namespace blank_canvas
         //used for animation
         double elapsedTime;
         int frame;
-
         int health;
 
         #endregion
@@ -358,8 +357,8 @@ namespace blank_canvas
             //the transparency of the sprite
             int a = alpha - (MAX_HEALTH - health) * FADE_DECREMENT;
             Color color = new Color(a, a, a, a);
-            
-            switch(animState)
+
+            switch (animState)
             {
                 case AnimState.Idle:
                     //checks if the plater is moving vertically
