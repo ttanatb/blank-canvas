@@ -22,8 +22,8 @@ namespace blank_canvas
         SpriteFont testFont;        //just a test font
         Texture2D testTexture;      //just a test texture
 
-        Player player;              
-        Enemy[] enemies;            
+        Player player;
+        Enemy[] enemies;
         Tile[] tiles;               //tiles to draw (we really don't need tiles, just rectangles)
         Rectangle[] tileCollision;  //tiles to check collision with
         Gates[] gates;
@@ -32,7 +32,7 @@ namespace blank_canvas
         //Enemy testEnemy;
         //the puzzle orb should be linked to a gate
 
-        int level;                  //the level of the stage (may be unnecessary)
+        Level level;                  //the level of the stage (may be unnecessary)
 
         const float GRAVITY = 24f;    //gravity of the whole thing (kind of unnecessary)
         #endregion
@@ -52,14 +52,15 @@ namespace blank_canvas
             tiles = stageReader.Tile;
             tileCollision = stageReader.CollisionBoxes;
             puzzleOrbs = stageReader.PuzzleOrbs;
-            gates = stageReader.PuzzleGates;       
+            gates = stageReader.PuzzleGates;
         }
 
         //properties
         public Camera Camera
         {
-            get { return camera;  }
+            get { return camera; }
         }
+
 
         #region Load Content
         /// <summary>
@@ -71,7 +72,7 @@ namespace blank_canvas
         /// <param name="tileTexture">The texture for the tiles</param>
         public void LoadContent(ContentManager content, string playerTexture,
             string enemyTexture, string tileTexture, string projectileTexture,
-            string orbBaseTexture, string orbTexture, string orbGlowTexture, 
+            string orbBaseTexture, string orbTexture, string orbGlowTexture,
             string gateTexture)
         {
             try
@@ -90,7 +91,7 @@ namespace blank_canvas
 
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load<Texture2D>(tileTexture);
-            
+
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
             {
                 puzzleorb.Texture = content.Load<Texture2D>(orbBaseTexture);
@@ -98,7 +99,7 @@ namespace blank_canvas
                 puzzleorb.OrbGlowTexture = content.Load<Texture2D>(orbGlowTexture);
             }
 
-            foreach(Gates gate in gates)
+            foreach (Gates gate in gates)
             {
                 gate.Texture = content.Load<Texture2D>(gateTexture);
             }
@@ -144,7 +145,7 @@ namespace blank_canvas
             }
 
             //updates the gates
-            foreach(Gates gate in gates)
+            foreach (Gates gate in gates)
             {
                 gate.Update();
             }
@@ -236,8 +237,8 @@ namespace blank_canvas
             for (int i = 0; i < enemies.Length; i++)
             {
                 //checks if is active and intersects search rectangle and has a distance smaller than the current distance
-                if (enemies[i].Active 
-                    && ((int)player.Direction * (enemies[i].X - player.X) < dist) 
+                if (enemies[i].Active
+                    && ((int)player.Direction * (enemies[i].X - player.X) < dist)
                     && searchRect.Intersects(enemies[i].Rectangle))
                 {
                     //sets the index to that 
@@ -278,11 +279,16 @@ namespace blank_canvas
             return index;
         }
 
-        private void NextLevel()
+        /// <summary>
+        /// Allows for level to change 
+        /// </summary>
+        public void NextLevel()
         {
             level++;
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
+            
+
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace blank_canvas
                 else player.X = rect.X - player.Width + Player.LEFT_MARGIN;
                 return;
             }
-            
+
             //checks if the player collided from the top
             if (player.PrevPos.Y <= rect.Y - rect.Height / 2)
             {

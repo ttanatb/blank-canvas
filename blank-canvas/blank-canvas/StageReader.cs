@@ -50,9 +50,9 @@ namespace blank_canvas
 
                 // Added this code for different levels
                 // Level 1 Desert
-                if (levelEnum == blank_canvas.Level.Forest)
+                if (levelEnum == blank_canvas.Level.Desert)
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Desert.txt");
                 }
                 // Level 2 Ice Caves
                 else if (levelEnum == blank_canvas.Level.Ice_Caves)
@@ -72,7 +72,7 @@ namespace blank_canvas
                 // Level 5 Castle
                 else if (levelEnum == blank_canvas.Level.Castle)
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Caste.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Castle.txt");
                 }
                 // Test file
                 else

@@ -27,14 +27,25 @@ namespace blank_canvas
         Texture2D gameOverTexture;
         Texture2D levelChangeTexture;
 
-        // creates game state
+        // variables for fonts
+        SpriteFont levelChangeText;
+
+        // enum variables
         GameState state;
+        Level lvl;
 
         // game state property
         public GameState gameState
         {
             get { return state; }
             set { state = value; }
+        }
+
+        // level property
+        public Level getLevel
+        {
+            get { return lvl; }
+            set { lvl = value; }
         }
 
         public Game1()
@@ -90,6 +101,7 @@ namespace blank_canvas
 
             //level change screen texture
             levelChangeTexture = Content.Load<Texture2D>("testlevelchange");
+            levelChangeText = Content.Load<SpriteFont>("Arial_14");
 
             stageManager = new StageManager(new Camera(GraphicsDevice.Viewport, GraphicsDevice), input);
             stageManager.LoadContent(Content, "playerSpriteSheet", "enemySpriteSheet", "Tiles-Spritesheet", "projectile", "orbBase", "orb", "orbGlow", "Door");
@@ -180,6 +192,9 @@ namespace blank_canvas
         {
             if (input.KeysPressed(Keys.Back, Keys.Escape))
                 state = GameState.Pause;
+            if (input.KeyPressed(Keys.D))
+
+                state = GameState.LevelChange;
         }
 
         /// <summary>
@@ -208,6 +223,9 @@ namespace blank_canvas
                 LoadContent();
                 state = GameState.MainMenu;
             }
+            //exits
+            else if (input.KeyPressed(Keys.Escape))
+                Exit();
         }
 
         /// <summary>
@@ -215,14 +233,35 @@ namespace blank_canvas
         /// </summary>
         private void UpdateLevelChange()
         {
-            // test to see if level change works
-            // need to do: to check if end of level reached, changes to next level in the game
+            stageManager.NextLevel();
+            if (input.KeyPressed(Keys.Space))
+            {
+                switch (getLevel)
+                {
+                    case Level.Desert:
+                        Content.Unload();
+                        LoadContent();
+                        break;
+                    case Level.Ice_Caves:
+                        Content.Unload();
+                        LoadContent();
+                        break;
+                    case Level.Forest:
+                        Content.Unload();
+                        LoadContent();
+                        break;
+                    case Level.Mountain:
+                        Content.Unload();
+                        LoadContent();
+                        break;
+                    case Level.Castle:
+                        Content.Unload();
+                        LoadContent();
+                        break;
+                }
 
-            //if (input.KeyPressed(Keys.Enter))
-            //{
-            //    //unloads all content then loads in what is necessary for the menu states
-
-            //}
+                state = GameState.Gameplay;
+            }
         }
 
 
