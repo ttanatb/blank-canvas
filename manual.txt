@@ -1,0 +1,13 @@
+*****HOW TO PLAY*****
+Movement: LEFT and RIGHT ARROW KEYS
+Jump: SPACE
+Shoot: C
+Change Bullet Color: SHIFT (LEFT, RIGHT)
+Drain Color from Enemy: X
+Pause: ESC or ENTER
+
+*****GOALS*****
+The object of the game is for the character to restore color to the world. 
+The character obtains ammo by DRAINING enemy color, thus killing them. 
+They also solve puzzles by SHOOTING the color they obtained. 
+Use different colors by pressing SHIFT to solve the puzzle correctly.
