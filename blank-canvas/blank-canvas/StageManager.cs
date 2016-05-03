@@ -32,7 +32,7 @@ namespace blank_canvas
         //Enemy testEnemy;
         //the puzzle orb should be linked to a gate
 
-        Level level;                  //the level of the stage (may be unnecessary)
+        int level;                  //the level of the stage (may be unnecessary)
 
         const float GRAVITY = 24f;    //gravity of the whole thing (kind of unnecessary)
         #endregion

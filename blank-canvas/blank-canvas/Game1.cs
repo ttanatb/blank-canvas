@@ -233,7 +233,10 @@ namespace blank_canvas
         /// </summary>
         private void UpdateLevelChange()
         {
+            // updates level count
             stageManager.NextLevel();
+
+            // switches level textures and design
             if (input.KeyPressed(Keys.Space))
             {
                 switch (getLevel)
