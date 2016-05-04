@@ -19,6 +19,7 @@ namespace blank_canvas
         const int HEIGHT = 64;
         Level level;
         TileType tileType;
+        PuzzleState activeState;
 
         #endregion
 
@@ -29,6 +30,16 @@ namespace blank_canvas
         {
             level = l;
             tileType = TT;
+
+            // Blank Canvas Block
+            if(tileType==TileType.Blank)
+            {
+                activeState = PuzzleState.Inactive;
+            }
+            else
+            {
+                activeState = PuzzleState.Active;
+            }
         }
 
         #endregion
@@ -55,6 +66,16 @@ namespace blank_canvas
                         case TileType.Theme:
                             spriteBatch.Draw(texture, Rectangle, new Rectangle(3 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
                             break;
+                        case TileType.Blank:
+                            if (activeState == PuzzleState.Inactive)
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            else
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(2 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            break;
                     }
                     break;
                 #endregion
@@ -74,6 +95,16 @@ namespace blank_canvas
                             break;
                         case TileType.Theme:
                             spriteBatch.Draw(texture, Rectangle, new Rectangle(3 * WIDTH, 1 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
+                        case TileType.Blank:
+                            if (activeState == PuzzleState.Inactive)
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            else
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(2 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
                             break;
                     }
                     break;
@@ -95,6 +126,16 @@ namespace blank_canvas
                         case TileType.Theme:
                             spriteBatch.Draw(texture, Rectangle, new Rectangle(3 * WIDTH, 2 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
                             break;
+                        case TileType.Blank:
+                            if (activeState == PuzzleState.Inactive)
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            else
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(2 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            break;
                     }
                     break;
                 #endregion
@@ -115,6 +156,16 @@ namespace blank_canvas
                         case TileType.Theme:
                             spriteBatch.Draw(texture, Rectangle, new Rectangle(3 * WIDTH, 3 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
                             break;
+                        case TileType.Blank:
+                            if (activeState == PuzzleState.Inactive)
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            else
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(2 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            break;
                     }
                     break;
                 #endregion
@@ -134,6 +185,16 @@ namespace blank_canvas
                             break;
                         case TileType.Theme:
                             spriteBatch.Draw(texture, Rectangle, new Rectangle(3 * WIDTH, 4 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
+                        case TileType.Blank:
+                            if (activeState == PuzzleState.Inactive)
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
+                            else
+                            {
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(2 * WIDTH, 0 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            }
                             break;
                     }
                     break;

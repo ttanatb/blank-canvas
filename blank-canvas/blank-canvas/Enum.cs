@@ -59,6 +59,7 @@ namespace blank_canvas
         Floor,
         Wall,
         Theme,
+        Blank,
     }
 
 
