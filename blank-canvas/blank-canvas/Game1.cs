@@ -31,6 +31,7 @@ namespace blank_canvas
         Texture2D pauseTexture;
         Texture2D gameOverTexture;
         Texture2D levelChangeTexture;
+        Texture2D instructionTexture;
 
         // variables for fonts
         SpriteFont levelChangeText;
@@ -94,6 +95,8 @@ namespace blank_canvas
             // game over screen texture
             gameOverTexture = content.Load("gameOverTexture");
 
+            instructionTexture = content.Load("instructionTexture");
+
             //level change screen texture
             levelChangeTexture =content.Load("levelChange");
             levelChangeText = Content.Load<SpriteFont>("Arial_14");
@@ -128,7 +131,9 @@ namespace blank_canvas
                 case GameState.MainMenu:
                     UpdateMainMenu();
                     break;
-
+                case GameState.Instruction:
+                    UpdateInstruction();
+                    break;
                 // if gameplay state
                 case GameState.Gameplay:
 
@@ -167,6 +172,14 @@ namespace blank_canvas
             base.Update(gameTime);
         }
 
+        private void UpdateInstruction()
+        {
+            if (input.KeysPressed(Keys.Space, Keys.Enter, Keys.Escape))
+            {
+                state = GameState.MainMenu;
+            }
+        }
+
         ///<summary>
         ///Changes from main menu to gameplay
         ///</summary>
@@ -186,6 +199,7 @@ namespace blank_canvas
                         state = GameState.Gameplay;
                         break;
                     case 1:
+                        state = GameState.Instruction;
                         break;
                     case 2:
                         Exit();
@@ -292,6 +306,11 @@ namespace blank_canvas
                     spriteBatch.Begin();
                     spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(563, 258 + 48 * pointerNum), Color.White);
+                    break;
+
+                case GameState.Instruction:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(instructionTexture, Vector2.Zero, Color.White);
                     break;
 
                 // draws gameplay and focuses the camera
