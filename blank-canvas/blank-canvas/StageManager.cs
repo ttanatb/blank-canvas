@@ -292,15 +292,10 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
-<<<<<<< HEAD
 
             if(finalOrb.Progress >= 5)
                 level++;
-=======
-            if(finalOrb.Progress >= 5)
-                level++;
 
->>>>>>> f5d1bc5a87df01163ec61d01129a326d5f736613
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
 
