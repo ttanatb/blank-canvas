@@ -25,7 +25,7 @@ namespace blank_canvas
 
         Texture2D menuTexture;
         Texture2D pointerTexture;
-        int mainMenuOptions;
+        int pointerNum;
 
         Texture2D pauseTexture;
         Texture2D gameOverTexture;
@@ -76,7 +76,7 @@ namespace blank_canvas
 
             //instantializes the initial GameState
             state = GameState.MainMenu;
-            mainMenuOptions = 0;
+            pointerNum = 0;
 
             base.Initialize();
         }
@@ -183,14 +183,14 @@ namespace blank_canvas
         private void UpdateMainMenu()
         {
             //currently in Main Menu state
-            if (input.KeyPressed(Keys.Down) && mainMenuOptions < 2)
-                mainMenuOptions++;
-            else if (input.KeyPressed(Keys.Up) && mainMenuOptions > 0)
-                mainMenuOptions--;
+            if (input.KeyPressed(Keys.Down) && pointerNum < 2)
+                pointerNum++;
+            else if (input.KeyPressed(Keys.Up) && pointerNum > 0)
+                pointerNum--;
 
-            if(input.KeyPressed(Keys.Enter))
+            if(input.KeysPressed(Keys.Enter, Keys.Space))
             {
-                switch(mainMenuOptions)
+                switch(pointerNum)
                 {
                     case 0:
                         state = GameState.Gameplay;
@@ -210,7 +210,10 @@ namespace blank_canvas
         private void UpdateGamePlay()
         {
             if (input.KeysPressed(Keys.Back, Keys.Escape))
+            {
                 state = GameState.Pause;
+                pointerNum = 0;
+            }
             if (input.KeyPressed(Keys.D))
 
                 state = GameState.LevelChange;
@@ -221,13 +224,26 @@ namespace blank_canvas
         /// </summary>
         private void UpdatePause()
         {
-            //unpauses
-            if (input.KeyPressed(Keys.Enter))
-                state = GameState.Gameplay;
+            if (input.KeyPressed(Keys.Down) && pointerNum < 1)
+                pointerNum++;
+            else if (input.KeyPressed(Keys.Up) && pointerNum > 0)
+                pointerNum--;
 
-            //exits
+            if (input.KeysPressed(Keys.Enter, Keys.Space))
+            {
+                switch (pointerNum)
+                {
+                    case 0:
+                        state = GameState.Gameplay;
+                        break;
+                    case 1:
+                        state = GameState.MainMenu;
+                        pointerNum = 0;
+                        break;
+                }
+            }
             else if (input.KeyPressed(Keys.Escape))
-                Exit();
+                state = GameState.Gameplay;
         }
 
         /// <summary>
@@ -303,7 +319,7 @@ namespace blank_canvas
                 case GameState.MainMenu:
                     spriteBatch.Begin();
                     spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
-                    spriteBatch.Draw(pointerTexture, new Vector2(563, 258 + 48 * mainMenuOptions), Color.White);
+                    spriteBatch.Draw(pointerTexture, new Vector2(563, 258 + 48 * pointerNum), Color.White);
                     break;
 
                 // draws gameplay and focuses the camera
@@ -317,6 +333,7 @@ namespace blank_canvas
                 case GameState.Pause:
                     spriteBatch.Begin();
                     spriteBatch.Draw(pauseTexture, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(pointerTexture, new Vector2(627, 330 + 85 * pointerNum), Color.White);
                     break;
 
                 // draws end screen, which then exits
