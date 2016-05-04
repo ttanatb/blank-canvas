@@ -139,11 +139,7 @@ namespace blank_canvas
             }
 
             if (CheckCollision(finalOrb))
-            {
-                finalOrb.Update();
                 return;
-
-            }
         }
 
         /// <summary>
@@ -185,6 +181,9 @@ namespace blank_canvas
 
                 if (added)
                 {
+
+                    orb.Progress++;
+
                     //sets the projectile to inactive
                     active = false;
 
