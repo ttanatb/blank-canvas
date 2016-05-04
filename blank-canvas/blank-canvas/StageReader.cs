@@ -126,7 +126,7 @@ namespace blank_canvas
             get
             {
                 SpecialTile[] sT = new SpecialTile[sTiles.Count];
-                for (int i = 0; i < tiles.Count; i++)
+                for (int i = 0; i < sTiles.Count; i++)
                     sT[i] = sTiles[i];
                 return sT;
             }
