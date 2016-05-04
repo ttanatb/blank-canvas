@@ -54,9 +54,7 @@ namespace blank_canvas
             tileCollision = stageReader.CollisionBoxes;
             puzzleOrbs = stageReader.PuzzleOrbs;
             gates = stageReader.PuzzleGates;
-
-            //finalorb test
-            finalOrb = new FinalOrb(new Vector2(7722, 866), PaletteColor.Blue);
+            finalOrb = stageReader.FinalOrb;
         }
 
         //properties
@@ -84,6 +82,7 @@ namespace blank_canvas
                 player.Texture = content.Load<Texture2D>("playerSpriteSheet");
                 player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
                 finalOrb.Texture = content.Load<Texture2D>("Final Orb Spritesheet");
+
             }
             catch (Exception e)
             {
@@ -301,8 +300,8 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
-            if(finalOrb.State == PuzzleState.Completed)
-            level++;
+            if(finalOrb.Progress >= 5)
+                level++;
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
             
@@ -373,16 +372,6 @@ namespace blank_canvas
 
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
-
-            //instructions
-            spriteBatch.DrawString(testFont,
-                "Use arrow keys to move\n" +
-                "Press C to shoot\n" +
-                "Press left shift/right shift to change color\n" +
-                "Press X to drain color\n" +
-                "Press Esc/Enter to Pause\n\n" +
-                "Drain color from the enemy, use those colors to fill in the puzzle orbs",
-                new Vector2(89, 300), Color.Black);
 
             //for gui stats
             camera.DrawStats(testTexture, testFont, player.ToString());
