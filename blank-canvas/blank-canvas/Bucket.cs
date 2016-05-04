@@ -238,22 +238,37 @@ namespace blank_canvas
                 case PaletteColor.Blue:
                     if (blue == 0)
                     {
-                        SwitchRBY();
-                        break;
+                        if (yellow == 0 && red == 0)
+                            return;
+                        else
+                        {
+                            SwitchRBY();
+                            break;
+                        }
                     }
                     else break;
                 case PaletteColor.Red:
                     if (red == 0)
                     {
-                        SwitchRBY();
-                        break;
+                        if (yellow == 0 && blue == 0)
+                            return;
+                        else
+                        {
+                            SwitchRBY();
+                            break;
+                        }
                     }
                     else break;
                 case PaletteColor.Yellow:
                     if (yellow == 0)
                     {
-                        SwitchRBY();
-                        break;
+                        if (blue == 0 && red == 0)
+                            return;
+                        else
+                        {
+                            SwitchRBY();
+                            break;
+                        }
                     }
                     else break;
             }

@@ -21,7 +21,7 @@ namespace blank_canvas
             dict.Add("playerSpriteSheet", content.Load<Texture2D>("playerSpriteSheet"));
             dict.Add("enemySpriteSheet", content.Load<Texture2D>("enemySpriteSheet"));
             dict.Add("Tiles-Spritesheet", content.Load<Texture2D>("Tiles-Spritesheet"));
-            dict.Add("projectileTexture", content.Load<Texture2D>("projectile"));
+            dict.Add("projectile", content.Load<Texture2D>("projectile"));
             dict.Add("orbBase", content.Load<Texture2D>("orbBase"));
             dict.Add("orb", content.Load<Texture2D>("orb"));
             dict.Add("orbGlow", content.Load<Texture2D>("orbGlow"));
