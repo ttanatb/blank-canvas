@@ -236,6 +236,10 @@ namespace blank_canvas
                         {
                             TT = TileType.Theme;
                         }
+                        else if (character.Equals('?'))
+                        {
+                            TT = TileType.Blank;
+                        }
                         else // By default spawned to a ground tile
                         {
                             TT = TileType.Ground;
