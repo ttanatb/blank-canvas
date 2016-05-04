@@ -354,9 +354,6 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
 
-            //this is to show test values
-            spriteBatch.DrawString(testFont, player.ToString(), new Vector2(player.X, player.Y - 50), Color.Black);
-
             //instructions
             spriteBatch.DrawString(testFont,
                 "Use arrow keys to move\n" +
@@ -368,7 +365,7 @@ namespace blank_canvas
                 new Vector2(89, 300), Color.Black);
 
             //for gui stats
-            camera.DrawStats(testTexture);
+            camera.DrawStats(testTexture, testFont, player.ToString());
 
         }
 
