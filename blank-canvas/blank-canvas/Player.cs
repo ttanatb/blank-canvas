@@ -37,7 +37,7 @@ namespace blank_canvas
 
         //timer to change frame
         const double FRAME_TIMER = 0.2;
-        const double INVUL_TIMER = 1.8;
+        const double INVUL_TIMER = 2.0;
 
         //margin for collision box
         public const int LEFT_MARGIN = 16;
@@ -58,7 +58,9 @@ namespace blank_canvas
         double elapsedTime;
         int frame;
         int health;
+
         bool invulnerable;
+        int invulFrame;
         double invulTimer;
         #endregion
 
@@ -157,6 +159,7 @@ namespace blank_canvas
             elapsedTime = 0;
             health = MAX_HEALTH;
             invulnerable = false;
+            invulFrame = 0;
         }
 
         #endregion
@@ -350,6 +353,7 @@ namespace blank_canvas
             {
                 elapsedTime -= FRAME_TIMER;
                 frame++;
+                invulFrame++;
             }
 
             
@@ -370,7 +374,11 @@ namespace blank_canvas
 
             Color color;
             if (invulnerable)
-                color = Color.DarkGray;
+            {
+                if (invulFrame % 2 == 0)
+                    color = Color.DarkGray;
+                else color = Color.Gray;
+            }
             else color = Color.White;
 
             //the transparency of the sprite
