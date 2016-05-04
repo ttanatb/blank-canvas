@@ -29,6 +29,7 @@ namespace blank_canvas
         Gates[] gates;
 
         PuzzleOrb[] puzzleOrbs;        //this is for testing
+        FinalOrb finalOrb;
         //Enemy testEnemy;
         //the puzzle orb should be linked to a gate
 
@@ -79,6 +80,7 @@ namespace blank_canvas
             {
                 player.Texture = content.Load<Texture2D>("playerSpriteSheet");
                 player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
+                finalOrb.OrbTexture = content.Load<Texture2D>("Final Orb Spritesheet");
             }
             catch (Exception e)
             {
