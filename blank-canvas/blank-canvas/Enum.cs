@@ -34,7 +34,8 @@ namespace blank_canvas
         Gameplay,
         Pause,
         EndOfGame,
-        LevelChange
+        LevelChange,
+        Instruction,
     }
 
     /// <summary>

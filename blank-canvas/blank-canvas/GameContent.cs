@@ -36,6 +36,7 @@ namespace blank_canvas
             dict.Add("pauseTexture", content.Load<Texture2D>("pausemenu"));
             dict.Add("gameOverTexture", content.Load<Texture2D>("gameover"));
             dict.Add("levelChange", content.Load<Texture2D>("testlevelchange"));
+            dict.Add("instructionTexture", content.Load<Texture2D>("instruction"));
 
 
             testTexture = content.Load<Texture2D>("testChar");
