@@ -37,6 +37,7 @@ namespace blank_canvas
 
         //timer to change frame
         const double FRAME_TIMER = 0.2;
+        const double INVUL_TIMER = 1.8;
 
         //margin for collision box
         public const int LEFT_MARGIN = 16;
@@ -45,8 +46,7 @@ namespace blank_canvas
         public const int BOTTOM_MARGIN = 16;
 
         //maximum health
-        const int MAX_HEALTH = 3;
-        const int FADE_DECREMENT = 30;
+        const int MAX_HEALTH = 5;
         #endregion
 
         #region variables
@@ -58,7 +58,8 @@ namespace blank_canvas
         double elapsedTime;
         int frame;
         int health;
-
+        bool invulnerable;
+        double invulTimer;
         #endregion
 
         #region properties
@@ -155,6 +156,7 @@ namespace blank_canvas
             bucket = new Bucket();
             elapsedTime = 0;
             health = MAX_HEALTH;
+            invulnerable = false;
         }
 
         #endregion
@@ -287,7 +289,7 @@ namespace blank_canvas
         public void TakeDamage(Enemy enemy)
         {
             //If the player is already in the hurting animation, return
-            if (animState == AnimState.Hurt)
+            if (invulnerable)
                 return;
 
             //reduces the health
@@ -296,6 +298,9 @@ namespace blank_canvas
             //set initial frame and animation state
             frame = 0;
             animState = AnimState.Hurt;
+            invulnerable = true;
+            invulTimer = 0;
+
 
             //determine direction after collision
             if (enemy.Center.X - Center.X > 0)
@@ -333,12 +338,21 @@ namespace blank_canvas
             //increases total elapsed time
             elapsedTime += deltaTime;
 
+            if (invulnerable)
+            {
+                invulTimer += deltaTime;
+                if (invulTimer > INVUL_TIMER)
+                    invulnerable = false;
+            }
+
             //determines if frame should increment
             if (elapsedTime > FRAME_TIMER)
             {
                 elapsedTime -= FRAME_TIMER;
                 frame++;
             }
+
+            
         }
 
         /// <summary>
@@ -354,9 +368,12 @@ namespace blank_canvas
                 spriteEffects = SpriteEffects.None;
             else spriteEffects = SpriteEffects.FlipHorizontally;
 
+            Color color;
+            if (invulnerable)
+                color = Color.DarkGray;
+            else color = Color.White;
+
             //the transparency of the sprite
-            int a = alpha - (MAX_HEALTH - health) * FADE_DECREMENT;
-            Color color = new Color(a, a, a, a);
 
             switch (animState)
             {
