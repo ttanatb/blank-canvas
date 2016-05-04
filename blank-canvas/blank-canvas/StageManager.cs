@@ -169,7 +169,7 @@ namespace blank_canvas
             foreach (Rectangle r in tileCollision)
             {
                 //checks if it intersects with player, then fixes position
-                if (r.Intersects(player.CollisionBox))
+                if (r.Intersects(player.CollisionBox)) // Blank Canvas Tile
                     FixPos(player, r);
 
                 //checks if it intersects with an active projectile
