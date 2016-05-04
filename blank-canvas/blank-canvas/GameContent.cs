@@ -12,6 +12,9 @@ namespace blank_canvas
     {
         Dictionary<string, Texture2D> dict = new Dictionary<string, Texture2D>();
 
+        Texture2D testTexture;
+        SpriteFont testFont;
+
         /// <summary>
         /// 
         /// </summary>
@@ -34,6 +37,9 @@ namespace blank_canvas
             dict.Add("gameOverTexture", content.Load<Texture2D>("gameover"));
             dict.Add("levelChange", content.Load<Texture2D>("testlevelchange"));
 
+
+            testTexture = content.Load<Texture2D>("testChar");
+            testFont = content.Load<SpriteFont>("Arial_14");
         }
 
         /// <summary>
@@ -49,5 +55,9 @@ namespace blank_canvas
             else
                 return null;
         }
+
+        public Texture2D TestTexture { get { return testTexture; } }
+
+        public SpriteFont TestFont {  get { return testFont; } }
     }
 }
