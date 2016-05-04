@@ -28,7 +28,6 @@ namespace blank_canvas
 
         #endregion
 
-
         #region constructor
         public GameObject(Rectangle rectangle)
         {
