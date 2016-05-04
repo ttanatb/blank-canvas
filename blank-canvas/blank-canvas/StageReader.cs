@@ -78,7 +78,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Desert.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
