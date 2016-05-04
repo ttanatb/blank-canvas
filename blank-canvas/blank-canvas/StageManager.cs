@@ -366,7 +366,6 @@ namespace blank_canvas
 
             //for gui stats
             camera.DrawStats(testTexture, testFont, player.ToString());
-
         }
 
     }
