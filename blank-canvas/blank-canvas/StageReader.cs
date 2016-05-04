@@ -169,7 +169,7 @@ namespace blank_canvas
             BinaryReader reader = null;
 
             try
-            {  
+            {
                 //does reader thing
                 reader = new BinaryReader(File.OpenRead(fileNames[0]));
                 char character;
@@ -219,7 +219,7 @@ namespace blank_canvas
                         // Determines the type of tile that needs to be built
                         TileType TT;
 
-                        if(character.Equals('_')) // Ground Tile "_"
+                        if (character.Equals('_')) // Ground Tile "_"
                         {
                             TT = TileType.Ground;
                         }
@@ -241,8 +241,31 @@ namespace blank_canvas
                         }
 
                         // initializes new ground tile
-                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
-                        tiles.Add(tile);
+                        if (levelEnum == blank_canvas.Level.Desert)
+                        {
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            tiles.Add(tile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Ice_Caves)
+                        {
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
+                            tiles.Add(tile);
+                        }
+                        else if(levelEnum == blank_canvas.Level.Forest)
+                        {
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
+                            tiles.Add(tile);
+                        }
+                        else if(levelEnum == blank_canvas.Level.Mountain)
+                        {
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
+                            tiles.Add(tile);
+                        }
+                        else if(levelEnum == blank_canvas.Level.Castle)
+                        {
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Castle);
+                            tiles.Add(tile);
+                        }
                         Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
                         if (i == 0)
@@ -256,8 +279,8 @@ namespace blank_canvas
                     else if (character.Equals('P'))
                     {
                         // initializes player in the world
-                        player = new Player(new Vector2(xpos, (ypos-64))); //
-                        Console.WriteLine("Player created: " + xpos + ", " + (ypos-64));
+                        player = new Player(new Vector2(xpos, (ypos - 64))); //
+                        Console.WriteLine("Player created: " + xpos + ", " + (ypos - 64));
                     }
                     #endregion
 
@@ -323,9 +346,9 @@ namespace blank_canvas
                     else if (character.Equals('/'))
                     {
 
-                        puzzleGates.Add(new Gates(new Vector2(xpos, ypos-64), prevCharacter));
+                        puzzleGates.Add(new Gates(new Vector2(xpos, ypos - 64), prevCharacter));
 
-                        Console.WriteLine("Door(" + prevCharacter + ") " + "created: " + xpos + ", " + (ypos-64));
+                        Console.WriteLine("Door(" + prevCharacter + ") " + "created: " + xpos + ", " + (ypos - 64));
                     }
                     // class not created yet
 
@@ -362,11 +385,11 @@ namespace blank_canvas
                 }
 
                 // Linking the Orbs to the gates
-                foreach(Gates gate in puzzleGates)
+                foreach (Gates gate in puzzleGates)
                 {
-                    foreach(PuzzleOrb orb in puzzleOrbs)
+                    foreach (PuzzleOrb orb in puzzleOrbs)
                     {
-                        if(gate.DoorNum == orb.OrbNum)
+                        if (gate.DoorNum == orb.OrbNum)
                         {
                             gate.PuzzleVariables.Add(orb);
                         }
