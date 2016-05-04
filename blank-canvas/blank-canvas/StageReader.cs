@@ -361,7 +361,7 @@ namespace blank_canvas
                     #endregion
 
                     #region Level End Orb
-                    else if (character.Equals('0'))
+                    else if (character.Equals('@'))
                     {
                         // initializes end orb
                         // class not created yet
