@@ -139,7 +139,10 @@ namespace blank_canvas
             }
 
             if (CheckCollision(finalOrb))
+            {
+                finalOrb.Update();
                 return;
+            }
         }
 
         /// <summary>

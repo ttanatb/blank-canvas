@@ -26,6 +26,7 @@ namespace blank_canvas
         int progress;           // keeps track of the orb completion progress
 
         PaletteColor colorKey;      //the key required to solve the orb
+        PuzzleState state;
 
         Rectangle orbCollisionBox;
         #endregion
@@ -40,7 +41,10 @@ namespace blank_canvas
             get { return progress; }
             set { progress = value; }
         }
-
+        public PuzzleState PuzzleState
+        {
+            get { return state; }
+        }
 
         #endregion
 
@@ -56,6 +60,7 @@ namespace blank_canvas
             // Sets the key for the orb to solve the puzzle
             colorKey = key;
             progress = 0;
+            state = PuzzleState.Active;
         }
         #endregion
 
@@ -69,6 +74,20 @@ namespace blank_canvas
             if (projectile.ProjectileColor == colorKey && progress < 5)
                 return true;
             else return false;
+        }
+
+        /// <summary>
+        /// Updates the check if the color matches the key
+        /// </summary>
+        public void Update()
+        {
+            if (state == PuzzleState.Active)
+            {
+                if (progress == 4)
+                {
+                    state = PuzzleState.Completed;
+                }
+            }
         }
 
         /// <summary>

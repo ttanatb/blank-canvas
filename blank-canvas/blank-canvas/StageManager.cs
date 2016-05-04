@@ -102,8 +102,8 @@ namespace blank_canvas
                 gate.Texture = content.Load("Door");
             }
 
-            testFont = Content.Load<SpriteFont>("Arial_14");
-            testTexture = Content.Load<Texture2D>("testChar");
+            testFont = content.TestFont;
+            testTexture = content.TestTexture;
         }
         #endregion
 
