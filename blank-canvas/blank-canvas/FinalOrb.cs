@@ -24,23 +24,14 @@ namespace blank_canvas
 
         int progress = 0;           // keeps track of the orb completion progress
 
-        int orbNum;
         Palette palette;            //manages the color
         PaletteColor colorKey;      //the key required to solve the orb
-        PuzzleState state;
 
-        Texture2D orbTexture;
-        Texture2D orbGlow;
-        Vector2 orbPosition;
         Rectangle orbCollisionBox;
+        PuzzleState state;
         #endregion
 
         #region Properties
-        public Texture2D OrbTexture
-        {
-            set { orbTexture = value; }
-        }
-
         public PaletteColor CurrentColor
         {
             get { return palette.CurrentColor; }
@@ -51,14 +42,15 @@ namespace blank_canvas
             get { return orbCollisionBox; }
         }
 
-        public PuzzleState PuzzleState
+        public PuzzleState State
         {
             get { return state; }
         }
 
-        public int OrbNum
+        public int Progress
         {
-            get { return orbNum; }
+            get { return progress; }
+            set { progress = value; }
         }
         #endregion
 
@@ -67,9 +59,8 @@ namespace blank_canvas
         {
             // Sets the puzzle orb position
             palette = new Palette(PaletteColor.White);
-            orbPosition = new Vector2(position.X + 13, position.Y + 11);
-            orbCollisionBox = new Rectangle((int)orbPosition.X + VERTICAL_OFFSET,
-                (int)orbPosition.Y + HORIZONTAL_OFFSET,
+            orbCollisionBox = new Rectangle((int)X + VERTICAL_OFFSET,
+                (int)Y + HORIZONTAL_OFFSET,
                 WIDTH - 2 * VERTICAL_OFFSET,
                 HEIGHT - 2 * HORIZONTAL_OFFSET);
 
@@ -123,34 +114,22 @@ namespace blank_canvas
                         switch (colorKey)
                         {
                             case (PaletteColor.Red):
-                                spriteBatch.Draw(orbTexture, position, new Color(alpha, 0, 0, 100));
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(WIDTH * (progress + 1), 0 , WIDTH, HEIGHT), new Color(alpha, 0, 0, 100));
                                 break;
                             case (PaletteColor.Blue):
-                                spriteBatch.Draw(orbTexture, position, new Color(0, 0, alpha, 100));
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(WIDTH * (progress + 1), 0, WIDTH, HEIGHT), new Color(0, 0, alpha, 100));
                                 break;
                             case (PaletteColor.Yellow):
-                                spriteBatch.Draw(orbTexture, position, new Color(alpha, alpha, 0, 100));
+                                spriteBatch.Draw(texture, Rectangle, new Rectangle(WIDTH * (progress + 1), 0, WIDTH, HEIGHT), new Color(alpha, alpha, 0, 100));
                                 break;
                         }
                         progress++;
                     }
                 }
-
                 //draws the base of the actual sprite
-                base.Draw(spriteBatch);
 
-                switch (CurrentColor)
-                {
-                    case (PaletteColor.Red):
-                        spriteBatch.Draw(orbTexture, position, new Color(alpha, 0, 0, a));
-                        break;
-                    case (PaletteColor.Blue):
-                        spriteBatch.Draw(orbTexture, position, new Color(0, 0, alpha, a));
-                        break;
-                    case (PaletteColor.Yellow):
-                        spriteBatch.Draw(orbTexture, position, new Color(alpha, alpha, 0, a));
-                        break;
-                }
+                spriteBatch.Draw(texture, Rectangle, new Rectangle(0, 0, WIDTH, HEIGHT), Color.White);
+
             }
         }
         #endregion

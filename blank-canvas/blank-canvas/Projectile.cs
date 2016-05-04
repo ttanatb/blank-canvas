@@ -116,7 +116,7 @@ namespace blank_canvas
         /// </summary>
         /// <param name="puzzleOrbs">An array of puzzle orbs</param>
         /// <param name="enemies">An array of enemies</param>
-        public void CheckCollision(PuzzleOrb[] puzzleOrbs, Enemy[] enemies)
+        public void CheckCollision(PuzzleOrb[] puzzleOrbs, Enemy[] enemies, FinalOrb finalOrb)
         {
             //loops through all the orbs
             foreach (PuzzleOrb orb in puzzleOrbs)
@@ -137,6 +137,9 @@ namespace blank_canvas
                 if (CheckCollision(enemy))
                     return;
             }
+
+            if (CheckCollision(finalOrb))
+                return;
         }
 
         /// <summary>
@@ -154,6 +157,32 @@ namespace blank_canvas
                 {
                     //sets the projectile to inactive
                     active = false;
+
+                    //uses up the paint from the bucket
+                    bucket.UsePaint();
+                }
+
+                return true;
+            }
+
+            else return false;
+        }
+
+        /// <summary>
+        /// Method that checks collision then deals with the changing of color when it collides with the orb
+        /// </summary>
+        private bool CheckCollision(FinalOrb orb)
+        {
+            //checks if the puzzle is not completed, then checks if it actually intersects
+            if (orb.State != PuzzleState.Completed && CollisionBox.Intersects(orb.CollisionBox))
+            {
+                //checks if the AddColor method that was called was valid (if it actually added a new color)
+                bool added = orb.AddColor(this);
+
+                if (added)
+                {
+                    //sets the projectile to inactive
+                    orb.Progress++;
 
                     //uses up the paint from the bucket
                     bucket.UsePaint();

@@ -54,6 +54,9 @@ namespace blank_canvas
             tileCollision = stageReader.CollisionBoxes;
             puzzleOrbs = stageReader.PuzzleOrbs;
             gates = stageReader.PuzzleGates;
+
+            //finalorb test
+            finalOrb = new FinalOrb(new Vector2(7722, 866), PaletteColor.Blue);
         }
 
         //properties
@@ -80,7 +83,7 @@ namespace blank_canvas
             {
                 player.Texture = content.Load<Texture2D>("playerSpriteSheet");
                 player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
-                finalOrb.OrbTexture = content.Load<Texture2D>("Final Orb Spritesheet");
+                finalOrb.Texture = content.Load<Texture2D>("Final Orb Spritesheet");
             }
             catch (Exception e)
             {
@@ -143,7 +146,7 @@ namespace blank_canvas
             {
                 //checks collision for all puzzle orbs and enemies
                 player.Projectile.Update(deltaTime);
-                player.Projectile.CheckCollision(puzzleOrbs, enemies);
+                player.Projectile.CheckCollision(puzzleOrbs, enemies, finalOrb);
             }
 
             //updates the gates
@@ -286,7 +289,7 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
-            if(finalOrb.PuzzleState)
+            if(finalOrb.State == PuzzleState.Completed)
             level++;
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
@@ -353,6 +356,8 @@ namespace blank_canvas
                 enemy.Draw(spriteBatch);
 
             player.Draw(spriteBatch);
+
+            finalOrb.Draw(spriteBatch);
 
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
