@@ -72,16 +72,9 @@ namespace blank_canvas
         {
             try
             {
-<<<<<<< HEAD
                 player.Texture = content.Load("playerSpriteSheet");
                 player.Projectile.Texture = content.Load("projectile");
                 finalOrb.Texture = content.Load("finalOrbTexture");
-=======
-                player.Texture = content.Load<Texture2D>("playerSpriteSheet");
-                player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
-                finalOrb.Texture = content.Load<Texture2D>("Final Orb Spritesheet");
-
->>>>>>> f1bf130d56516b2d0d86b0de0c76919d39d1cbb6
             }
             catch (Exception e)
             {
@@ -299,9 +292,15 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
+<<<<<<< HEAD
 
             if(finalOrb.Progress >= 5)
                 level++;
+=======
+            if(finalOrb.Progress >= 5)
+                level++;
+
+>>>>>>> f5d1bc5a87df01163ec61d01129a326d5f736613
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
 
