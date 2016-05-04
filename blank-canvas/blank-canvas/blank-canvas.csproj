@@ -55,6 +55,7 @@
     <Compile Include="InputManager.cs" />
     <Compile Include="Palette.cs" />
     <Compile Include="PuzzleOrb.cs" />
+    <Compile Include="SpecialTile.cs" />
     <Compile Include="StageManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />

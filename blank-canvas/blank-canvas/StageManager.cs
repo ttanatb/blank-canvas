@@ -21,6 +21,7 @@ namespace blank_canvas
         Player player;
         Enemy[] enemies;
         Tile[] tiles;               //tiles to draw (we really don't need tiles, just rectangles)
+        SpecialTile[] sTiles;
         Rectangle[] tileCollision;  //tiles to check collision with
         Gates[] gates;
 
@@ -47,6 +48,7 @@ namespace blank_canvas
             player = stageReader.Player;
             enemies = stageReader.Enemies;
             tiles = stageReader.Tile;
+            sTiles = stageReader.STile;
             tileCollision = stageReader.CollisionBoxes;
             puzzleOrbs = stageReader.PuzzleOrbs;
             gates = stageReader.PuzzleGates;
@@ -165,7 +167,7 @@ namespace blank_canvas
             foreach (Rectangle r in tileCollision)
             {
                 //checks if it intersects with player, then fixes position
-                if (r.Intersects(player.CollisionBox)) // Blank Canvas Tile
+                if (r.Intersects(player.CollisionBox))
                     FixPos(player, r);
 
                 //checks if it intersects with an active projectile
@@ -177,6 +179,25 @@ namespace blank_canvas
                 {
                     if (enemy.Active && r.Intersects(enemy.CollisionRect))
                         enemy.ChangeDirection();
+                }
+            }
+
+            // Loops through the special tiles in the game
+            foreach (SpecialTile sTile in sTiles)
+            {
+                if(sTile.ActiveState == PuzzleState.Active)
+                {
+                    // Blank Canvas Tile
+                    FixPos(player, sTile.Rectangle);
+                }
+
+                if(sTile.TileType == TileType.Hazard)
+                {
+                    if (player.CollisionBox.Intersects(sTile.Rectangle))
+                    {
+                        // Damage Player?
+                        // player.TakeDamage(sTile)
+                    }
                 }
             }
 
@@ -366,6 +387,9 @@ namespace blank_canvas
 
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
+
+            foreach (SpecialTile sTile in sTiles)
+                sTile.Draw(spriteBatch);
 
             //for gui stats
             camera.DrawStats(testTexture, testFont, player.ToString());

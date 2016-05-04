@@ -60,6 +60,7 @@ namespace blank_canvas
         Wall,
         Theme,
         Blank,
+        Hazard,
     }
 
 

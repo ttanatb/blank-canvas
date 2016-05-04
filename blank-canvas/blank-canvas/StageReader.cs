@@ -21,6 +21,7 @@ namespace blank_canvas
 
         Player player;
         List<Tile> tiles;
+        List<SpecialTile> sTiles;
         List<Enemy> enemies;
         List<Rectangle> collisionBoxes;
         List<PuzzleOrb> puzzleOrbs;
@@ -40,6 +41,7 @@ namespace blank_canvas
             //instantiates everything
             enemies = new List<Enemy>();
             tiles = new List<Tile>();
+            sTiles = new List<SpecialTile>();
             collisionBoxes = new List<Rectangle>();
             puzzleOrbs = new List<PuzzleOrb>();
             puzzleGates = new List<Gates>();
@@ -78,7 +80,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Desert.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "TestTile.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -116,6 +118,17 @@ namespace blank_canvas
                 for (int i = 0; i < tiles.Count; i++)
                     t[i] = tiles[i];
                 return t;
+            }
+        }
+
+        public SpecialTile[] STile
+        {
+            get
+            {
+                SpecialTile[] sT = new SpecialTile[sTiles.Count];
+                for (int i = 0; i < tiles.Count; i++)
+                    sT[i] = sTiles[i];
+                return sT;
             }
         }
 
@@ -228,11 +241,7 @@ namespace blank_canvas
                         else if (character.Equals('~')) // Theme Tile "~"
                         {
                             TT = TileType.Theme;
-                        }
-                        else if (character.Equals('?'))
-                        {
-                            TT = TileType.Blank;
-                        }
+                        }                        
                         else // By default spawned to a ground tile
                         {
                             TT = TileType.Ground;
@@ -270,6 +279,66 @@ namespace blank_canvas
                             tiles.Add(tile);
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
+
+                        if (i == 0)
+                            startingPos = xpos;
+
+                        i++;
+                    }
+                    #endregion
+
+                    #region Special Tile Creation
+                    if (character.Equals('?') || character.Equals('!'))
+                    {
+                        TileType TT;
+
+                        if (character.Equals('?'))
+                        {
+                            TT = TileType.Blank;
+                        }
+                        else if (character.Equals('!'))
+                        {
+                            TT = TileType.Hazard;
+                        }
+                        else
+                        {
+                            TT = TileType.Blank;
+                        }
+
+                        if (levelEnum == blank_canvas.Level.Desert)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            tiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Ice_Caves)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
+                            tiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Forest)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
+                            tiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Mountain)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
+                            tiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Castle)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Castle);
+                            tiles.Add(sTile);
+                        }
+                        else
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            tiles.Add(sTile);
+                        }
+
+
+
+                        Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
                         if (i == 0)
                             startingPos = xpos;
@@ -362,18 +431,18 @@ namespace blank_canvas
                     {
                         if (prevCharacter.Equals('1'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos-128), PaletteColor.Red);
-                            Console.WriteLine("Final Red Orb created: " + xpos + ", " + (ypos-128));
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos - 128), PaletteColor.Red);
+                            Console.WriteLine("Final Red Orb created: " + xpos + ", " + (ypos - 128));
                         }
                         if (prevCharacter.Equals('2'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos-128), PaletteColor.Blue);
-                            Console.WriteLine("Final Blue Orb created: " + xpos + ", " + (ypos-128));
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos - 128), PaletteColor.Blue);
+                            Console.WriteLine("Final Blue Orb created: " + xpos + ", " + (ypos - 128));
                         }
                         if (prevCharacter.Equals('3'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos-128), PaletteColor.Yellow);
-                            Console.WriteLine("Final Yellow Orb created: " + xpos + ", " + (ypos-128));
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos - 128), PaletteColor.Yellow);
+                            Console.WriteLine("Final Yellow Orb created: " + xpos + ", " + (ypos - 128));
                         }
                     }
                     #endregion
