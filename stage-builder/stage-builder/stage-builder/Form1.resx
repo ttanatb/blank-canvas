@@ -119,11 +119,12 @@
   </resheader>
   <data name="keyBox.Text" xml:space="preserve">
     <value>Tiles[1x1]:
-   Blank Tile
+   Nothing
 _  Ground Tile
 -  Secondary Tile
 |  Wall Tile
 ~  Custom Tile
+?  Colorable Tile
 
 Player[1x2]:
 P  Player
@@ -133,7 +134,7 @@ r  Red Enemy
 y  Yellow Enemy
 b  Blue Enemy
 
-Orbs(color key)[1x1]:
+Puzzle Orbs(color key)[1x1]:
 #R  Orb (Red)
 #B  Orb (Blue)
 #Y  Orb (Yellow)
@@ -141,11 +142,14 @@ Orbs(color key)[1x1]:
 #P  Orb (Purple)
 #G  Orb (Green)
 #A  Orb (Black)
-0   End Level Orb
 
 Barriers[1x2]:
 #/  Door
 ]   Clear Paint Barrior
-</value>
+
+End Level Orb[3x3]:
+1@ Final Orb (yellow)
+2@ Final Orb (blue)
+3@ Final Orb (red)</value>
   </data>
 </root>

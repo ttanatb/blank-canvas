@@ -50,9 +50,7 @@ namespace blank_canvas
             tileCollision = stageReader.CollisionBoxes;
             puzzleOrbs = stageReader.PuzzleOrbs;
             gates = stageReader.PuzzleGates;
-
-            //finalorb test
-            finalOrb = new FinalOrb(new Vector2(7722, 866), PaletteColor.Blue);
+            finalOrb = stageReader.FinalOrb;
         }
 
         //properties
@@ -74,9 +72,16 @@ namespace blank_canvas
         {
             try
             {
+<<<<<<< HEAD
                 player.Texture = content.Load("playerSpriteSheet");
                 player.Projectile.Texture = content.Load("projectile");
                 finalOrb.Texture = content.Load("finalOrbTexture");
+=======
+                player.Texture = content.Load<Texture2D>("playerSpriteSheet");
+                player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
+                finalOrb.Texture = content.Load<Texture2D>("Final Orb Spritesheet");
+
+>>>>>>> f1bf130d56516b2d0d86b0de0c76919d39d1cbb6
             }
             catch (Exception e)
             {
@@ -187,6 +192,18 @@ namespace blank_canvas
             {
                 if (gate.DoorState == PuzzleState.Active && gate.Rectangle.Intersects(player.CollisionBox))
                     FixPos(player, gate.Rectangle);
+
+                // Checks if the enemy intersects with the door
+                foreach (Enemy enemy in enemies)
+                {
+                    if (enemy.Active && gate.Rectangle.Intersects(enemy.CollisionRect))
+                        enemy.ChangeDirection();
+                }
+
+                // checks if projecticle intersects with the doow
+                if (player.Projectile.Active && gate.Rectangle.Intersects(player.Projectile.CollisionBox))
+                    player.Projectile.Active = false;
+
             }
         }
 
@@ -282,11 +299,16 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
+<<<<<<< HEAD
             if (finalOrb.State == PuzzleState.Completed)
             {
                 level++;
 
             }
+=======
+            if(finalOrb.Progress >= 5)
+                level++;
+>>>>>>> f1bf130d56516b2d0d86b0de0c76919d39d1cbb6
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
 

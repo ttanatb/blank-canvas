@@ -174,15 +174,18 @@ namespace blank_canvas
         private bool CheckCollision(FinalOrb orb)
         {
             //checks if the puzzle is not completed, then checks if it actually intersects
-            if (orb.State != PuzzleState.Completed && CollisionBox.Intersects(orb.CollisionBox))
+            if (CollisionBox.Intersects(orb.CollisionBox))
             {
                 //checks if the AddColor method that was called was valid (if it actually added a new color)
                 bool added = orb.AddColor(this);
 
                 if (added)
                 {
-                    //sets the projectile to inactive
+
                     orb.Progress++;
+
+                    //sets the projectile to inactive
+                    active = false;
 
                     //uses up the paint from the bucket
                     bucket.UsePaint();

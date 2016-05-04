@@ -78,7 +78,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "IceCaves.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -151,17 +151,10 @@ namespace blank_canvas
             }
         }
 
-
-        public int Level
+        public FinalOrb FinalOrb
         {
-            get { return level; }
+            get { return finalOrb; }
         }
-
-        public string Title
-        {
-            get { return title; }
-        }
-
         #endregion
 
         // reads in file
@@ -273,7 +266,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
                             tiles.Add(tile);
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
@@ -369,17 +362,17 @@ namespace blank_canvas
                     {
                         if (prevCharacter.Equals('1'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos, ypos-128), PaletteColor.Red);
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos-128), PaletteColor.Red);
                             Console.WriteLine("Final Red Orb created: " + xpos + ", " + (ypos-128));
                         }
                         if (prevCharacter.Equals('2'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos, ypos), PaletteColor.Blue);
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos-128), PaletteColor.Blue);
                             Console.WriteLine("Final Blue Orb created: " + xpos + ", " + (ypos-128));
                         }
-                        if (prevCharacter.Equals('1'))
+                        if (prevCharacter.Equals('3'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos, ypos), PaletteColor.Red);
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos-128), PaletteColor.Yellow);
                             Console.WriteLine("Final Yellow Orb created: " + xpos + ", " + (ypos-128));
                         }
                     }
