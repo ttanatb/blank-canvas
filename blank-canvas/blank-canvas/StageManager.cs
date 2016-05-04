@@ -193,6 +193,18 @@ namespace blank_canvas
             {
                 if (gate.DoorState == PuzzleState.Active && gate.Rectangle.Intersects(player.CollisionBox))
                     FixPos(player, gate.Rectangle);
+
+                // Checks if the enemy intersects with the door
+                foreach (Enemy enemy in enemies)
+                {
+                    if (enemy.Active && gate.Rectangle.Intersects(enemy.CollisionRect))
+                        enemy.ChangeDirection();
+                }
+
+                // checks if projecticle intersects with the doow
+                if (player.Projectile.Active && gate.Rectangle.Intersects(player.Projectile.CollisionBox))
+                    player.Projectile.Active = false;
+
             }
         }
 

@@ -78,7 +78,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "IceCaves.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -266,7 +266,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
                             tiles.Add(tile);
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
