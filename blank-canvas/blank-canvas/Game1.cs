@@ -22,7 +22,11 @@ namespace blank_canvas
 
         // creates variables for textures of background, main menu, and pause screen
         Texture2D backgroundTexture;
+
         Texture2D menuTexture;
+        Texture2D pointerTexture;
+        int mainMenuOptions;
+
         Texture2D pauseTexture;
         Texture2D gameOverTexture;
         Texture2D levelChangeTexture;
@@ -72,6 +76,7 @@ namespace blank_canvas
 
             //instantializes the initial GameState
             state = GameState.MainMenu;
+            mainMenuOptions = 0;
 
             base.Initialize();
         }
@@ -92,6 +97,7 @@ namespace blank_canvas
 
             // main menu screen texture
             menuTexture = Content.Load<Texture2D>("mainmenu");
+            pointerTexture = Content.Load<Texture2D>("pointer");
 
             // pause screen texture
             pauseTexture = Content.Load<Texture2D>("pausemenu");
@@ -177,11 +183,24 @@ namespace blank_canvas
         private void UpdateMainMenu()
         {
             //currently in Main Menu state
-            if (input.KeyPressed(Keys.Space))
-            {
-                //starts up the stage manager and loads in the content
+            if (input.KeyPressed(Keys.Down) && mainMenuOptions < 2)
+                mainMenuOptions++;
+            else if (input.KeyPressed(Keys.Up) && mainMenuOptions > 0)
+                mainMenuOptions--;
 
-                state = GameState.Gameplay;
+            if(input.KeyPressed(Keys.Enter))
+            {
+                switch(mainMenuOptions)
+                {
+                    case 0:
+                        state = GameState.Gameplay;
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        Exit();
+                        break;
+                }
             }
         }
 
@@ -284,6 +303,7 @@ namespace blank_canvas
                 case GameState.MainMenu:
                     spriteBatch.Begin();
                     spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(pointerTexture, new Vector2(563, 258 + 48 * mainMenuOptions), Color.White);
                     break;
 
                 // draws gameplay and focuses the camera

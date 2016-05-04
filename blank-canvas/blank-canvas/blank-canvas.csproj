@@ -46,6 +46,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="FinalOrb.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameOverException.cs" />
@@ -97,6 +98,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\playerSpriteSheet.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\pointer.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\projectile.png">
