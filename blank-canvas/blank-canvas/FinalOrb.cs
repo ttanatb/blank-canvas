@@ -68,7 +68,7 @@ namespace blank_canvas
         #endregion
 
         #region Constructors
-        public FinalOrb(Vector2 position, PaletteColor key, char prevChar) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
+        public FinalOrb(Vector2 position, PaletteColor key) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
             // Sets the puzzle orb position
             palette = new Palette(PaletteColor.White);
@@ -79,7 +79,6 @@ namespace blank_canvas
                 HEIGHT - 2 * HORIZONTAL_OFFSET);
 
             // Sets the key for the orb to solve the puzzle
-            orbNum = Convert.ToInt32(prevChar);
             colorKey = key;
             state = PuzzleState.Active;
         }
