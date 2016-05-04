@@ -41,11 +41,6 @@ namespace blank_canvas
             set { orbTexture = value; }
         }
 
-        public Texture2D OrbGlowTexture
-        {
-            set { orbGlow = value; }
-        }
-
         public PaletteColor CurrentColor
         {
             get { return palette.CurrentColor; }
@@ -125,13 +120,13 @@ namespace blank_canvas
                         switch (colorKey)
                         {
                             case (PaletteColor.Red):
-                                spriteBatch.Draw(orbGlow, position, new Color(alpha, 0, 0, 100));
+                                spriteBatch.Draw(orbTexture, position, new Color(alpha, 0, 0, 100));
                                 break;
                             case (PaletteColor.Blue):
-                                spriteBatch.Draw(orbGlow, position, new Color(0, 0, alpha, 100));
+                                spriteBatch.Draw(orbTexture, position, new Color(0, 0, alpha, 100));
                                 break;
                             case (PaletteColor.Yellow):
-                                spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha, 0, 100));
+                                spriteBatch.Draw(orbTexture, position, new Color(alpha, alpha, 0, 100));
                                 break;
                         }
                         progress++;
