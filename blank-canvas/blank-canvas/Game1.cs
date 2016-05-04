@@ -151,6 +151,7 @@ namespace blank_canvas
                     }
                     catch (GameOverException)
                     {
+                        pointerNum = 0;
                         state = GameState.EndOfGame;
                     }
 
@@ -258,9 +259,6 @@ namespace blank_canvas
                 LoadContent();
                 state = GameState.MainMenu;
             }
-            //exits
-            else if (input.KeyPressed(Keys.Escape))
-                Exit();
         }
 
         /// <summary>
@@ -340,6 +338,7 @@ namespace blank_canvas
                 case GameState.EndOfGame:
                     spriteBatch.Begin();
                     spriteBatch.Draw(gameOverTexture, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(pointerTexture, new Vector2(627, 325), Color.White);
                     break;
 
                 // when player reaches end of level

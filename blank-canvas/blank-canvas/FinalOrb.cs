@@ -38,6 +38,7 @@ namespace blank_canvas
         public int Progress
         {
             get { return progress; }
+            set { progress = value; }
         }
 
 
@@ -68,17 +69,6 @@ namespace blank_canvas
             if (projectile.ProjectileColor == colorKey && progress < 5)
                 return true;
             else return false;
-        }
-
-        /// <summary>
-        /// Updates the check if the color matches the key
-        /// </summary>
-        public void Update()
-        {
-            if (progress < 5)
-            {
-                progress++;
-            }
         }
 
         /// <summary>
