@@ -17,7 +17,7 @@ namespace blank_canvas
     {
         #region Variables
         const int WIDTH = 192;
-        const int HEIGHT = 192; 
+        const int HEIGHT = 192;
 
         const int HORIZONTAL_OFFSET = 5;
         const int VERTICAL_OFFSET = 4;
@@ -68,7 +68,7 @@ namespace blank_canvas
         #endregion
 
         #region Constructors
-        public FinalOrb(Vector2 position, PaletteColor key, char prevChar) :base(new Rectangle((int)position.X, (int)position.Y,WIDTH, HEIGHT))
+        public FinalOrb(Vector2 position, PaletteColor key, char prevChar) : base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
             // Sets the puzzle orb position
             palette = new Palette(PaletteColor.White);
@@ -121,17 +121,21 @@ namespace blank_canvas
 
                 if (state != PuzzleState.Completed)
                 {
-                    switch (colorKey)
+                    while (progress != 5)
                     {
-                        case (PaletteColor.Red):
-                            spriteBatch.Draw(orbGlow, position, new Color(alpha, 0, 0, 100));
-                            break;
-                        case (PaletteColor.Blue):
-                            spriteBatch.Draw(orbGlow, position, new Color(0, 0, alpha, 100));
-                            break;
-                        case (PaletteColor.Yellow):
-                            spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha, 0, 100));
-                            break;
+                        switch (colorKey)
+                        {
+                            case (PaletteColor.Red):
+                                spriteBatch.Draw(orbGlow, position, new Color(alpha, 0, 0, 100));
+                                break;
+                            case (PaletteColor.Blue):
+                                spriteBatch.Draw(orbGlow, position, new Color(0, 0, alpha, 100));
+                                break;
+                            case (PaletteColor.Yellow):
+                                spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha, 0, 100));
+                                break;
+                        }
+                        progress++;
                     }
                 }
 
