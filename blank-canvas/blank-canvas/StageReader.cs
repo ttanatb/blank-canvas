@@ -25,6 +25,7 @@ namespace blank_canvas
         List<Rectangle> collisionBoxes;
         List<PuzzleOrb> puzzleOrbs;
         List<Gates> puzzleGates;
+        FinalOrb finalOrb;
 
         // position counter
         int xpos;
