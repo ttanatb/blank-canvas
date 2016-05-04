@@ -49,11 +49,11 @@ namespace blank_canvas
         }
 
         //for gui stats
-        public void DrawStats(Texture2D testTexture)
+        public void DrawStats(Texture2D testTexture, SpriteFont testFont, String playerString)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            //spriteBatch.Draw(testTexture, new Rectangle(50, 40, 300, 70), Color.Lavender);
             spriteBatch.Draw(testTexture, new Rectangle(50, 40, 300, 70), new Rectangle(0,0,300,70),Color.Lavender, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.DrawString(testFont, playerString, new Vector2(50, 40), Color.Black);
             spriteBatch.End();
         }
     }
