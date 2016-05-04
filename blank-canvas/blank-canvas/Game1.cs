@@ -293,7 +293,7 @@ namespace blank_canvas
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Beige);
+            GraphicsDevice.Clear(Color.DarkCyan);
 
             // switches the state based on current GameState
             switch (state)
@@ -309,7 +309,7 @@ namespace blank_canvas
                 // draws gameplay and focuses the camera
                 case GameState.Gameplay:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, stageManager.Camera.Transform);
-                    spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
+                    //spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 
