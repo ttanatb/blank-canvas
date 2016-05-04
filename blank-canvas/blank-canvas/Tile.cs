@@ -22,13 +22,6 @@ namespace blank_canvas
 
         #endregion
 
-        #region Properties
-        public TileType TileType
-        {
-            get { return tileType; }
-        }
-        #endregion
-
         #region constructors
 
         /// <param name="position">X and Y coordinates of top-left corner</param>

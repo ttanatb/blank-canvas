@@ -90,6 +90,9 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Texture = content.Load("Tiles-Spritesheet");
 
+            foreach (SpecialTile sTile in sTiles)
+                sTile.Texture = content.Load("Tiles-Spritesheet");
+
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
             {
                 puzzleorb.Texture = content.Load("orbBase");
@@ -385,11 +388,11 @@ namespace blank_canvas
 
             finalOrb.Draw(spriteBatch);
 
-            foreach (Tile tile in tiles)
-                tile.Draw(spriteBatch);
-
             foreach (SpecialTile sTile in sTiles)
                 sTile.Draw(spriteBatch);
+
+            foreach (Tile tile in tiles)
+                tile.Draw(spriteBatch);
 
             //for gui stats
             camera.DrawStats(testTexture, testFont, player.ToString());

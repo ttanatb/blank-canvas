@@ -308,37 +308,37 @@ namespace blank_canvas
                         if (levelEnum == blank_canvas.Level.Desert)
                         {
                             SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
-                            tiles.Add(sTile);
+                            sTiles.Add(sTile);
                         }
                         else if (levelEnum == blank_canvas.Level.Ice_Caves)
                         {
                             SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
-                            tiles.Add(sTile);
+                            sTiles.Add(sTile);
                         }
                         else if (levelEnum == blank_canvas.Level.Forest)
                         {
                             SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
-                            tiles.Add(sTile);
+                            sTiles.Add(sTile);
                         }
                         else if (levelEnum == blank_canvas.Level.Mountain)
                         {
                             SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
-                            tiles.Add(sTile);
+                            sTiles.Add(sTile);
                         }
                         else if (levelEnum == blank_canvas.Level.Castle)
                         {
                             SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Castle);
-                            tiles.Add(sTile);
+                            sTiles.Add(sTile);
                         }
                         else
                         {
                             SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
-                            tiles.Add(sTile);
+                            sTiles.Add(sTile);
                         }
 
 
 
-                        Console.WriteLine("Tile created: " + xpos + ", " + ypos);
+                        Console.WriteLine("Special Tile created: " + xpos + ", " + ypos);
 
                         if (i == 0)
                             startingPos = xpos;

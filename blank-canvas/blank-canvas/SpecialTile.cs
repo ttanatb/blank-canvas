@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace blank_canvas
 {
-    class SpecialTile : Tile
+    class SpecialTile: GameObject
     {
         #region fields
         const int WIDTH = 64;
@@ -24,10 +24,15 @@ namespace blank_canvas
             get { return activeState; }
             set { activeState = value; }
         }
+
+        public TileType TileType
+        {
+            get { return tileType; }
+        }
         #endregion
 
         #region Constructor
-        public SpecialTile(Vector2 position, TileType TT, Level l) : base(position, TT, l)
+        public SpecialTile(Vector2 position, TileType TT, Level l):base(new Rectangle((int)position.X, (int)position.Y, WIDTH, HEIGHT))
         {
             // Blank Canvas Block
             activeState = PuzzleState.Inactive;
