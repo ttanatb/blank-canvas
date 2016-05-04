@@ -100,8 +100,8 @@ namespace blank_canvas
                 gate.Texture = content.Load("Door");
             }
 
-            //testFont = Content.Load<SpriteFont>("Arial_14");
-            //testTexture = Content.Load<Texture2D>("testChar");
+            testFont = Content.Load<SpriteFont>("Arial_14");
+            testTexture = Content.Load<Texture2D>("testChar");
         }
         #endregion
 
@@ -368,7 +368,7 @@ namespace blank_canvas
                 tile.Draw(spriteBatch);
 
             //for gui stats
-            //camera.DrawStats(testTexture, testFont, player.ToString());
+            camera.DrawStats(testTexture, testFont, player.ToString());
         }
 
     }
