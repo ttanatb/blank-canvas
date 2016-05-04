@@ -389,10 +389,15 @@ namespace blank_canvas
             finalOrb.Draw(spriteBatch);
 
             foreach (SpecialTile sTile in sTiles)
+            {
                 sTile.Draw(spriteBatch);
+            }
 
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
+
+            foreach (Rectangle r in tileCollision)
+                spriteBatch.Draw(testTexture, r, Color.Red);
 
             //for gui stats
             camera.DrawStats(testTexture, testFont, player.ToString());

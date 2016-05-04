@@ -36,6 +36,8 @@ namespace blank_canvas
         {
             // Blank Canvas Block
             activeState = PuzzleState.Inactive;
+            tileType = TT;
+            level = l;
         }
         #endregion
 

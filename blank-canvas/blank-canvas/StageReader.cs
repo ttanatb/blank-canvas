@@ -211,7 +211,7 @@ namespace blank_canvas
                 // counts the position in the binary reader
                 xpos = 0;
                 ypos = 0;
-                int i = 0;
+                int collisionTileLength = 0;
                 int startingPos = 0;
 
                 // checks to see if the current position is equal to the length of the text file
@@ -280,10 +280,10 @@ namespace blank_canvas
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
-                        if (i == 0)
+                        if (collisionTileLength == 0)
                             startingPos = xpos;
 
-                        i++;
+                        collisionTileLength++;
                     }
                     #endregion
 
@@ -296,13 +296,9 @@ namespace blank_canvas
                         {
                             TT = TileType.Blank;
                         }
-                        else if (character.Equals('!'))
-                        {
-                            TT = TileType.Hazard;
-                        }
                         else
                         {
-                            TT = TileType.Blank;
+                            TT = TileType.Hazard;
                         }
 
                         if (levelEnum == blank_canvas.Level.Desert)
@@ -337,13 +333,9 @@ namespace blank_canvas
                         }
 
 
-
                         Console.WriteLine("Special Tile created: " + xpos + ", " + ypos);
 
-                        if (i == 0)
-                            startingPos = xpos;
-
-                        i++;
+                        
                     }
                     #endregion
 
@@ -447,13 +439,19 @@ namespace blank_canvas
                     }
                     #endregion
 
-                    else if ((character.Equals(' ')) || (reader.BaseStream.Position == reader.BaseStream.Length) || character.Equals('\r'))
+                    
+                    if (character.Equals(' ') 
+                        || character.Equals('P') 
+                        || character.Equals('?') 
+                        || character.Equals('y') 
+                        || (reader.BaseStream.Position == reader.BaseStream.Length) 
+                        || character.Equals('\r'))
                     {
-                        if (i != 0)
+                        if (collisionTileLength != 0)
                         {
-                            collisionBoxes.Add(new Rectangle(startingPos, ypos, 64 * i, 50));
-                            Console.WriteLine("CollisionBox added at: " + startingPos + " to " + 64 * i + startingPos);
-                            i = 0;
+                            collisionBoxes.Add(new Rectangle(startingPos, ypos, 64 * collisionTileLength, 50));
+                            Console.WriteLine("CollisionBox added at: " + startingPos + " to " + 64 * collisionTileLength + startingPos);
+                            collisionTileLength = 0;
                         }
 
                         if (character.Equals('\r'))
@@ -463,6 +461,7 @@ namespace blank_canvas
                             xpos = -64;
                         }
                     }
+                    */
 
                     xpos += 64;
                     prevCharacter = character;
