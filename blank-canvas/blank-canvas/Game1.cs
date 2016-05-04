@@ -19,6 +19,7 @@ namespace blank_canvas
         SpriteBatch spriteBatch;
         StageManager stageManager;
         InputManager input;
+        GameContent content;
 
         // creates variables for textures of background, main menu, and pause screen
         Texture2D backgroundTexture;
@@ -87,30 +88,32 @@ namespace blank_canvas
         /// </summary>
         protected override void LoadContent()
         {
+            content = new GameContent(Content);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //loads in all the texture that the stage manager requries
 
             // gameplay textures
-            backgroundTexture = Content.Load<Texture2D>("testBackground");
+            backgroundTexture = content.Load("backgroundTexture");
 
             // main menu screen texture
-            menuTexture = Content.Load<Texture2D>("mainmenu");
-            pointerTexture = Content.Load<Texture2D>("pointer");
+            menuTexture = content.Load("mainMenuTexture");
+            pointerTexture = content.Load("pointerTexture");
 
             // pause screen texture
-            pauseTexture = Content.Load<Texture2D>("pausemenu");
+            pauseTexture = content.Load("pauseTexture");
 
             // game over screen texture
-            gameOverTexture = Content.Load<Texture2D>("gameover");
+            gameOverTexture = content.Load("gameOverTexture");
 
             //level change screen texture
-            levelChangeTexture = Content.Load<Texture2D>("testlevelchange");
+            levelChangeTexture =content.Load("levelChange");
             levelChangeText = Content.Load<SpriteFont>("Arial_14");
 
             stageManager = new StageManager(new Camera(GraphicsDevice.Viewport, GraphicsDevice), input);
-            stageManager.LoadContent(Content, "playerSpriteSheet", "enemySpriteSheet", "Tiles-Spritesheet", "projectile", "orbBase", "orb", "orbGlow", "Door");
+            stageManager.LoadContent(content);
         }
 
         /// <summary>

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 
 namespace blank_canvas
 {
     /// <summary>
     /// The StageManager manages the gameplay loop
     /// </summary>
-    class StageManager
+    class StageManager:Game
     {
         #region variables
         StageReader stageReader;    //reads in the text file and creates the stage
@@ -74,16 +70,13 @@ namespace blank_canvas
         /// <param name="playerTexture">The texture for the player</param>
         /// <param name="enemyTexture">The texture for the enemy</param>
         /// <param name="tileTexture">The texture for the tiles</param>
-        public void LoadContent(ContentManager content, string playerTexture,
-            string enemyTexture, string tileTexture, string projectileTexture,
-            string orbBaseTexture, string orbTexture, string orbGlowTexture,
-            string gateTexture)
+        public void LoadContent(GameContent content)
         {
             try
             {
-                player.Texture = content.Load<Texture2D>("playerSpriteSheet");
-                player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
-                finalOrb.Texture = content.Load<Texture2D>("Final Orb Spritesheet");
+                player.Texture = content.Load("playerSpriteSheet");
+                player.Projectile.Texture = content.Load("projectile");
+                finalOrb.Texture = content.Load("finalOrbTexture");
             }
             catch (Exception e)
             {
@@ -92,25 +85,25 @@ namespace blank_canvas
             }
 
             foreach (Enemy enemy in enemies)
-                enemy.Texture = content.Load<Texture2D>(enemyTexture);
+                enemy.Texture = content.Load("enemySpriteSheet");
 
             foreach (Tile tile in tiles)
-                tile.Texture = content.Load<Texture2D>(tileTexture);
+                tile.Texture = content.Load("Tiles-Spritesheet");
 
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
             {
-                puzzleorb.Texture = content.Load<Texture2D>(orbBaseTexture);
-                puzzleorb.OrbTexture = content.Load<Texture2D>(orbTexture);
-                puzzleorb.OrbGlowTexture = content.Load<Texture2D>(orbGlowTexture);
+                puzzleorb.Texture = content.Load("orbBase");
+                puzzleorb.OrbTexture = content.Load("orb");
+                puzzleorb.OrbGlowTexture = content.Load("orbGlow");
             }
 
             foreach (Gates gate in gates)
             {
-                gate.Texture = content.Load<Texture2D>(gateTexture);
+                gate.Texture = content.Load("Door");
             }
 
-            testFont = content.Load<SpriteFont>("Arial_14");
-            testTexture = content.Load<Texture2D>("testChar");
+            //testFont = Content.Load<SpriteFont>("Arial_14");
+            //testTexture = Content.Load<Texture2D>("testChar");
         }
         #endregion
 
@@ -289,11 +282,14 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
-            if(finalOrb.State == PuzzleState.Completed)
-            level++;
+            if (finalOrb.State == PuzzleState.Completed)
+            {
+                level++;
+
+            }
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
-            
+
 
         }
 
@@ -362,18 +358,8 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
 
-            //instructions
-            spriteBatch.DrawString(testFont,
-                "Use arrow keys to move\n" +
-                "Press C to shoot\n" +
-                "Press left shift/right shift to change color\n" +
-                "Press X to drain color\n" +
-                "Press Esc/Enter to Pause\n\n" +
-                "Drain color from the enemy, use those colors to fill in the puzzle orbs",
-                new Vector2(89, 300), Color.Black);
-
             //for gui stats
-            camera.DrawStats(testTexture, testFont, player.ToString());
+            //camera.DrawStats(testTexture, testFont, player.ToString());
         }
 
     }
