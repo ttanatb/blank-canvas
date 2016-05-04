@@ -236,6 +236,10 @@ namespace blank_canvas
                         {
                             TT = TileType.Theme;
                         }
+                        else if (character.Equals('?'))
+                        {
+                            TT = TileType.Blank;
+                        }
                         else // By default spawned to a ground tile
                         {
                             TT = TileType.Ground;
@@ -361,10 +365,23 @@ namespace blank_canvas
                     #endregion
 
                     #region Level End Orb
-                    else if (character.Equals('0'))
+                    else if (character.Equals('@'))
                     {
-                        // initializes end orb
-                        // class not created yet
+                        if (prevCharacter.Equals('1'))
+                        {
+                            finalOrb = new FinalOrb(new Vector2(xpos, ypos-128), PaletteColor.Red);
+                            Console.WriteLine("Final Red Orb created: " + xpos + ", " + (ypos-128));
+                        }
+                        if (prevCharacter.Equals('2'))
+                        {
+                            finalOrb = new FinalOrb(new Vector2(xpos, ypos), PaletteColor.Blue);
+                            Console.WriteLine("Final Blue Orb created: " + xpos + ", " + (ypos-128));
+                        }
+                        if (prevCharacter.Equals('1'))
+                        {
+                            finalOrb = new FinalOrb(new Vector2(xpos, ypos), PaletteColor.Red);
+                            Console.WriteLine("Final Yellow Orb created: " + xpos + ", " + (ypos-128));
+                        }
                     }
                     #endregion
 

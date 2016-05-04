@@ -29,6 +29,7 @@ namespace blank_canvas
         Gates[] gates;
 
         PuzzleOrb[] puzzleOrbs;        //this is for testing
+        FinalOrb finalOrb;
         //Enemy testEnemy;
         //the puzzle orb should be linked to a gate
 
@@ -79,6 +80,7 @@ namespace blank_canvas
             {
                 player.Texture = content.Load<Texture2D>("playerSpriteSheet");
                 player.Projectile.Texture = content.Load<Texture2D>(projectileTexture);
+                finalOrb.OrbTexture = content.Load<Texture2D>("Final Orb Spritesheet");
             }
             catch (Exception e)
             {
@@ -169,7 +171,7 @@ namespace blank_canvas
             foreach (Rectangle r in tileCollision)
             {
                 //checks if it intersects with player, then fixes position
-                if (r.Intersects(player.CollisionBox))
+                if (r.Intersects(player.CollisionBox)) // Blank Canvas Tile
                     FixPos(player, r);
 
                 //checks if it intersects with an active projectile
@@ -284,6 +286,7 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
+            if(finalOrb.PuzzleState)
             level++;
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
@@ -366,7 +369,6 @@ namespace blank_canvas
 
             //for gui stats
             camera.DrawStats(testTexture, testFont, player.ToString());
-
         }
 
     }
