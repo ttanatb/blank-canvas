@@ -266,7 +266,12 @@ namespace blank_canvas
                             Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Castle);
                             tiles.Add(tile);
                         }
-                        Console.WriteLine("Tile created: " + xpos + ", " + ypos);
+                        else
+                        {
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
+                            tiles.Add(tile);
+                        }
+                            Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
                         if (i == 0)
                             startingPos = xpos;
