@@ -98,7 +98,10 @@ namespace blank_canvas
             {
                 if (CurrentColor == colorKey)
                 {
-                    state = PuzzleState.Completed;
+                    if (progress == 5)
+                    {
+                        state = PuzzleState.Completed;
+                    }
                 }
             }
         }

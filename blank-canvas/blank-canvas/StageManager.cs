@@ -286,6 +286,7 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
+            if(finalOrb.PuzzleState)
             level++;
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
