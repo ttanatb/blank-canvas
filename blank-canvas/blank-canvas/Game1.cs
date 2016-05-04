@@ -39,20 +39,6 @@ namespace blank_canvas
         GameState state;
         Level lvl;
 
-        // game state property
-        public GameState gameState
-        {
-            get { return state; }
-            set { state = value; }
-        }
-
-        // level property
-        public Level getLevel
-        {
-            get { return lvl; }
-            set { lvl = value; }
-        }
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -218,9 +204,7 @@ namespace blank_canvas
                 state = GameState.Pause;
                 pointerNum = 0;
             }
-            if (input.KeyPressed(Keys.D))
-
-                state = GameState.LevelChange;
+            stageManager.NextLevel();
         }
 
         /// <summary>
@@ -257,9 +241,6 @@ namespace blank_canvas
         {
             if (input.KeyPressed(Keys.Enter))
             {
-                //unloads all content then loads in what is necessary for the menu states
-                Content.Unload();
-                LoadContent();
                 state = GameState.MainMenu;
             }
         }
@@ -269,35 +250,25 @@ namespace blank_canvas
         /// </summary>
         private void UpdateLevelChange()
         {
-            // updates level count
+            // updates level count 
             stageManager.NextLevel();
 
             // switches level textures and design
             if (input.KeyPressed(Keys.Space))
             {
-                switch (getLevel)
-                {
-                    case Level.Desert:
-                        Content.Unload();
-                        LoadContent();
-                        break;
-                    case Level.Ice_Caves:
-                        Content.Unload();
-                        LoadContent();
-                        break;
-                    case Level.Forest:
-                        Content.Unload();
-                        LoadContent();
-                        break;
-                    case Level.Mountain:
-                        Content.Unload();
-                        LoadContent();
-                        break;
-                    case Level.Castle:
-                        Content.Unload();
-                        LoadContent();
-                        break;
-                }
+                //switch (getLevel)
+                //{
+                //    case Level.Desert:
+                //        break;
+                //    case Level.Ice_Caves:
+                //        break;
+                //    case Level.Forest:
+                //        break;
+                //    case Level.Mountain:
+                //        break;
+                //    case Level.Castle:
+                //        break;
+                //}
 
                 state = GameState.Gameplay;
             }
