@@ -299,16 +299,9 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
-<<<<<<< HEAD
-            if (finalOrb.State == PuzzleState.Completed)
-            {
-                level++;
 
-            }
-=======
             if(finalOrb.Progress >= 5)
                 level++;
->>>>>>> f1bf130d56516b2d0d86b0de0c76919d39d1cbb6
             //NEEDS WORK: dump everything
             //NEEDS WORK: load the new variables
 
