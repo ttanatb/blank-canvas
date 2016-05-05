@@ -49,7 +49,7 @@ namespace blank_canvas
             try
             {
                 //goes to the directory
-                sourcePath = Path.GetFullPath(@"..\..\..\..\..\blank-canvas\blank-canvas\Content"); // Correct Path
+                sourcePath = Path.GetFullPath(@"..\..\..\..\..\blank-canvas\blank-canvas\Content\stage"); // Correct Path
 
                 // Added this code for different levels
                 // Level 1 Desert

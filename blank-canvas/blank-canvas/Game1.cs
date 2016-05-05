@@ -19,7 +19,7 @@ namespace blank_canvas
         SpriteBatch spriteBatch;
         StageManager stageManager;
         InputManager input;
-        GameContent content;
+        GameContent contentManager;
 
         // creates variables for textures of background, main menu, and pause screen
         Texture2D backgroundTexture;
@@ -75,7 +75,7 @@ namespace blank_canvas
         /// </summary>
         protected override void LoadContent()
         {
-            content = new GameContent(Content);
+            contentManager = new GameContent(Content);
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -83,26 +83,22 @@ namespace blank_canvas
             //loads in all the texture that the stage manager requries
 
             // gameplay textures
-            backgroundTexture = content.Load("backgroundTexture");
+            backgroundTexture = contentManager.Load("testBackground");
 
-            // main menu screen texture
-            menuTexture = content.Load("mainMenuTexture");
-            pointerTexture = content.Load("pointerTexture");
+            // textures for the screens
+            menuTexture = contentManager.Load("mainMenu");
+            pauseTexture = contentManager.Load("pause");
+            gameOverTexture = contentManager.Load("gameOver");
+            instructionTexture = contentManager.Load("instruction");
+            pointerTexture = contentManager.Load("pointer");
 
-            // pause screen texture
-            pauseTexture = content.Load("pauseTexture");
-
-            // game over screen texture
-            gameOverTexture = content.Load("gameOverTexture");
-
-            instructionTexture = content.Load("instructionTexture");
 
             //level change screen texture
-            levelChangeTexture =content.Load("levelChange");
+            levelChangeTexture = contentManager.Load("levelChange");
             levelChangeText = Content.Load<SpriteFont>("Arial_14");
 
             stageManager = new StageManager(new Camera(GraphicsDevice.Viewport, GraphicsDevice), input);
-            stageManager.LoadContent(content);
+            stageManager.LoadContent(contentManager);
         }
 
         /// <summary>

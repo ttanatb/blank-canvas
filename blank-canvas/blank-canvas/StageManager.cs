@@ -66,17 +66,17 @@ namespace blank_canvas
         /// <summary>
         /// Loads in the textures
         /// </summary>
-        /// <param name="content">The ContentManager</param>
+        /// <param name="contentManager">The ContentManager</param>
         /// <param name="playerTexture">The texture for the player</param>
         /// <param name="enemyTexture">The texture for the enemy</param>
         /// <param name="tileTexture">The texture for the tiles</param>
-        public void LoadContent(GameContent content)
+        public void LoadContent(GameContent contentManager)
         {
             try
             {
-                player.Texture = content.Load("playerSpriteSheet");
-                player.Projectile.Texture = content.Load("projectile");
-                finalOrb.Texture = content.Load("finalOrbTexture");
+                player.Texture = contentManager.Load("player");
+                player.Projectile.Texture = contentManager.Load("projectile");
+                finalOrb.Texture = contentManager.Load("finalOrb");
             }
             catch (Exception e)
             {
@@ -85,28 +85,28 @@ namespace blank_canvas
             }
 
             foreach (Enemy enemy in enemies)
-                enemy.Texture = content.Load("enemySpriteSheet");
+                enemy.Texture = contentManager.Load("enemy");
 
             foreach (Tile tile in tiles)
-                tile.Texture = content.Load("Tiles-Spritesheet");
+                tile.Texture = contentManager.Load("tile");
 
             foreach (SpecialTile sTile in sTiles)
-                sTile.Texture = content.Load("Tiles-Spritesheet");
+                sTile.Texture = contentManager.Load("tile");
 
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
             {
-                puzzleorb.Texture = content.Load("orbBase");
-                puzzleorb.OrbTexture = content.Load("orb");
-                puzzleorb.OrbGlowTexture = content.Load("orbGlow");
+                puzzleorb.Texture = contentManager.Load("orbBase");
+                puzzleorb.OrbTexture = contentManager.Load("orb");
+                puzzleorb.OrbGlowTexture = contentManager.Load("orbGlow");
             }
 
             foreach (Gates gate in gates)
             {
-                gate.Texture = content.Load("Door");
+                gate.Texture = contentManager.Load("door");
             }
 
-            testFont = content.TestFont;
-            testTexture = content.TestTexture;
+            testFont = contentManager.TestFont;
+            testTexture = contentManager.TestTexture;
         }
         #endregion
 

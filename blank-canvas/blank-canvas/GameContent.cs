@@ -21,24 +21,24 @@ namespace blank_canvas
         /// <param name="game"></param>
         public GameContent(ContentManager content)
         {
-            dict.Add("playerSpriteSheet", content.Load<Texture2D>("playerSpriteSheet"));
-            dict.Add("enemySpriteSheet", content.Load<Texture2D>("enemySpriteSheet"));
-            dict.Add("Tiles-Spritesheet", content.Load<Texture2D>("Tiles-Spritesheet"));
-            dict.Add("projectile", content.Load<Texture2D>("projectile"));
-            dict.Add("orbBase", content.Load<Texture2D>("orbBase"));
-            dict.Add("orb", content.Load<Texture2D>("orb"));
-            dict.Add("orbGlow", content.Load<Texture2D>("orbGlow"));
-            dict.Add("Door", content.Load<Texture2D>("Door"));
-            dict.Add("finalOrbTexture", content.Load<Texture2D>("Final Orb Spritesheet"));
-            dict.Add("backgroundTexture", content.Load<Texture2D>("testBackground"));
-            dict.Add("mainMenuTexture", content.Load<Texture2D>("mainmenu"));
-            dict.Add("pointerTexture", content.Load<Texture2D>("pointer"));
-            dict.Add("pauseTexture", content.Load<Texture2D>("pausemenu"));
-            dict.Add("gameOverTexture", content.Load<Texture2D>("gameover"));
+            dict.Add("player", content.Load<Texture2D>(@"sprite\playerSpriteSheet"));
+            dict.Add("enemy", content.Load<Texture2D>(@"sprite\enemySpriteSheet"));
+            dict.Add("tile", content.Load<Texture2D>(@"sprite\tileSpritesheet"));
+            dict.Add("projectile", content.Load<Texture2D>(@"sprite\projectile"));
+            dict.Add("orbBase", content.Load<Texture2D>(@"sprite\orbBase"));
+            dict.Add("orb", content.Load<Texture2D>(@"sprite\orb"));
+            dict.Add("orbGlow", content.Load<Texture2D>(@"sprite\orbGlow"));
+            dict.Add("door", content.Load<Texture2D>(@"sprite\door"));
+            dict.Add("pointer", content.Load<Texture2D>(@"sprite\pointer"));
+            dict.Add("finalOrb", content.Load<Texture2D>(@"sprite\finalOrbSpriteSheet"));
+
+            dict.Add("mainMenu", content.Load<Texture2D>(@"screen\mainmenu"));
+            dict.Add("pause", content.Load<Texture2D>(@"screen\pause"));
+            dict.Add("gameOver", content.Load<Texture2D>(@"screen\gameover"));
+            dict.Add("instruction", content.Load<Texture2D>(@"screen\instruction"));
+
             dict.Add("levelChange", content.Load<Texture2D>("testlevelchange"));
-            dict.Add("instructionTexture", content.Load<Texture2D>("instruction"));
-
-
+            dict.Add("testBackground", content.Load<Texture2D>("testBackground"));
             testTexture = content.Load<Texture2D>("testChar");
             testFont = content.Load<SpriteFont>("Arial_14");
         }
