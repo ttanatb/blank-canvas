@@ -80,7 +80,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "TestTile.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -275,7 +275,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
                             tiles.Add(tile);
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
@@ -332,7 +332,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
                             sTiles.Add(sTile);
                         }
 

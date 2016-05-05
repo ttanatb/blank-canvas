@@ -436,9 +436,6 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
 
-            foreach (Rectangle r in tileCollision)
-                spriteBatch.Draw(testTexture, r, Color.Red);
-
             //for gui stats
             camera.DrawStats(testTexture, testFont, player.ToString());
         }

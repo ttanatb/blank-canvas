@@ -303,7 +303,8 @@ namespace blank_canvas
 
                 // draws the main menu
                 case GameState.MainMenu:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
+
                     spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(563, 258 + 48 * pointerNum), Color.White);
                     break;
@@ -315,28 +316,28 @@ namespace blank_canvas
 
                 // draws gameplay and focuses the camera
                 case GameState.Gameplay:
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, stageManager.Camera.Transform);
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, stageManager.Camera.Transform);
                     //spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 
                 // draws pause screen
                 case GameState.Pause:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(pauseTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(627, 330 + 85 * pointerNum), Color.White);
                     break;
 
                 // draws end screen, which then exits
                 case GameState.EndOfGame:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(gameOverTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(627, 325), Color.White);
                     break;
 
                 // when player reaches end of level
                 case GameState.LevelChange:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(levelChangeTexture, Vector2.Zero, Color.White);
                     break;
             }
