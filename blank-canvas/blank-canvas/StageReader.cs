@@ -344,7 +344,7 @@ namespace blank_canvas
                     #endregion
 
                     #region Player Spawn
-                    else if (character.Equals('P'))
+                    else if (character.Equals('P') && prevCharacter.Equals(' '))
                     {
                         // initializes player in the world
                         player = new Player(new Vector2(xpos, (ypos - 64))); //
@@ -393,7 +393,7 @@ namespace blank_canvas
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Orange, prevCharacter));
                         Console.WriteLine("Orange Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
-                    else if (character.Equals('R'))
+                    else if (character.Equals('P'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Purple, prevCharacter));
                         Console.WriteLine("Purple Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);

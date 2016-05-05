@@ -97,5 +97,6 @@ namespace blank_canvas
         Hurt,
         Shoot,
         Drain,
+        Death,
     }
 }

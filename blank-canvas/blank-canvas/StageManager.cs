@@ -117,7 +117,7 @@ namespace blank_canvas
         /// <param name="deltaTime">The amount of miliseconds passed since previous update</param>
         public void Update(float deltaTime)
         {
-            if (player.Health < 1)
+            if (player.IsDead)
                 throw new GameOverException();
 
             //updates the camera and input
