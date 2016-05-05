@@ -62,6 +62,7 @@ namespace blank_canvas
         Theme,
         Blank,
         Hazard,
+        EnemyBlockTile,
     }
 
 

@@ -288,7 +288,7 @@ namespace blank_canvas
                     #endregion
 
                     #region Special Tile Creation
-                    if (character.Equals('?') || character.Equals('!'))
+                    if (character.Equals('?') || character.Equals('!') || character.Equals('*'))
                     {
                         TileType TT;
 
@@ -296,9 +296,13 @@ namespace blank_canvas
                         {
                             TT = TileType.Blank;
                         }
-                        else
+                        else if (character.Equals('!'))
                         {
                             TT = TileType.Hazard;
+                        }
+                        else // '*'
+                        {
+                            TT = TileType.EnemyBlockTile;
                         }
 
                         if (levelEnum == blank_canvas.Level.Desert)
@@ -442,8 +446,17 @@ namespace blank_canvas
                     
                     if (character.Equals(' ') 
                         || character.Equals('P') 
-                        || character.Equals('?') 
-                        || character.Equals('y') 
+                        || character.Equals('?')
+                        || character.Equals('!')
+                        || character.Equals('y')
+                        || character.Equals('r')
+                        || character.Equals('b')
+                        || character.Equals('B')
+                        || character.Equals('R')
+                        || character.Equals('Y')
+                        || character.Equals('G')
+                        || character.Equals('P')
+                        || character.Equals('O')
                         || (reader.BaseStream.Position == reader.BaseStream.Length) 
                         || character.Equals('\r'))
                     {
@@ -461,7 +474,7 @@ namespace blank_canvas
                             xpos = -64;
                         }
                     }
-                    */
+                    
 
                     xpos += 64;
                     prevCharacter = character;

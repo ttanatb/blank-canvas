@@ -188,18 +188,56 @@ namespace blank_canvas
             // Loops through the special tiles in the game
             foreach (SpecialTile sTile in sTiles)
             {
-                if(sTile.ActiveState == PuzzleState.Active)
+
+                //Blank Canvas Tile (uncomplete)
+                if(sTile.TileType == TileType.Blank && sTile.ActiveState == PuzzleState.Active)
                 {
-                    // Blank Canvas Tile
-                    FixPos(player, sTile.Rectangle);
+                    // checks if projectile intersects with it
+                    if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox))
+                    {
+                        // activates the block (and paints it)
+                        sTile.ActiveState = PuzzleState.Completed;
+                        player.Projectile.Active = false;
+                    }
+                }
+                // Blank Canvas Tile (only intersects with objects if completed)
+                if(sTile.ActiveState == PuzzleState.Completed) // if the special tile has been filled with paint
+                {
+                    // Check Collision with player
+                    if (sTile.Rectangle.Intersects(player.CollisionBox))
+                    {
+                        FixPos(player, sTile.Rectangle);
+                    }
+
+                    // checks if projecticle intersects with the special Tile (completed)
+                    if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox))
+                    {
+                        player.Projectile.Active = false;
+                    }
+
+                    // Checks if projectile intersects with the special tile (completed)
+                    if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox))
+                    {
+                        player.Projectile.Active = false;
+                    }
                 }
 
+                // Handles a hazard Tile (made to have the player take damage if they intersect with this block)
                 if(sTile.TileType == TileType.Hazard)
                 {
                     if (player.CollisionBox.Intersects(sTile.Rectangle))
                     {
-                        // Damage Player?
-                        // player.TakeDamage(sTile)
+                        player.TakeDamage(sTile);
+                    }
+                }
+
+                // Handles the Enemy Block Tile (made to keep enemies moving back and forth ontop of a platform)
+                foreach (Enemy enemy in enemies)
+                {
+                    if (sTile.TileType == TileType.EnemyBlockTile || sTile.TileType == TileType.Hazard)
+                    {
+                        if (enemy.Active && sTile.Rectangle.Intersects(enemy.CollisionRect))
+                            enemy.ChangeDirection();
                     }
                 }
             }
@@ -213,8 +251,10 @@ namespace blank_canvas
                 // Checks if the enemy intersects with the door
                 foreach (Enemy enemy in enemies)
                 {
-                    if (enemy.Active && gate.Rectangle.Intersects(enemy.CollisionRect))
+                    if (enemy.Active && gate.Rectangle.Intersects(enemy.CollisionRect) && gate.DoorState == PuzzleState.Active)
+                    {
                         enemy.ChangeDirection();
+                    }
                 }
 
                 // checks if projecticle intersects with the doow

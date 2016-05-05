@@ -316,6 +316,28 @@ namespace blank_canvas
             velocity.X = -(float)direction * VERTICAL_KNOCK_BACK;
         }
 
+        public void TakeDamage(SpecialTile hazard)
+        {
+            //If the player is already in the hurting animation, return
+            if (invulnerable)
+                return;
+
+            //reduces the health
+            health--;
+
+            //set initial frame and animation state
+            frame = 0;
+            animState = AnimState.Hurt;
+            invulnerable = true;
+            invulTimer = 0;
+
+            //sets the player up the knocks the player back //CHANGE FOR HAZARDS POSSIBLY
+            position.Y -= 1;
+            velocity.Y = -HORIZONTAL_KNOCK_BACK;
+            velocity.X = -(float)direction * VERTICAL_KNOCK_BACK;
+            
+        }
+
         /// <summary>
         /// Drains the color from an enemy
         /// </summary>
