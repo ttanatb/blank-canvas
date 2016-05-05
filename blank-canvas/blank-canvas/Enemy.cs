@@ -151,13 +151,13 @@ namespace blank_canvas
             switch (CurrentColor)
             {
                 case (PaletteColor.Red):
-                    color = new Color(200, 0, 0, 255);
+                    color = new Color(205, 92, 92, 255);
                     break;
                 case (PaletteColor.Blue):
-                    color = new Color(20, 20, 255, 255);
+                    color = new Color(70, 130, 180, 255);
                     break;
                 case (PaletteColor.Yellow):
-                    color = new Color(255, 255, 0, 255);
+                    color = new Color(255, 255, 51, 255);
                     break;
                 default:
                     color = new Color(255, 255, 255, 255);
