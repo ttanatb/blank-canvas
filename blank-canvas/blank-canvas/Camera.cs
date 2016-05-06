@@ -47,7 +47,8 @@ namespace blank_canvas
         /// <param name="player">The player to center the camera at</param>
         public void Update(Player player)
         {
-            centre = new Vector2(player.X + (player.Width / 2) - 400, player.Y + (player.Height / 2) - 400);
+            centre = new Vector2(player.Center.X - view.Width / 2, player.Center.Y - view.Height / 2);
+            //centre = new Vector2(player.X + (player.Width / 2) - 400, player.Y + (player.Height / 2) - 400);
             transform = Matrix.CreateScale(new Vector3(1, 1, 0)) * Matrix.CreateTranslation(new Vector3(-centre.X, -centre.Y, 0));
         }
 

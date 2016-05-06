@@ -303,11 +303,15 @@ namespace blank_canvas
 
                     spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(563, 258 + 48 * pointerNum), Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 case GameState.Instruction:
                     spriteBatch.Begin();
                     spriteBatch.Draw(instructionTexture, Vector2.Zero, Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 // draws gameplay and focuses the camera
@@ -322,6 +326,8 @@ namespace blank_canvas
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(pauseTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(627, 330 + 85 * pointerNum), Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 // draws end screen, which then exits
@@ -329,15 +335,18 @@ namespace blank_canvas
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(gameOverTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(627, 325), Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 // when player reaches end of level
                 case GameState.LevelChange:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(levelChangeTexture, Vector2.Zero, Color.White);
+                    spriteBatch.End();
+
                     break;
             }
-            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
