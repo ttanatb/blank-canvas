@@ -68,27 +68,27 @@ namespace blank_canvas
             spriteBatch.Draw(testTexture, new Rectangle(35, 30, 125, 110), new Rectangle(0, 0, 125, 110),Color.Gray, 0f, Vector2.Zero, SpriteEffects.None, 1);
 
             //red
-            spriteBatch.Draw(testTexture, new Rectangle(45, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.Draw(testTexture, new Rectangle(45, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.Salmon, 0f, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.DrawString(testFont, redNum + "", new Vector2(50, 45), Color.White);
             //blue
-            spriteBatch.Draw(testTexture, new Rectangle(85, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.Draw(testTexture, new Rectangle(85, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.RoyalBlue, 0f, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.DrawString(testFont, blueNum + "", new Vector2(90, 45), Color.White);
             //yellow
-            spriteBatch.Draw(testTexture, new Rectangle(125, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.Yellow, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.Draw(testTexture, new Rectangle(125, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.DrawString(testFont, yellNum + "", new Vector2(130, 45), Color.White);
 
             //current color
             if(currColor == "Red")
             {
-                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.Salmon, 0f, Vector2.Zero, SpriteEffects.None, 1);
             }
             if (currColor == "Blue")
             {
-                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.RoyalBlue, 0f, Vector2.Zero, SpriteEffects.None, 1);
             }
             if (currColor == "Yellow")
             {
-                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.Yellow, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
             }
             spriteBatch.DrawString(testFont, "Current Color", new Vector2(60, 78), Color.White);
 
@@ -120,7 +120,7 @@ namespace blank_canvas
                 case 2:
                     for (int i = 0; i < health; i++)
                     {
-                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.Orange, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
                         count += 22;
                     }
                     break;

@@ -75,6 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\blank_canvas_GUI_box.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\screen\gameover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
