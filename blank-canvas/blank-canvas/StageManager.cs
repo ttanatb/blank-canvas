@@ -437,7 +437,8 @@ namespace blank_canvas
                 tile.Draw(spriteBatch);
 
             //for gui stats
-            camera.DrawStats(testTexture, testFont, player.ToString());
+            camera.SortArr(player.ColorStats());
+            camera.DrawStats(testTexture, testFont, player.CurrColor(), player.CurrHealth());
         }
 
     }

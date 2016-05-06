@@ -533,6 +533,33 @@ namespace blank_canvas
             return msg;
         }
 
+        //for gui stats box
+        public int[] ColorStats()
+        {
+            int[] colorStats = new int[3];
+
+            int redNum = bucket.Red;
+            colorStats[0] = redNum;
+            int blueNum = bucket.Blue;
+            colorStats[1] = blueNum;
+            int yellNum = bucket.Yellow;
+            colorStats[2] = yellNum;
+
+            return colorStats;
+        }
+
+        //for gui stats box
+        public string CurrColor()
+        {
+            return bucket.ToString();
+        }
+
+        //for gui stats box
+        public int CurrHealth()
+        {
+            return health;
+        }
+
         #endregion
 
     }
