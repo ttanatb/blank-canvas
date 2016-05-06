@@ -436,6 +436,8 @@ namespace blank_canvas
             foreach (Tile tile in tiles)
                 tile.Draw(spriteBatch);
 
+            spriteBatch.End();
+
             //for gui stats
             camera.SortArr(player.ColorStats());
             camera.DrawStats(testTexture, testFont, player.CurrColor(), player.CurrHealth());
