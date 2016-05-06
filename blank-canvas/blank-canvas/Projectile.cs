@@ -245,13 +245,13 @@ namespace blank_canvas
             {
                 //the alpha represents the tint that colors the actual projectile   
                 case PaletteColor.Red:
-                    spriteBatch.Draw(texture, position, new Color(alpha, 0, 0, alpha));
+                    spriteBatch.Draw(texture, position, new Color(alpha * 4 / 5, alpha * 2 / 5, alpha * 2 / 5, alpha));
                     break;
                 case PaletteColor.Blue:
-                    spriteBatch.Draw(texture, position, new Color(0, 0, alpha, alpha));
+                    spriteBatch.Draw(texture, position, new Color(alpha / 5, alpha * 2 / 5, alpha * 4 / 5, alpha));
                     break;
                 case PaletteColor.Yellow:
-                    spriteBatch.Draw(texture, position, new Color(alpha, alpha, 0, alpha));
+                    spriteBatch.Draw(texture, position, new Color(alpha, alpha, alpha / 5, alpha));
                     break;
                 default:
                     throw new Exception(); //enemies can only be rby, you can't shoot out non-rby colors
