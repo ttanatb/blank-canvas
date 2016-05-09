@@ -136,25 +136,25 @@ namespace blank_canvas
                     switch (colorKey)
                     {
                         case (PaletteColor.Red):
-                            spriteBatch.Draw(orbGlow, position, new Color(alpha, 0, 0, 100));
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha, 0, 0, alpha));
                             break;
                         case (PaletteColor.Blue):
-                            spriteBatch.Draw(orbGlow, position, new Color(0, 0, alpha, 100));
+                            spriteBatch.Draw(orbGlow, position, new Color(0, 0, alpha * 3 / 4, alpha));
                             break;
                         case (PaletteColor.Yellow):
-                            spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha, 0, 100));
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha * 7 / 9, alpha, 0, alpha));
                             break;
                         case (PaletteColor.Orange):
-                            spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha / 2, 0, 100));
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha, alpha / 3, 0, alpha));
                             break;
                         case (PaletteColor.Green):
-                            spriteBatch.Draw(orbGlow, position, new Color(0, alpha, 0, 100));
+                            spriteBatch.Draw(orbGlow, position, new Color(0, alpha / 2, 0, alpha));
                             break;
                         case (PaletteColor.Purple):
-                            spriteBatch.Draw(orbGlow, position, new Color(alpha / 2, 0, alpha / 2, 100));
+                            spriteBatch.Draw(orbGlow, position, new Color(alpha / 2, 0, alpha / 2, alpha));
                             break;
                         case (PaletteColor.Black):
-                            spriteBatch.Draw(orbGlow, position, new Color(0, 0, 0, 100));
+                            spriteBatch.Draw(orbGlow, position, new Color(0, 0, 0, alpha));
                             break;
                     }
                 }

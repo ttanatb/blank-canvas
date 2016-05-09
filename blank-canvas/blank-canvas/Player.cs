@@ -38,6 +38,7 @@ namespace blank_canvas
         //timer to change frame
         const double FRAME_TIMER = 0.2;
         const double INVUL_TIMER = 2.0;
+        const double DEATH_TIMER = 2.0;
 
         //margin for collision box
         public const int LEFT_MARGIN = 16;
@@ -62,6 +63,10 @@ namespace blank_canvas
         bool invulnerable;
         int invulFrame;
         double invulTimer;
+
+        bool isDead;
+        bool deathTimerStart;
+        double deathTimer;
         #endregion
 
         #region properties
@@ -148,6 +153,11 @@ namespace blank_canvas
             get { return health; }
         }
 
+        public bool IsDead
+        {
+            get { return isDead; }
+        }
+
         #endregion
 
         #region constructor
@@ -160,6 +170,9 @@ namespace blank_canvas
             health = MAX_HEALTH;
             invulnerable = false;
             invulFrame = 0;
+            isDead = false;
+            deathTimerStart = false;
+            deathTimer = 0;
         }
 
         #endregion
@@ -173,7 +186,7 @@ namespace blank_canvas
         public void UpdateInput(InputManager input)
         {
             //if the player is in its hurt animation, return
-            if (animState == AnimState.Hurt)
+            if (animState == AnimState.Hurt || animState == AnimState.Death)
                 return;
 
             //checks for input for jump
@@ -292,7 +305,7 @@ namespace blank_canvas
         public void TakeDamage(Enemy enemy)
         {
             //If the player is already in the hurting animation, return
-            if (invulnerable)
+            if (invulnerable || animState == AnimState.Death)
                 return;
 
             //reduces the health
@@ -300,10 +313,14 @@ namespace blank_canvas
 
             //set initial frame and animation state
             frame = 0;
-            animState = AnimState.Hurt;
-            invulnerable = true;
-            invulTimer = 0;
 
+            if (health > 0)
+            {
+                animState = AnimState.Hurt;
+                invulnerable = true;
+                invulTimer = 0;
+            }
+            else animState = AnimState.Death;
 
             //determine direction after collision
             if (enemy.Center.X - Center.X > 0)
@@ -319,7 +336,7 @@ namespace blank_canvas
         public void TakeDamage(SpecialTile hazard)
         {
             //If the player is already in the hurting animation, return
-            if (invulnerable)
+            if (invulnerable || animState == AnimState.Death)
                 return;
 
             //reduces the health
@@ -327,9 +344,16 @@ namespace blank_canvas
 
             //set initial frame and animation state
             frame = 0;
-            animState = AnimState.Hurt;
             invulnerable = true;
             invulTimer = 0;
+
+            if (health > 0)
+            {
+                animState = AnimState.Hurt;
+                invulnerable = true;
+                invulTimer = 0;
+            }
+            else animState = AnimState.Death;
 
             //sets the player up the knocks the player back //CHANGE FOR HAZARDS POSSIBLY
             position.Y -= 1;
@@ -376,6 +400,13 @@ namespace blank_canvas
                 elapsedTime -= FRAME_TIMER;
                 frame++;
                 invulFrame++;
+            }
+
+            if (deathTimerStart)
+            {
+                deathTimer += deltaTime;
+                if (deathTimer > DEATH_TIMER)
+                    isDead = true;
             }
 
             
@@ -472,6 +503,19 @@ namespace blank_canvas
 
                     spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 4 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
                     break;
+
+                case AnimState.Death:
+                    color = Color.DarkGray;
+                    if (frame > 6)
+                    {
+                        frame = 6;
+                        deathTimerStart = true;
+                        elapsedTime = 0;
+                        velocity.X = 0;
+                    }
+
+                    spriteBatch.Draw(texture, Rectangle, new Rectangle(frame * WIDTH, 5 * HEIGHT, WIDTH, HEIGHT), color, 0f, Vector2.Zero, spriteEffects, 1);
+                    break;
             }
 
             //draws the projectile if it is active
@@ -485,8 +529,35 @@ namespace blank_canvas
             string msg = bucket.ToString();
             if (health > 0)
                 msg += "\nHealth: " + health;
-            else msg += "\nYou should be dead now, but I haven't implemented that yet";
+            else msg += "0 health";
             return msg;
+        }
+
+        //for gui stats box
+        public int[] ColorStats()
+        {
+            int[] colorStats = new int[3];
+
+            int redNum = bucket.Red;
+            colorStats[0] = redNum;
+            int blueNum = bucket.Blue;
+            colorStats[1] = blueNum;
+            int yellNum = bucket.Yellow;
+            colorStats[2] = yellNum;
+
+            return colorStats;
+        }
+
+        //for gui stats box
+        public string CurrColor()
+        {
+            return bucket.ToString();
+        }
+
+        //for gui stats box
+        public int CurrHealth()
+        {
+            return health;
         }
 
         #endregion

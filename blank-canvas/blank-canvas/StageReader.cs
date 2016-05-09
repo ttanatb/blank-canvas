@@ -49,7 +49,7 @@ namespace blank_canvas
             try
             {
                 //goes to the directory
-                sourcePath = Path.GetFullPath(@"..\..\..\..\..\blank-canvas\blank-canvas\Content"); // Correct Path
+                sourcePath = Path.GetFullPath(@"..\..\..\..\..\blank-canvas\blank-canvas\Content\stage"); // Correct Path
 
                 // Added this code for different levels
                 // Level 1 Desert
@@ -80,7 +80,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "TestTile.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -275,7 +275,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
                             tiles.Add(tile);
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
@@ -332,7 +332,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
                             sTiles.Add(sTile);
                         }
 
@@ -344,7 +344,7 @@ namespace blank_canvas
                     #endregion
 
                     #region Player Spawn
-                    else if (character.Equals('P'))
+                    else if (character.Equals('P') && prevCharacter.Equals(' '))
                     {
                         // initializes player in the world
                         player = new Player(new Vector2(xpos, (ypos - 64))); //
@@ -393,7 +393,7 @@ namespace blank_canvas
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Orange, prevCharacter));
                         Console.WriteLine("Orange Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);
                     }
-                    else if (character.Equals('R'))
+                    else if (character.Equals('P'))
                     {
                         puzzleOrbs.Add(new PuzzleOrb(new Vector2(xpos, ypos), PaletteColor.Purple, prevCharacter));
                         Console.WriteLine("Purple Orb(" + prevCharacter + ") " + "created: " + xpos + ", " + ypos);

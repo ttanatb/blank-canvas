@@ -330,8 +330,9 @@ namespace blank_canvas
         public override string ToString()
         {
             string msg = "";
-            msg += "Red: " + red + " Blue: " + blue + " Yellow: " + yellow;
-            msg += "\nCurrent color: " + currentColor;
+            //msg += "Red: " + red + " Blue: " + blue + " Yellow: " + yellow;
+            //msg += "\nCurrent color: " + currentColor;
+            msg = "" + currentColor;
             return msg;
         }
 

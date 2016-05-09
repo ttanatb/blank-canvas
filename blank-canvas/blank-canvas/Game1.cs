@@ -19,7 +19,7 @@ namespace blank_canvas
         SpriteBatch spriteBatch;
         StageManager stageManager;
         InputManager input;
-        GameContent content;
+        GameContent contentManager;
 
         // creates variables for textures of background, main menu, and pause screen
         Texture2D backgroundTexture;
@@ -75,7 +75,7 @@ namespace blank_canvas
         /// </summary>
         protected override void LoadContent()
         {
-            content = new GameContent(Content);
+            contentManager = new GameContent(Content);
 
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -83,26 +83,22 @@ namespace blank_canvas
             //loads in all the texture that the stage manager requries
 
             // gameplay textures
-            backgroundTexture = content.Load("backgroundTexture");
+            backgroundTexture = contentManager.Load("testBackground");
 
-            // main menu screen texture
-            menuTexture = content.Load("mainMenuTexture");
-            pointerTexture = content.Load("pointerTexture");
+            // textures for the screens
+            menuTexture = contentManager.Load("mainMenu");
+            pauseTexture = contentManager.Load("pause");
+            gameOverTexture = contentManager.Load("gameOver");
+            instructionTexture = contentManager.Load("instruction");
+            pointerTexture = contentManager.Load("pointer");
 
-            // pause screen texture
-            pauseTexture = content.Load("pauseTexture");
-
-            // game over screen texture
-            gameOverTexture = content.Load("gameOverTexture");
-
-            instructionTexture = content.Load("instructionTexture");
 
             //level change screen texture
-            levelChangeTexture =content.Load("levelChange");
+            levelChangeTexture = contentManager.Load("levelChange");
             levelChangeText = Content.Load<SpriteFont>("Arial_14");
 
             stageManager = new StageManager(new Camera(GraphicsDevice.Viewport, GraphicsDevice), input);
-            stageManager.LoadContent(content);
+            stageManager.LoadContent(contentManager);
         }
 
         /// <summary>
@@ -303,44 +299,54 @@ namespace blank_canvas
 
                 // draws the main menu
                 case GameState.MainMenu:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
+
                     spriteBatch.Draw(menuTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(563, 258 + 48 * pointerNum), Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 case GameState.Instruction:
                     spriteBatch.Begin();
                     spriteBatch.Draw(instructionTexture, Vector2.Zero, Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 // draws gameplay and focuses the camera
                 case GameState.Gameplay:
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, stageManager.Camera.Transform);
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, stageManager.Camera.Transform);
                     //spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 
                 // draws pause screen
                 case GameState.Pause:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(pauseTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(627, 330 + 85 * pointerNum), Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 // draws end screen, which then exits
                 case GameState.EndOfGame:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(gameOverTexture, Vector2.Zero, Color.White);
                     spriteBatch.Draw(pointerTexture, new Vector2(627, 325), Color.White);
+                    spriteBatch.End();
+
                     break;
 
                 // when player reaches end of level
                 case GameState.LevelChange:
-                    spriteBatch.Begin();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, null);
                     spriteBatch.Draw(levelChangeTexture, Vector2.Zero, Color.White);
+                    spriteBatch.End();
+
                     break;
             }
-            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
