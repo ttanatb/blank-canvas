@@ -17,6 +17,8 @@ namespace blank_canvas
 
         SpriteFont testFont;        //just a test font
         Texture2D testTexture;      //just a test texture
+        Texture2D heartHealth;      //for player health bar
+        Texture2D guiBox;           //for stats box
 
         Player player;
         Enemy[] enemies;
@@ -107,6 +109,8 @@ namespace blank_canvas
 
             testFont = contentManager.TestFont;
             testTexture = contentManager.TestTexture;
+            heartHealth = contentManager.HeartHealth;
+            guiBox = contentManager.GuiBox;
         }
         #endregion
 
@@ -429,7 +433,7 @@ namespace blank_canvas
 
             //for gui stats
             camera.SortArr(player.ColorStats());
-            camera.DrawStats(testTexture, testFont, player.CurrColor(), player.CurrHealth());
+            camera.DrawStats(testTexture, heartHealth, guiBox, testFont, player.CurrColor(), player.CurrHealth());
         }
 
     }

@@ -78,6 +78,12 @@
     <Content Include="Content\blank_canvas_GUI_box.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\guiBoxRounded.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\hearthealth.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\screen\gameover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

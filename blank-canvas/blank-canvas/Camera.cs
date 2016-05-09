@@ -61,85 +61,97 @@ namespace blank_canvas
         }
 
         //for gui stats
-        public void DrawStats(Texture2D testTexture, SpriteFont testFont, String currColor, int health)
+        public void DrawStats(Texture2D testTexture, Texture2D heartHealth, Texture2D guiBox, SpriteFont testFont, String currColor, int health)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
             //the box
-            spriteBatch.Draw(testTexture, new Rectangle(35, 30, 125, 110), new Rectangle(0, 0, 125, 110),Color.Gray, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.Draw(guiBox, new Rectangle(20, 20, 143, 112), new Rectangle(0, 0, 143, 112),Color.Gray, 0f, Vector2.Zero, SpriteEffects.None, 1);
 
-            //red
-            spriteBatch.Draw(testTexture, new Rectangle(45, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.Salmon, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            spriteBatch.DrawString(testFont, redNum + "", new Vector2(50, 45), Color.White);
-            //blue
-            spriteBatch.Draw(testTexture, new Rectangle(85, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.RoyalBlue, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            spriteBatch.DrawString(testFont, blueNum + "", new Vector2(90, 45), Color.White);
-            //yellow
-            spriteBatch.Draw(testTexture, new Rectangle(125, 40, 25, 25), new Rectangle(0, 0, 25, 25), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            spriteBatch.DrawString(testFont, yellNum + "", new Vector2(130, 45), Color.White);
-
-            //current color
-            if(currColor == "Red")
-            {
-                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.Salmon, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            }
-            if (currColor == "Blue")
-            {
-                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.RoyalBlue, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            }
-            if (currColor == "Yellow")
-            {
-                spriteBatch.Draw(testTexture, new Rectangle(45, 72, 105, 25), new Rectangle(0, 0, 105, 20), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            }
-            spriteBatch.DrawString(testFont, "Current Color", new Vector2(60, 78), Color.White);
 
             //health
             int count = 0;
+            for (int i = 0; i < health; i++)
+            {
+                spriteBatch.Draw(heartHealth, new Rectangle(26 + count, 15, 23, 38), new Rectangle(0, 0, 23, 38), Color.Pink, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                count += 27;
+            }
+            //if you want the health to change colors as it decreases
+            /*
             switch (health)
             {
                 case 5:
                     for (int i = 0; i < health; i++)
                     {
-                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 22;
+                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                        count += 25;
                     }
                     break;
                 case 4:
                     for (int i = 0; i < health; i++)
                     {
-                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.Green, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 22;
+                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Green, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                        count += 25;
                     }
                     break;
                 case 3:
                     for (int i = 0; i < health; i++)
                     {
-                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.Yellow, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 22;
+                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Yellow, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                        count += 25;
                     }
                     break;
                 case 2:
                     for (int i = 0; i < health; i++)
                     {
-                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 22;
+                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                        count += 25;
                     }
                     break;
                 case 1:
                     for (int i = 0; i < health; i++)
                     {
-                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 22;
+                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                        count += 25;
                     }
                     break;
                 default:
                     for (int i = 0; i < health; i++)
                     {
-                        spriteBatch.Draw(testTexture, new Rectangle(45 + count, 105, 15, 28), new Rectangle(0, 0, 15, 25), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 22;
+                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1);
+                        count += 25;
                     }
                     break;
             }
+            */
+
+
+            //color numbers
+            //red
+            spriteBatch.Draw(testTexture, new Rectangle(33, 60, 30, 30), new Rectangle(0, 0, 30, 30), Color.Salmon, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.DrawString(testFont, redNum + "", new Vector2(38, 68), Color.White);
+            //blue
+            spriteBatch.Draw(testTexture, new Rectangle(75, 60, 30, 30), new Rectangle(0, 0, 30, 30), Color.RoyalBlue, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.DrawString(testFont, blueNum + "", new Vector2(83, 68), Color.White);
+            //yellow
+            spriteBatch.Draw(testTexture, new Rectangle(120, 60, 30, 30), new Rectangle(0, 0, 30, 30), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.DrawString(testFont, yellNum + "", new Vector2(128, 68), Color.White);
+
+
+            //current color
+            if (currColor == "Red")
+            {
+                spriteBatch.Draw(testTexture, new Rectangle(31, 100, 120, 23), new Rectangle(0, 0, 120, 23), Color.Salmon, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            }
+            if (currColor == "Blue")
+            {
+                spriteBatch.Draw(testTexture, new Rectangle(31, 100, 120, 23), new Rectangle(0, 0, 120, 23), Color.RoyalBlue, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            }
+            if (currColor == "Yellow")
+            {
+                spriteBatch.Draw(testTexture, new Rectangle(31, 100, 120, 23), new Rectangle(0, 0, 120, 23), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            }
+            spriteBatch.DrawString(testFont, "Current Color", new Vector2(52, 105), Color.White);
 
 
             spriteBatch.End();
