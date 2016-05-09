@@ -121,7 +121,7 @@ namespace blank_canvas
                                 }
                                 else
                                 {
-                                    spriteBatch.Draw(texture, Rectangle, new Rectangle(2 * WIDTH, 3 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                                    spriteBatch.Draw(texture, Rectangle, new Rectangle(1 * WIDTH, 3 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
                                 }
                                 break;
                         }

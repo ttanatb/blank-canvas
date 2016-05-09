@@ -80,7 +80,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "Mountain.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -275,7 +275,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
                             tiles.Add(tile);
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
@@ -332,7 +332,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
                             sTiles.Add(sTile);
                         }
 
@@ -427,7 +427,7 @@ namespace blank_canvas
                     {
                         if (prevCharacter.Equals('1'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos - 128), PaletteColor.Red);
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos - 128), PaletteColor.Yellow);
                             Console.WriteLine("Final Red Orb created: " + xpos + ", " + (ypos - 128));
                         }
                         if (prevCharacter.Equals('2'))
@@ -437,26 +437,27 @@ namespace blank_canvas
                         }
                         if (prevCharacter.Equals('3'))
                         {
-                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos - 128), PaletteColor.Yellow);
+                            finalOrb = new FinalOrb(new Vector2(xpos - 64, ypos - 128), PaletteColor.Red);
                             Console.WriteLine("Final Yellow Orb created: " + xpos + ", " + (ypos - 128));
                         }
                     }
                     #endregion
 
                     
-                    if (character.Equals(' ') 
-                        || character.Equals('P') 
-                        || character.Equals('?')
-                        || character.Equals('!')
-                        || character.Equals('y')
-                        || character.Equals('r')
-                        || character.Equals('b')
-                        || character.Equals('B')
-                        || character.Equals('R')
-                        || character.Equals('Y')
-                        || character.Equals('G')
-                        || character.Equals('P')
-                        || character.Equals('O')
+                    if (character.Equals(' ')                        
+                        || character.Equals('*') // Enemy Special Block
+                        || character.Equals('?') // Blank Canvas Block
+                        || character.Equals('!') // Hazard Block
+                        || character.Equals('P') // Player Spawn
+                        || character.Equals('y') // Yellow Enemy
+                        || character.Equals('r') // Red Enemy
+                        || character.Equals('b') // Blue Enemy
+                        || character.Equals('B') // Blue Orb
+                        || character.Equals('R') // Red Orb
+                        || character.Equals('Y') // Yellow Orb
+                        || character.Equals('G') // Green Orb
+                        || character.Equals('O') // Orange Orb
+                        || character.Equals('/') // Door
                         || (reader.BaseStream.Position == reader.BaseStream.Length) 
                         || character.Equals('\r'))
                     {

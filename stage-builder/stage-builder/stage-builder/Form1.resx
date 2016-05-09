@@ -123,8 +123,12 @@
 _  Ground Tile
 -  Secondary Tile
 |  Wall Tile
-~  Custom Tile
+~  Custom Level Tile
+
+Special Tiles[1x1]:
 ?  Colorable Tile
+!  Hazard Tile
+*  Enemy Blocking Tile
 
 Player[1x2]:
 P  Player
@@ -145,7 +149,6 @@ Puzzle Orbs(color key)[1x1]:
 
 Barriers[1x2]:
 #/  Door
-]   Clear Paint Barrior
 
 End Level Orb[3x3]:
 1@ Final Orb (yellow)

@@ -135,7 +135,7 @@
             // compilebutton
             // 
             this.compilebutton.Location = new System.Drawing.Point(696, 552);
-            this.compilebutton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.compilebutton.Margin = new System.Windows.Forms.Padding(2);
             this.compilebutton.Name = "compilebutton";
             this.compilebutton.Size = new System.Drawing.Size(124, 38);
             this.compilebutton.TabIndex = 9;
@@ -146,7 +146,7 @@
             // fileExistsButton
             // 
             this.fileExistsButton.Location = new System.Drawing.Point(353, 552);
-            this.fileExistsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.fileExistsButton.Margin = new System.Windows.Forms.Padding(2);
             this.fileExistsButton.Name = "fileExistsButton";
             this.fileExistsButton.Size = new System.Drawing.Size(124, 38);
             this.fileExistsButton.TabIndex = 13;

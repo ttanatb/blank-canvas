@@ -142,7 +142,7 @@ namespace blank_canvas
             {
                 //checks collision for all puzzle orbs and enemies
                 player.Projectile.Update(deltaTime);
-                player.Projectile.CheckCollision(puzzleOrbs, enemies, finalOrb);
+                player.Projectile.CheckCollision(puzzleOrbs, enemies, sTiles, finalOrb);
             }
 
             //updates the gates
@@ -189,17 +189,6 @@ namespace blank_canvas
             foreach (SpecialTile sTile in sTiles)
             {
 
-                //Blank Canvas Tile (uncomplete)
-                if(sTile.TileType == TileType.Blank && sTile.ActiveState == PuzzleState.Active)
-                {
-                    // checks if projectile intersects with it
-                    if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox))
-                    {
-                        // activates the block (and paints it)
-                        sTile.ActiveState = PuzzleState.Completed;
-                        player.Projectile.Active = false;
-                    }
-                }
                 // Blank Canvas Tile (only intersects with objects if completed)
                 if(sTile.ActiveState == PuzzleState.Completed) // if the special tile has been filled with paint
                 {

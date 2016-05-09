@@ -116,7 +116,7 @@ namespace blank_canvas
         /// </summary>
         /// <param name="puzzleOrbs">An array of puzzle orbs</param>
         /// <param name="enemies">An array of enemies</param>
-        public void CheckCollision(PuzzleOrb[] puzzleOrbs, Enemy[] enemies, FinalOrb finalOrb)
+        public void CheckCollision(PuzzleOrb[] puzzleOrbs, Enemy[] enemies, SpecialTile[] specialTiles, FinalOrb finalOrb)
         {
             //loops through all the orbs
             foreach (PuzzleOrb orb in puzzleOrbs)
@@ -136,6 +136,15 @@ namespace blank_canvas
                 //checks if the enemies collide with the orb
                 if (CheckCollision(enemy))
                     return;
+            }
+
+            foreach (SpecialTile sTile in specialTiles)
+            {
+                //checks if it collides with the special orb
+                if (CheckCollision(sTile))
+                {                    
+                    return;
+                }
             }
 
             if (CheckCollision(finalOrb))
@@ -199,6 +208,30 @@ namespace blank_canvas
 
             else return false;
         }
+
+        /// <summary>
+        /// Method that checks collision then deals with the changing of color when it collides with the orb
+        /// </summary>
+        private bool CheckCollision(SpecialTile paletteTile)
+        {
+            if (CollisionBox.Intersects(paletteTile.Rectangle) && paletteTile.ActiveState == PuzzleState.Active && paletteTile.TileType == TileType.Blank)
+            {
+                //checks if the block is colored is not completed, then checks if it actually intersects
+
+                paletteTile.ActiveState = PuzzleState.Completed;
+
+                //sets the projectile to inactive
+                active = false;
+
+                //uses up the paint from the bucket
+                bucket.UsePaint();
+
+                return true;
+            }
+            else return false;
+        }
+
+
 
         /// <summary>
         /// Method that check collision then deals with the changing of color when it collides with the enemy
