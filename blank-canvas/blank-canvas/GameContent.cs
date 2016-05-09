@@ -14,6 +14,8 @@ namespace blank_canvas
 
         Texture2D testTexture;
         SpriteFont testFont;
+        Texture2D heartHealth;
+        Texture2D guiBox;
 
         /// <summary>
         /// 
@@ -41,6 +43,8 @@ namespace blank_canvas
             dict.Add("testBackground", content.Load<Texture2D>("testBackground"));
             testTexture = content.Load<Texture2D>("blank_canvas_GUI_box");
             testFont = content.Load<SpriteFont>("Arial_14");
+            heartHealth = content.Load<Texture2D>("hearthealth");
+            guiBox = content.Load<Texture2D>("guiBoxRounded");
         }
 
         /// <summary>
@@ -58,6 +62,10 @@ namespace blank_canvas
         }
 
         public Texture2D TestTexture { get { return testTexture; } }
+
+        public Texture2D HeartHealth { get { return heartHealth; } }
+
+        public Texture2D GuiBox { get { return guiBox; } }
 
         public SpriteFont TestFont {  get { return testFont; } }
     }
