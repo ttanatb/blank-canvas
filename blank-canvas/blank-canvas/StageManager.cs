@@ -168,6 +168,7 @@ namespace blank_canvas
                 //checks for collision with player
                 if (player.CollisionBox.Intersects(enemy.CollisionRect))
                     player.TakeDamage(enemy);
+
             }
 
             //loops through each collision tiles in the game
@@ -224,13 +225,15 @@ namespace blank_canvas
                     }
                 }
 
-                // Handles the Enemy Block Tile (made to keep enemies moving back and forth ontop of a platform)
+                // Handles the Enemy Colliding with the special Tiles (made to keep enemies moving back and forth ontop of a platform)
                 foreach (Enemy enemy in enemies)
                 {
-                    if (sTile.TileType == TileType.EnemyBlockTile || sTile.TileType == TileType.Hazard)
+                    if (sTile.TileType == TileType.EnemyBlockTile || sTile.TileType == TileType.Hazard || (sTile.TileType==TileType.Blank) && sTile.ActiveState == PuzzleState.Completed)
                     {
                         if (enemy.Active && sTile.Rectangle.Intersects(enemy.CollisionRect))
+                        {
                             enemy.ChangeDirection();
+                        }
                     }
                 }
             }
