@@ -60,7 +60,7 @@ namespace blank_canvas
                 // Level 2 Ice Caves
                 else if (levelEnum == blank_canvas.Level.Ice_Caves)
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Ice Caves.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "IceCaves.txt");
                 }
                 // Level 3 Forest
                 else if (levelEnum == blank_canvas.Level.Forest)
@@ -80,7 +80,7 @@ namespace blank_canvas
                 // Test file
                 else
                 {
-                    fileNames = Directory.GetFiles(sourcePath, "Mountain.txt");
+                    fileNames = Directory.GetFiles(sourcePath, "IceCaves.txt");
                 }
                 Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
@@ -275,7 +275,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
                             tiles.Add(tile);
                         }
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
@@ -332,7 +332,7 @@ namespace blank_canvas
                         }
                         else
                         {
-                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
                             sTiles.Add(sTile);
                         }
 
