@@ -202,6 +202,7 @@ namespace blank_canvas
                 switch(pointerNum)
                 {
                     case 0:
+                        stageManager.Level = 0;
                         stageManager.LoadContent(contentManager);
                         state = GameState.Gameplay;
                         break;

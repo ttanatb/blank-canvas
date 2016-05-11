@@ -38,7 +38,7 @@ namespace blank_canvas
         //constructor
         public StageManager(Camera camera, InputManager inputManager)
         {
-            level = 2;
+            level = 0;
             input = new InputManager();         //normal instantialization for input manager
             stageReader = new StageReader(level);    //may need some tinkering?
             this.camera = camera;               //get camera from game1
@@ -53,6 +53,7 @@ namespace blank_canvas
         public int Level
         {
             get { return level; }
+            set { level = value; }
         }
 
 

@@ -108,7 +108,7 @@ namespace blank_canvas
                         spriteBatch.Draw(texture, Rectangle, new Rectangle(WIDTH * (progress + 1), 0, WIDTH, HEIGHT), new Color(0, 0, alpha, 100));
                         break;
                     case (PaletteColor.Yellow):
-                        spriteBatch.Draw(texture, Rectangle, new Rectangle(WIDTH * (progress + 1), 0, WIDTH, HEIGHT), new Color(alpha, alpha, 0, 100));
+                        spriteBatch.Draw(texture, Rectangle, new Rectangle(WIDTH * (progress + 1), 0, WIDTH, HEIGHT), Color.Yellow);
                         break;
                 }
 
