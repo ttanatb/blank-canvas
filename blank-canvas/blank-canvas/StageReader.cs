@@ -36,7 +36,7 @@ namespace blank_canvas
         int level;
 
         // constructor that gets string
-        public StageReader(int level)
+        public StageReader()
         {
             //instantiates everything
             enemies = new List<Enemy>();
@@ -45,7 +45,6 @@ namespace blank_canvas
             collisionBoxes = new List<Rectangle>();
             puzzleOrbs = new List<PuzzleOrb>();
             puzzleGates = new List<Gates>();
-            levelEnum = (Level)level;
 
             try
             {
@@ -53,11 +52,37 @@ namespace blank_canvas
                 sourcePath = Path.GetFullPath(@"..\..\..\..\..\blank-canvas\blank-canvas\Content\stage"); // Correct Path
 
                 // Added this code for different levels
-
-                fileNames = Directory.GetFiles(sourcePath);
-                
-                foreach(string s in fileNames)
-                    Console.WriteLine(s);
+                // Level 1 Desert
+                if (levelEnum == blank_canvas.Level.Desert)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Desert.txt");
+                }
+                // Level 2 Ice Caves
+                else if (levelEnum == blank_canvas.Level.Ice_Caves)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Ice Caves.txt");
+                }
+                // Level 3 Forest
+                else if (levelEnum == blank_canvas.Level.Forest)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Forest.txt");
+                }
+                // Level 4 Mountain
+                else if (levelEnum == blank_canvas.Level.Mountain)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Mountain.txt");
+                }
+                // Level 5 Castle
+                else if (levelEnum == blank_canvas.Level.Castle)
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Castle.txt");
+                }
+                // Test file
+                else
+                {
+                    fileNames = Directory.GetFiles(sourcePath, "Mountain.txt");
+                }
+                Console.WriteLine(sourcePath + "\n" + fileNames[0]);
             }
             catch (DirectoryNotFoundException)
             {
@@ -143,35 +168,20 @@ namespace blank_canvas
         {
             get { return finalOrb; }
         }
-
-        public Level LevelEnum
-        {
-            get { return levelEnum; }
-            set { levelEnum = value; }
-        }
         #endregion
 
         // reads in file
-        public void ReadFile(int lvl)
+        public void ReadFile()
         {
             BinaryReader reader = null;
-
-            tiles.Clear();
-            sTiles.Clear();
-            enemies.Clear();
-            collisionBoxes.Clear();
-            puzzleOrbs.Clear();
-            puzzleGates.Clear();
-
 
             try
             {
                 //does reader thing
-                reader = new BinaryReader(File.OpenRead(fileNames[lvl]));
+                reader = new BinaryReader(File.OpenRead(fileNames[0]));
                 char character;
                 char prevCharacter = ' ';
 
-                levelEnum = (Level)lvl ;
                 //a bit of info: every line ends with a '\r\n'
 
 
@@ -194,6 +204,7 @@ namespace blank_canvas
                 }
 
                 int.TryParse(lvlString, out level); //parses it back to int
+                Console.WriteLine(level);
 
                 reader.ReadChar(); //reads away the '\n'
 
@@ -236,14 +247,11 @@ namespace blank_canvas
                             TT = TileType.Ground;
                         }
 
-                        Tile tile = new Tile(new Vector2(xpos, ypos), TT, (Level)lvl);
-                        tiles.Add(tile);
-
-                        /*
                         // initializes new ground tile
                         if (levelEnum == blank_canvas.Level.Desert)
                         {
-                            
+                            Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            tiles.Add(tile);
                         }
                         else if (levelEnum == blank_canvas.Level.Ice_Caves)
                         {
@@ -270,7 +278,6 @@ namespace blank_canvas
                             Tile tile = new Tile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
                             tiles.Add(tile);
                         }
-                        */
                             Console.WriteLine("Tile created: " + xpos + ", " + ypos);
 
                         if (collisionTileLength == 0)
@@ -298,8 +305,37 @@ namespace blank_canvas
                             TT = TileType.EnemyBlockTile;
                         }
 
-                        SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, (Level)lvl);
-                        sTiles.Add(sTile);
+                        if (levelEnum == blank_canvas.Level.Desert)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Desert);
+                            sTiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Ice_Caves)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Ice_Caves);
+                            sTiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Forest)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Forest);
+                            sTiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Mountain)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
+                            sTiles.Add(sTile);
+                        }
+                        else if (levelEnum == blank_canvas.Level.Castle)
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Castle);
+                            sTiles.Add(sTile);
+                        }
+                        else
+                        {
+                            SpecialTile sTile = new SpecialTile(new Vector2(xpos, ypos), TT, blank_canvas.Level.Mountain);
+                            sTiles.Add(sTile);
+                        }
+
 
                         Console.WriteLine("Special Tile created: " + xpos + ", " + ypos);
 
