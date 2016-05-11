@@ -103,6 +103,8 @@ namespace blank_canvas
 
             camera = new Camera(GraphicsDevice.Viewport, GraphicsDevice);
             stageManager = new StageManager(camera, input);
+
+
         }
 
         /// <summary>
