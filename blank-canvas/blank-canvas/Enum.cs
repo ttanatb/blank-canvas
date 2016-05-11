@@ -43,11 +43,11 @@ namespace blank_canvas
     /// </summary>
     public enum Level
     {
-        Desert = 1,
-        Ice_Caves = 2,
-        Forest = 3,
-        Mountain = 4,
-        Castle = 5,
+        Desert = 0,
+        Ice_Caves = 1,
+        Forest = 2,
+        Mountain = 3,
+        Castle = 4,
     }
 
     /// <summary>

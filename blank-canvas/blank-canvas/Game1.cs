@@ -40,6 +40,8 @@ namespace blank_canvas
         GameState state;
         Level lvl;
 
+        Camera camera;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -65,6 +67,8 @@ namespace blank_canvas
             //instantializes the initial GameState
             state = GameState.MainMenu;
             pointerNum = 0;
+
+            lvl = 0;
 
             base.Initialize();
         }
@@ -97,8 +101,8 @@ namespace blank_canvas
             levelChangeTexture = contentManager.Load("levelChange");
             levelChangeText = Content.Load<SpriteFont>("Arial_14");
 
-            stageManager = new StageManager(new Camera(GraphicsDevice.Viewport, GraphicsDevice), input);
-            stageManager.LoadContent(contentManager);
+            camera = new Camera(GraphicsDevice.Viewport, GraphicsDevice);
+            stageManager = new StageManager(camera, input);
         }
 
         /// <summary>
@@ -133,6 +137,8 @@ namespace blank_canvas
                 // if gameplay state
                 case GameState.Gameplay:
 
+                    UpdateGamePlay();
+
                     // updates the level based on the amount of time that has passed
                     float deltaTime = gameTime.ElapsedGameTime.Milliseconds;
                     try
@@ -144,9 +150,13 @@ namespace blank_canvas
                         pointerNum = 0;
                         state = GameState.EndOfGame;
                     }
+                    catch (NextLevelException)
+                    {
+                        stageManager.NextLevel();
+                        stageManager.LoadContent(contentManager);
+                    }
 
                     //  updates the gameplay based on any input to change the state
-                    UpdateGamePlay();
                     break;
 
                 // if pause state
@@ -192,6 +202,7 @@ namespace blank_canvas
                 switch(pointerNum)
                 {
                     case 0:
+                        stageManager.LoadContent(contentManager);
                         state = GameState.Gameplay;
                         break;
                     case 1:
@@ -214,7 +225,6 @@ namespace blank_canvas
                 state = GameState.Pause;
                 pointerNum = 0;
             }
-            stageManager.NextLevel();
         }
 
         /// <summary>

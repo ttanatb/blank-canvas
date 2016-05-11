@@ -29,8 +29,6 @@ namespace blank_canvas
 
         PuzzleOrb[] puzzleOrbs;        //this is for testing
         FinalOrb finalOrb;
-        //Enemy testEnemy;
-        //the puzzle orb should be linked to a gate
 
         int level;                  //the level of the stage (may be unnecessary)
 
@@ -40,27 +38,21 @@ namespace blank_canvas
         //constructor
         public StageManager(Camera camera, InputManager inputManager)
         {
+            level = 2;
             input = new InputManager();         //normal instantialization for input manager
-            stageReader = new StageReader();    //may need some tinkering?
+            stageReader = new StageReader(level);    //may need some tinkering?
             this.camera = camera;               //get camera from game1
-            level = 0;                          //sets level at 0
-
-            //read file from the stage reader and get player, enemy, tile data
-            stageReader.ReadFile();
-            player = stageReader.Player;
-            enemies = stageReader.Enemies;
-            tiles = stageReader.Tile;
-            sTiles = stageReader.STile;
-            tileCollision = stageReader.CollisionBoxes;
-            puzzleOrbs = stageReader.PuzzleOrbs;
-            gates = stageReader.PuzzleGates;
-            finalOrb = stageReader.FinalOrb;
         }
 
         //properties
         public Camera Camera
         {
             get { return camera; }
+        }
+
+        public int Level
+        {
+            get { return level; }
         }
 
 
@@ -74,6 +66,17 @@ namespace blank_canvas
         /// <param name="tileTexture">The texture for the tiles</param>
         public void LoadContent(GameContent contentManager)
         {
+            //read file from the stage reader and get player, enemy, tile data
+            stageReader.ReadFile(level);
+            player = stageReader.Player;
+            enemies = stageReader.Enemies;
+            tiles = stageReader.Tile;
+            sTiles = stageReader.STile;
+            tileCollision = stageReader.CollisionBoxes;
+            puzzleOrbs = stageReader.PuzzleOrbs;
+            gates = stageReader.PuzzleGates;
+            finalOrb = stageReader.FinalOrb;
+
             try
             {
                 player.Texture = contentManager.Load("player");
@@ -123,6 +126,9 @@ namespace blank_canvas
         {
             if (player.IsDead)
                 throw new GameOverException();
+
+            if (finalOrb.Progress > 4)
+                throw new NextLevelException();
 
             //updates the camera and input
             deltaTime = deltaTime / 1000.0f;
@@ -352,14 +358,8 @@ namespace blank_canvas
         /// </summary>
         public void NextLevel()
         {
-
-            if(finalOrb.Progress >= 5)
-                level++;
-
-            //NEEDS WORK: dump everything
-            //NEEDS WORK: load the new variables
-
-
+            level++;
+            stageReader.LevelEnum = (Level)level;
         }
 
         /// <summary>
