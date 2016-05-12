@@ -129,10 +129,10 @@ namespace blank_canvas
             //color numbers
             //red
             spriteBatch.Draw(testTexture, new Rectangle(33, 60, 30, 30), new Rectangle(0, 0, 30, 30), Color.Salmon, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            spriteBatch.DrawString(testFont, redNum + "", new Vector2(38, 68), Color.White);
+            spriteBatch.DrawString(testFont, redNum + "", new Vector2(39, 68), Color.White);
             //blue
             spriteBatch.Draw(testTexture, new Rectangle(75, 60, 30, 30), new Rectangle(0, 0, 30, 30), Color.RoyalBlue, 0f, Vector2.Zero, SpriteEffects.None, 1);
-            spriteBatch.DrawString(testFont, blueNum + "", new Vector2(83, 68), Color.White);
+            spriteBatch.DrawString(testFont, blueNum + "", new Vector2(84, 68), Color.White);
             //yellow
             spriteBatch.Draw(testTexture, new Rectangle(120, 60, 30, 30), new Rectangle(0, 0, 30, 30), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
             spriteBatch.DrawString(testFont, yellNum + "", new Vector2(128, 68), Color.White);
