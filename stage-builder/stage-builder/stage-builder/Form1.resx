@@ -131,7 +131,7 @@ Special Tiles[1x1]:
 *  Enemy Blocking Tile
 
 Player[1x2]:
-P  Player
+$  Player Spawn
 
 Enemies[1x1]:
 r  Red Enemy

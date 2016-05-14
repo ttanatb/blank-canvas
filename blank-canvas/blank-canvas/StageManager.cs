@@ -241,6 +241,10 @@ namespace blank_canvas
                         {
                             enemy.ChangeDirection();
                         }
+                        if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox))
+                        {
+                            player.Projectile.Active = false;
+                        }
                     }
                 }
             }
