@@ -308,7 +308,7 @@ namespace blank_canvas
                     #endregion
 
                     #region Player Spawn
-                    else if (character.Equals('P') && prevCharacter.Equals(' '))
+                    else if (character.Equals('$'))
                     {
                         // initializes player in the world
                         player = new Player(new Vector2(xpos, (ypos - 64))); //
@@ -412,7 +412,7 @@ namespace blank_canvas
                         || character.Equals('*') // Enemy Special Block
                         || character.Equals('?') // Blank Canvas Block
                         || character.Equals('!') // Hazard Block
-                        || character.Equals('P') // Player Spawn
+                        || character.Equals('$') // Player Spawn
                         || character.Equals('y') // Yellow Enemy
                         || character.Equals('r') // Red Enemy
                         || character.Equals('b') // Blue Enemy
@@ -421,6 +421,7 @@ namespace blank_canvas
                         || character.Equals('Y') // Yellow Orb
                         || character.Equals('G') // Green Orb
                         || character.Equals('O') // Orange Orb
+                        || character.Equals('P') // Purple Orb
                         || character.Equals('/') // Door
                         || (reader.BaseStream.Position == reader.BaseStream.Length) 
                         || character.Equals('\r'))

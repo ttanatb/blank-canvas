@@ -133,6 +133,9 @@ namespace blank_canvas
                 case Level.Castle:
                     switch (tileType)
                     {
+                        case TileType.Hazard:
+                            spriteBatch.Draw(texture, Rectangle, new Rectangle(4 * WIDTH, 4 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
                         case TileType.Blank:
                             if (activeState == PuzzleState.Active)
                             {
