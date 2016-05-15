@@ -422,6 +422,7 @@ namespace blank_canvas
                         || character.Equals('G') // Green Orb
                         || character.Equals('O') // Orange Orb
                         || character.Equals('P') // Purple Orb
+                        || character.Equals('A') // Black Orb
                         || character.Equals('/') // Door
                         || (reader.BaseStream.Position == reader.BaseStream.Length) 
                         || character.Equals('\r'))
