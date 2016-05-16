@@ -218,11 +218,6 @@ namespace blank_canvas
                         player.Projectile.Active = false;
                     }
 
-                    // Checks if projectile intersects with the special tile (completed)
-                    if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox))
-                    {
-                        player.Projectile.Active = false;
-                    }
                 }
 
                 // Handles a hazard Tile (made to have the player take damage if they intersect with this block)
@@ -243,7 +238,7 @@ namespace blank_canvas
                         {
                             enemy.ChangeDirection();
                         }
-                        if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox))
+                        if (player.Projectile.Active && sTile.Rectangle.Intersects(player.Projectile.CollisionBox) && sTile.TileType!=TileType.EnemyBlockTile)
                         {
                             player.Projectile.Active = false;
                         }
