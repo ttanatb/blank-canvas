@@ -85,6 +85,9 @@
     <Content Include="Content\bg\bg2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\bg\bg3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\bg\bg4.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

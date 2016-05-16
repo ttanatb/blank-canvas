@@ -60,7 +60,9 @@ namespace blank_canvas
             yellNum = colorStats[2];
         }
 
-        //for gui stats
+        /// <summary>
+        /// Draws out the GUI
+        /// </summary>
         public void DrawStats(Texture2D testTexture, Texture2D heartHealth, Texture2D guiBox, SpriteFont testFont, String currColor, int health)
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
@@ -76,55 +78,6 @@ namespace blank_canvas
                 spriteBatch.Draw(heartHealth, new Rectangle(26 + count, 15, 23, 38), new Rectangle(0, 0, 23, 38), Color.Pink, 0f, Vector2.Zero, SpriteEffects.None, 1);
                 count += 27;
             }
-            //if you want the health to change colors as it decreases
-            /*
-            switch (health)
-            {
-                case 5:
-                    for (int i = 0; i < health; i++)
-                    {
-                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Blue, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 25;
-                    }
-                    break;
-                case 4:
-                    for (int i = 0; i < health; i++)
-                    {
-                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Green, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 25;
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i < health; i++)
-                    {
-                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Yellow, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 25;
-                    }
-                    break;
-                case 2:
-                    for (int i = 0; i < health; i++)
-                    {
-                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Gold, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 25;
-                    }
-                    break;
-                case 1:
-                    for (int i = 0; i < health; i++)
-                    {
-                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 25;
-                    }
-                    break;
-                default:
-                    for (int i = 0; i < health; i++)
-                    {
-                        spriteBatch.Draw(heartHealth, new Rectangle(28 + count, 81, 23, 38), new Rectangle(0, 0, 23, 38), Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1);
-                        count += 25;
-                    }
-                    break;
-            }
-            */
-
 
             //color numbers
             //red
