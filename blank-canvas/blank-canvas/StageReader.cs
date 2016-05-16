@@ -33,7 +33,6 @@ namespace blank_canvas
         int ypos;
 
         string title;
-        int level;
 
         // constructor that gets string
         public StageReader(int level)
@@ -54,7 +53,23 @@ namespace blank_canvas
 
                 // Added this code for different levels
 
-                fileNames = Directory.GetFiles(sourcePath);
+                fileNames = new string[5];
+
+                string[]files = Directory.GetFiles(sourcePath);
+                for(int i = 1; i <= fileNames.Length; i++)
+                {
+                    Console.WriteLine("i is " + i);
+                    for(int j = 0; j < files.Length; j++)
+                    {
+                        char b = files[j][files[j].Length - 5];
+                        char a = i.ToString().ToCharArray()[0];
+                        if (b.Equals(a))
+                        {
+                            fileNames[i-1] = files[j];
+                            break;
+                        }
+                    }
+                }
                 
                 foreach(string s in fileNames)
                     Console.WriteLine(s);
@@ -193,7 +208,6 @@ namespace blank_canvas
                     lvlString += character; //concatnates the string of numbers
                 }
 
-                int.TryParse(lvlString, out level); //parses it back to int
 
                 reader.ReadChar(); //reads away the '\n'
 

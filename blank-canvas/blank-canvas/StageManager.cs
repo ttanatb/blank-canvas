@@ -19,6 +19,7 @@ namespace blank_canvas
         Texture2D testTexture;      //just a test texture
         Texture2D heartHealth;      //for player health bar
         Texture2D guiBox;           //for stats box
+        Texture2D bg;
 
         Player player;
         Enemy[] enemies;
@@ -77,6 +78,7 @@ namespace blank_canvas
             puzzleOrbs = stageReader.PuzzleOrbs;
             gates = stageReader.PuzzleGates;
             finalOrb = stageReader.FinalOrb;
+            bg = contentManager.Load("bg" + level.ToString());
 
             try
             {
@@ -415,6 +417,8 @@ namespace blank_canvas
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            camera.DrawBG(bg);
+
             // Drawing from Background to front
             foreach (PuzzleOrb puzzleorb in puzzleOrbs)
                 puzzleorb.Draw(spriteBatch);

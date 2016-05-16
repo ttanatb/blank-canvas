@@ -38,8 +38,6 @@ namespace blank_canvas
 
         // enum variables
         GameState state;
-        Level lvl;
-
         Camera camera;
 
         public Game1()
@@ -67,8 +65,6 @@ namespace blank_canvas
             //instantializes the initial GameState
             state = GameState.MainMenu;
             pointerNum = 0;
-
-            lvl = 0;
 
             base.Initialize();
         }
@@ -154,8 +150,17 @@ namespace blank_canvas
                     }
                     catch (NextLevelException)
                     {
-                        stageManager.NextLevel();
-                        stageManager.LoadContent(contentManager);
+                        if (stageManager.Level == 4)
+                        {
+                            state = GameState.MainMenu;
+                            pointerNum = 0;
+                            stageManager.Level = 0;
+                        }
+                        else
+                        {
+                            stageManager.NextLevel();
+                            stageManager.LoadContent(contentManager);
+                        }
                     }
 
                     //  updates the gameplay based on any input to change the state
@@ -204,7 +209,6 @@ namespace blank_canvas
                 switch(pointerNum)
                 {
                     case 0:
-                        stageManager.Level = 0;
                         stageManager.LoadContent(contentManager);
                         state = GameState.Gameplay;
                         break;
@@ -330,7 +334,6 @@ namespace blank_canvas
                 // draws gameplay and focuses the camera
                 case GameState.Gameplay:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, stageManager.Camera.Transform);
-                    //spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 

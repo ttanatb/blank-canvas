@@ -156,5 +156,16 @@ namespace blank_canvas
 
             spriteBatch.End();
         }
+
+        /// <summary>
+        /// Draws the background
+        /// </summary>
+        /// <param name="texture">The texture of the background</param>
+        public void DrawBG(Texture2D texture)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(texture, Vector2.Zero, Color.White);
+            spriteBatch.End();
+        }
     }
 }
