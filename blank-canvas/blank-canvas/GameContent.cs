@@ -41,6 +41,13 @@ namespace blank_canvas
 
             dict.Add("levelChange", content.Load<Texture2D>("testlevelchange"));
             dict.Add("testBackground", content.Load<Texture2D>("testBackground"));
+
+            dict.Add("bg0", content.Load<Texture2D>(@"bg\bg0"));
+            dict.Add("bg1", content.Load<Texture2D>(@"bg\bg1"));
+            dict.Add("bg2", content.Load<Texture2D>(@"bg\bg2"));
+            //dict.Add("bg3", content.Load<Texture2D>(""));
+            //dict.Add("bg4", content.Load<Texture2D>(""));
+
             testTexture = content.Load<Texture2D>("blank_canvas_GUI_box");
             testFont = content.Load<SpriteFont>("Arial_14");
             heartHealth = content.Load<Texture2D>("hearthealth");

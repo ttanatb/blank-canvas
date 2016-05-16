@@ -334,7 +334,6 @@ namespace blank_canvas
                 // draws gameplay and focuses the camera
                 case GameState.Gameplay:
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, null, null, null, null, stageManager.Camera.Transform);
-                    //spriteBatch.Draw(backgroundTexture, new Vector2(-500, 0), Color.White);
                     stageManager.Draw(spriteBatch);
                     break;
 
