@@ -46,7 +46,7 @@ namespace blank_canvas
             dict.Add("bg1", content.Load<Texture2D>(@"bg\bg1"));
             dict.Add("bg2", content.Load<Texture2D>(@"bg\bg2"));
             //dict.Add("bg3", content.Load<Texture2D>(""));
-            //dict.Add("bg4", content.Load<Texture2D>(""));
+            dict.Add("bg4", content.Load<Texture2D>(@"bg\bg4"));
 
             testTexture = content.Load<Texture2D>("blank_canvas_GUI_box");
             testFont = content.Load<SpriteFont>("Arial_14");
