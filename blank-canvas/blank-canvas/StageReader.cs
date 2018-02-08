@@ -6,7 +6,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 
 /*
-    Class: StageReader
+    Class: 
+    Reader
     Purpose: reads in the stage from a text file
 
 */
