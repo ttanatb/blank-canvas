@@ -216,7 +216,7 @@ namespace blank_canvas
                         state = GameState.Instruction;
                         break;
                     case 2:
-                        Exit();
+                        Environment.Exit(10);
                         break;
                 }
             }
