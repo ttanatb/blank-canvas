@@ -121,13 +121,13 @@ namespace blank_canvas
                 if (direction == Direction.Right)
                     return new Rectangle((int)position.X + LEFT_MARGIN,
                         (int)position.Y + TOP_MARGIN,
-                        WIDTH - LEFT_MARGIN - RIGHT_MARGIN - RIGHT_MARGIN,
+                        WIDTH - LEFT_MARGIN - RIGHT_MARGIN,
                         HEIGHT - TOP_MARGIN - TOP_MARGIN - TOP_MARGIN);
 
                 //collision box when direction is left
                 else return new Rectangle((int)position.X + RIGHT_MARGIN,
                         (int)position.Y + TOP_MARGIN,
-                        WIDTH - LEFT_MARGIN - RIGHT_MARGIN - RIGHT_MARGIN,
+                        WIDTH - LEFT_MARGIN - RIGHT_MARGIN,
                         HEIGHT - TOP_MARGIN-TOP_MARGIN-TOP_MARGIN);
             }
         }
