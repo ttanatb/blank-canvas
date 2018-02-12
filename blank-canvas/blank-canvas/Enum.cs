@@ -47,7 +47,8 @@ namespace blank_canvas
         Ice_Caves = 1,
         Forest = 2,
         Mountain = 3,
-        Castle = 4,
+        Lavalands = 4,
+        Castle = 5,
     }
 
     /// <summary>

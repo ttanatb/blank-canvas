@@ -150,7 +150,7 @@ namespace blank_canvas
                     }
                     catch (NextLevelException)
                     {
-                        if (stageManager.Level == 4)
+                        if (stageManager.Level == 6)
                         {
                             state = GameState.MainMenu;
                             pointerNum = 0;
@@ -216,7 +216,7 @@ namespace blank_canvas
                         state = GameState.Instruction;
                         break;
                     case 2:
-                        Exit();
+                        Environment.Exit(10);
                         break;
                 }
             }

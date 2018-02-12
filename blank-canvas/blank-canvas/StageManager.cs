@@ -39,7 +39,7 @@ namespace blank_canvas
         //constructor
         public StageManager(Camera camera, InputManager inputManager)
         {
-            level = 0;
+            level = 4;                          // Change this to change the first leevel
             input = new InputManager();         //normal instantialization for input manager
             stageReader = new StageReader(level);    //may need some tinkering?
             this.camera = camera;               //get camera from game1
@@ -223,7 +223,7 @@ namespace blank_canvas
                 // Handles a hazard Tile (made to have the player take damage if they intersect with this block)
                 if(sTile.TileType == TileType.Hazard)
                 {
-                    if (player.CollisionBox.Intersects(sTile.Rectangle))
+                    if (player.HazardCollisionBox.Intersects(sTile.Rectangle))
                     {
                         player.TakeDamage(sTile);
                     }

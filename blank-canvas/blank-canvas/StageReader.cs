@@ -53,7 +53,7 @@ namespace blank_canvas
 
                 // Added this code for different levels
 
-                fileNames = new string[5];
+                fileNames = new string[6];
 
                 string[]files = Directory.GetFiles(sourcePath);
                 for(int i = 1; i <= fileNames.Length; i++)

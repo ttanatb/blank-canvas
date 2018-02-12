@@ -120,8 +120,9 @@ namespace blank_canvas
                     break;
                 #endregion
 
-                #region Level5Castle
-                case Level.Castle:
+
+                #region Lavalands
+                case Level.Lavalands:
                     switch (tileType)
                     {
                         case TileType.Ground:
@@ -138,6 +139,29 @@ namespace blank_canvas
                             break;
                         case TileType.Hazard:
                             spriteBatch.Draw(texture, Rectangle, new Rectangle(4 * WIDTH, 4 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
+                    }
+                    break;
+                #endregion
+
+                #region Level5Castle
+                case Level.Castle:
+                    switch (tileType)
+                    {
+                        case TileType.Ground:
+                            spriteBatch.Draw(texture, Rectangle, new Rectangle(0 * WIDTH, 5 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
+                        case TileType.Floor:
+                            spriteBatch.Draw(texture, Rectangle, new Rectangle(1 * WIDTH, 5 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
+                        case TileType.Wall:
+                            spriteBatch.Draw(texture, Rectangle, new Rectangle(2 * WIDTH, 5 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
+                        case TileType.Theme:
+                            spriteBatch.Draw(texture, Rectangle, new Rectangle(3 * WIDTH, 5 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
+                            break;
+                        case TileType.Hazard:
+                            spriteBatch.Draw(texture, Rectangle, new Rectangle(4 * WIDTH, 5 * HEIGHT, WIDTH, HEIGHT), Color.White, 0, Vector2.Zero, SpriteEffects.None, 0);
                             break;
                     }
                     break;
