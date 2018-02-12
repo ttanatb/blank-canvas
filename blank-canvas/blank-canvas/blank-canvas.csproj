@@ -14,9 +14,6 @@
     <MonoGamePlatform>WindowsGL</MonoGamePlatform>
     <MonoGameContentBuilderExe>
     </MonoGameContentBuilderExe>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -27,7 +24,6 @@
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -37,7 +33,6 @@
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
@@ -165,9 +160,6 @@
     <Content Include="Content\Arial_14.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->
   <Target Name="BeforeResolveReferences">

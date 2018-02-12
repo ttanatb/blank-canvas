@@ -223,7 +223,7 @@ namespace blank_canvas
                 // Handles a hazard Tile (made to have the player take damage if they intersect with this block)
                 if(sTile.TileType == TileType.Hazard)
                 {
-                    if (player.HazardCollisionBox.Intersects(sTile.Rectangle))
+                    if (player.CollisionBox.Intersects(sTile.Rectangle))
                     {
                         player.TakeDamage(sTile);
                     }

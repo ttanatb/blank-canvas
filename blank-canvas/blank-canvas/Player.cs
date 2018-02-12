@@ -111,29 +111,6 @@ namespace blank_canvas
         }
 
         /// <summary>
-        /// The collision box based on the margins
-        /// </summary>
-        public Rectangle HazardCollisionBox
-        {
-            get
-            {
-                //collision box when direction is right
-                if (direction == Direction.Right)
-                    return new Rectangle((int)position.X + LEFT_MARGIN,
-                        (int)position.Y + TOP_MARGIN,
-                        WIDTH - LEFT_MARGIN - RIGHT_MARGIN - RIGHT_MARGIN,
-                        HEIGHT - TOP_MARGIN - TOP_MARGIN - TOP_MARGIN);
-
-                //collision box when direction is left
-                else return new Rectangle((int)position.X + RIGHT_MARGIN,
-                        (int)position.Y + TOP_MARGIN,
-                        WIDTH - LEFT_MARGIN - RIGHT_MARGIN - RIGHT_MARGIN,
-                        HEIGHT - TOP_MARGIN-TOP_MARGIN-TOP_MARGIN);
-            }
-        }
-
-
-        /// <summary>
         /// Returns the projectile of the player's bucket
         /// </summary>
         public Projectile Projectile
